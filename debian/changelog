@@ -1,0 +1,779 @@
+groonga (8.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Bump Standards-Version, no other changes are required.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Wed, 14 Feb 2018 23:35:34 +0900
+
+groonga (7.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Bump Standards-Version, no other changes are required.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Tue, 30 Jan 2018 17:59:15 +0900
+
+groonga (7.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/control
+    - Bump Standards-Version, no other changes are required.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Fri, 29 Dec 2017 13:17:40 +0900
+
+groonga (7.0.9-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 03 Dec 2017 13:18:43 +0900
+
+groonga (7.0.8-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Wed, 01 Nov 2017 10:01:58 +0900
+
+groonga (7.0.7-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Bump version to 4.1.1 (no other changes are required)
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 08 Oct 2017 09:28:30 +0900
+
+groonga (7.0.6-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/groonga-httpd.service
+    - Ensure to create /var/run/groonga directory.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Fri, 08 Sep 2017 22:08:28 +0900
+
+groonga (7.0.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 30 Jul 2017 17:39:17 +0900
+
+groonga (7.0.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/control
+    - Bump version to 4.0.0 (no other changes are required)
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Fri, 30 Jun 2017 22:15:05 +0900
+
+groonga (7.0.3-2) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/copyright
+    - Add missing copyright about benchmark.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 18 Jun 2017 12:42:13 +0900
+
+groonga (7.0.3-1) experimental; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/copyright
+    - Add missing copyright about benchmark.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Thu, 01 Jun 2017 22:10:59 +0900
+
+groonga (7.0.2-1) experimental; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Mon, 15 May 2017 15:56:38 +0900
+
+groonga (7.0.1-1) experimental; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Thu, 30 Mar 2017 14:38:48 +0900
+
+groonga (7.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Mon, 27 Feb 2017 15:27:20 +0900
+
+groonga (6.1.5-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-a-bug-that-AND-optimization-may-skip-matched-rec.patch
+    debian/patches/really-fix-a-bug-that-AND-optimization-may-skip-matc.patch
+    - Drop needless patch files. These changes are already merged in
+      Groonga 6.1.5.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Mon, 23 Jan 2017 19:14:09 +0900
+
+groonga (6.1.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-a-bug-that-AND-optimization-may-skip-matched-rec.patch
+    debian/patches/really-fix-a-bug-that-AND-optimization-may-skip-matc.patch
+    - Apply patches to fix an index search bug that index search may
+      not return records that should be matched.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Thu, 19 Jan 2017 17:12:44 +0900
+
+groonga (6.1.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/libgroonga0.install
+    - Drop removed file since Groonga 6.1.2.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sat, 07 Jan 2017 13:49:34 +0900
+
+groonga (6.1.1-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Refresh patch to fix FTBFS on kFreeBSD.
+  * debian/control
+    - Add dependency to support Zstd column compression.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 04 Dec 2016 14:41:51 +0900
+
+groonga (6.1.0-2) unstable; urgency=medium
+
+  * debian/patches/fix-nginx-FTBFS-on-kfreebsd.patch
+    - Add patch to fix FTBFS on kFreeBSD.
+  * debian/copyright
+    - Add copyright about bundled ngx-mruby.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 30 Oct 2016 07:31:31 +0900
+
+groonga (6.1.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Add missing dependency to lsb-base because of init.d script.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sat, 29 Oct 2016 13:50:37 +0900
+
+groonga (6.0.9-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-build-error-with-openssl-1.1.patch
+    - Drop needless patch because it was fixed in upstream.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sat, 01 Oct 2016 21:35:07 +0900
+
+groonga (6.0.8-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Mon, 29 Aug 2016 14:40:39 +0900
+
+groonga (6.0.7-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/patches/fix-nginx-build-error-with-openssl-1.1.patch
+    - Update OpenSSL patch for bundled nginx 1.11.3
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Thu, 04 Aug 2016 22:00:19 +0900
+
+groonga (6.0.5-2) unstable; urgency=medium
+
+  * debian/patches/fix-nginx-build-error-with-openssl-1.1.patch
+    - Fix FTBFS with OpenSSL 1.1.0 (Closes: #828331)
+  * debian/copyright
+    - Update copyright year about vendor/mruby.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sat, 16 Jul 2016 17:26:18 +0900
+
+groonga (6.0.5-1) unstable; urgency=medium
+
+  * New upstream release.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Thu, 30 Jun 2016 23:37:23 +0900
+
+groonga (6.0.4-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/control
+    - Drop needless dependency to autotools-dev.
+  * debian/groonga-httpd.service,
+    debian/groonga-server-gqtp.service
+    - Add Documentation= entry to service unit.
+  * debian/groonga-httpd.default,
+    debian/groonga-server-gqtp.default
+    - Update default configuration in this release.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Tue, 07 Jun 2016 22:09:26 +0900
+
+groonga (6.0.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * debian/control
+    - Update standards version to 3.9.8.
+    - Update compat level to 10.
+    - Drop needless dependency to dh-autoreconf.
+  * debian/upstream/signing-key.asc
+    - Add signing key to check signature.
+  * debian/watch
+    - Add pgpsigurlmangle to verify the archive.
+  * debian/groonga-bin.install
+    - Drop man files which are not provided anymore.
+    - Install missing grndb command.
+  * debian/groonga-httpd.service
+    - Make package description more clear.
+    - Use EnvironmentFile directive to customize.
+    - Drop unused Conflicts directive.
+  * debian/groonga-gqtp.service
+    - Make package description more clear.
+    - Use server mode which does not fork.
+  * debian/libgroonga0.install
+    - Install missing functions plugin.
+  * debian/copyright
+    - Update copyright year.
+  * debian/groonga-bin.lintian-overrides,
+    debian/groonga-httpd.lintian-overrides,
+    debian/groonga-plugin-suggest.lintian-overrides
+    - Suppress binary-without-manpage lintian warnings because
+      upstream dropped man support explicitly.
+  * debian/rule
+    - Remove bundled jquery and underscore correctly.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Fri, 29 Apr 2016 00:51:25 +0900
+
+groonga (6.0.1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * debian/control
+    - Use Architecture: any to support more architectures.
+    - Drop transitional groonga-server-http package.
+  * debian/rules
+    - Remove needless DEB_BUILD_HARDENING flag.
+    - Disable static library.
+  * debian/groonga-httpd.default
+    - Set variables to enable fast phrase search feature.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Mon, 28 Mar 2016 21:59:57 +0900
+
+groonga (6.0.0-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * debian/control
+    - Fix "undefined reference to `GRN_ATOMIC_ADD_EX'" on mips,mipsel,m68k.
+      Closes: #770243
+    - Update standards-version to 3.9.7
+    - Add SSL/TLS dependency which is required by groonga-httpd.
+  * patches/*
+    - Remove needless use-jquery-flot-0.8.3.patch because it is fixed
+      in upstream.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sun, 28 Feb 2016 12:34:17 +0900
+
+groonga (5.1.2-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * patches/use-jquery-flot-0.8.3.patch
+    - Fix source-is-missing lintian error.
+  * debian/rules,debian/control
+    - Fix automake related FTBFS issue which is caused by added patch.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 30 Jan 2016 21:48:00 +0900
+
+groonga (5.1.1-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * debian/copyright
+    - Fix I:unused-file-paragraph-in-dep5-copyright paragraph notifications.
+  * debian/rules
+    - Fix FTBFS on ppc64el due to outdated config.guess in vendor/onigmo-source.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 02 Jan 2016 20:47:09 +0900
+
+groonga (5.1.0-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+  * Import upstream debian/* changes.
+    - Closes: #799167, #800451
+  * Do not delete conffiles which are owned by other packages
+    - Closes: #773029
+  * debian/source.lintian-overrides
+    - Suppress source-is-missing error.
+  * debian/tests/*
+    - Add files for autopkgtest.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sun, 27 Dec 2015 00:00:00 +0900
+
+groonga (4.0.6.1-2) unstable; urgency=low
+
+  * Team upload.
+  * debian/control
+    - Support amd64,i386,kfreebsd-amd64,kfreebsd-i386 and ppc64el only
+      because of build failure for other architectures. It is a just workaroud. 
+    - Follow Standard-Version to 3.9.6.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 25 Oct 2014 02:58:33 +0000
+
+groonga (4.0.6.1-1) unstable; urgency=low
+
+  * Team upload.
+  * debian/copyright
+    - Add missing copyright about sphinx bundled js/css.
+    - Add missing copyright about jquery-ui css.
+  * Initial upload to Debian (Closes: #732055)
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Wed, 15 Oct 2014 12:09:48 +0000
+
+groonga (4.0.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@cozmixng.org>  Mon, 29 Sep 2014 00:00:00 +0900
+
+groonga (4.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/copyright
+    - Add missing copyright about bundled .js and .css
+  * debian/missing-sources
+    - Add missing-sources for bundled JavaScript.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 29 Aug 2014 00:00:00 +0900
+
+groonga (4.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Tue, 29 Jul 2014 00:00:00 +0900
+
+groonga (4.0.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 Jun 2014 00:00:00 +0900
+
+groonga (4.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 May 2014 00:00:00 +0900
+
+groonga (4.0.1-2) unstable; urgency=low
+
+  * debian/control
+    - Add a missing pkg-config dependency to libgroonga-dev.
+    - Depend on mecab-naist-jdic instead of mecab-ipadic-utf8 because
+      mecab-naist-jdic is a replacement of mecab-ipadic-utf8.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 May 2014 00:00:00 +0900
+
+groonga (4.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 29 Mar 2014 00:00:00 +0900
+
+groonga (4.0.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sun, 09 Feb 2014 00:00:00 +0900
+
+groonga (3.1.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/control
+    - Add proper description to fix "duplicate-long-description" lintian warning
+      for groonga-server-gqtp and groonga-server-http packages.
+    - Remove needless period to fix I:description-synopsis-might-not-be-phrased-properly lintian warning.
+    - Use "all" in Architecture field to fix I: package-contains-no-arch-dependent-files
+      lintian warning for groonga-example package.
+  * debian/rules
+    - Add DEB_BUILD_HARDENING flag to fix lintian warning "hardening-no-relro" and
+      "hardening-no-fortify-functions"
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Wed, 29 Jan 2014 00:00:00 +0900
+
+groonga (3.1.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sun, 29 Dec 2013 00:00:00 +0900
+
+groonga (3.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Fri, 29 Nov 2013 00:00:00 +0900
+
+groonga (3.0.9-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Tue, 29 Oct 2013 00:00:00 +0900
+
+groonga (3.0.8-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sun, 29 Sep 2013 00:00:00 +0900
+
+groonga (3.0.7-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Thu, 29 Aug 2013 00:00:00 +0900
+
+groonga (3.0.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Mon, 29 Jul 2013 00:00:00 +0900
+
+groonga (3.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 29 Jun 2013 00:00:00 +0900
+
+groonga (3.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Wed, 29 May 2013 00:00:00 +0900
+
+groonga (3.0.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Mon, 29 Apr 2013 00:00:00 +0900
+
+groonga (3.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Fri, 29 Mar 2013 00:00:00 +0900
+
+groonga (3.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Thu, 28 Feb 2013 00:00:00 +0900
+
+groonga (3.0.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 09 Feb 2013 00:00:00 +0900
+
+groonga (2.1.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Tue, 29 Jan 2013 00:00:00 +0900
+
+groonga (2.1.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sat, 29 Dec 2012 15:04:41 +0900
+
+groonga (2.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 29 Dec 2012 00:00:00 +0900
+
+groonga (2.0.9-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Thu, 29 Nov 2012 00:00:00 +0900
+
+groonga (2.0.8-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Mon, 29 Oct 2012 00:00:00 +0900
+
+groonga (2.0.7-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Sat, 29 Sep 2012 00:00:00 +0900
+
+groonga (2.0.6-1) unstable; urgency=low
+
+  * New upstream release.
+  * Split common tasks for server use into groonga-server-common package.
+  * groonga-server and groonga-httpd require groonga-server-common package.
+
+ -- HAYASHI Kentaro <hayashi@clear-code.com>  Wed, 29 Aug 2012 00:00:00 +0900
+
+groonga (2.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 Jul 2012 00:00:00 +0900
+
+groonga (2.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 29 Jun 2012 00:00:00 +0900
+
+groonga (2.0.3-1) unstable; urgency=low
+
+  * New upstream release.
+  * Fix a bug that log_reopen command in logrotate uses wrong protocol.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Tue, 29 May 2012 00:00:00 +0900
+
+groonga (2.0.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Set missing default values.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 Apr 2012 00:00:00 +0900
+
+groonga (2.0.1-3) unstable; urgency=low
+
+  * Fix default file path: /etc/default/groonga -> /etc/default/groonga-server
+  * Use shutdown command for stop.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 30 Mar 2012 00:00:00 +0900
+
+groonga (2.0.1-2) unstable; urgency=low
+
+  * Fix bind address argument parameter.
+    Patch by Masaharu IWAI. Thanks!!!
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 30 Mar 2012 00:00:00 +0900
+
+groonga (2.0.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * grntest -> groonga-benchmark.
+  * Remove groogna-tools package.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 Mar 2012 00:00:00 +0900
+
+groonga (2.0.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Use HTTP as the default protocol.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 29 Feb 2012 00:00:00 +0900
+
+groonga (1.3.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * groonga-server doesn't require groonga-munin-plugins.
+    Suggested by Masaharu IWAI. Thanks!!!
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 Jan 2012 00:00:00 +0900
+
+groonga (1.2.9-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 Dec 2011 00:00:00 +0900
+
+groonga (1.2.8-1) unstable; urgency=low
+
+  * New upstream release.
+  * Enable zlib support.
+  * Enable lzo support.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Tue, 29 Nov 2011 00:00:00 +0900
+
+groonga (1.2.7-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sat, 29 Oct 2011 00:00:00 +0900
+
+groonga (1.2.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 Sep 2011 00:00:00 +0900
+
+groonga (1.2.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Mon, 29 Aug 2011 00:00:00 +0900
+
+groonga (1.2.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 29 Jul 2011 00:00:00 +0900
+
+groonga (1.2.3-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 29 Jun 2011 00:00:00 +0900
+
+groonga (1.2.2-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 May 2011 00:00:00 +0900
+
+groonga (1.2.1-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 29 Apr 2011 00:00:00 +0900
+
+groonga (1.2.0-3) unstable; urgency=low
+
+  * libgronga-dev: add missing libgroonga.so.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 06 Apr 2011 21:00:00 +0900
+
+groonga (1.2.0-2) unstable; urgency=low
+
+  * libgronga-dev: add missing libgroonga.so.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Tue, 29 Mar 2011 21:00:00 +0900
+
+groonga (1.2.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Tue, 29 Mar 2011 00:00:00 +0900
+
+groonga (1.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 09 Feb 2011 00:00:00 +0900
+
+groonga (1.0.8-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 02 Feb 2011 00:00:00 +0900
+
+groonga (1.0.7-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sat, 29 Jan 2011 00:00:00 +0900
+
+groonga (1.0.6-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 31 Dec 2010 00:00:00 +0900
+
+groonga (1.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 29 Dec 2010 00:00:00 +0900
+
+groonga (1.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Mon, 29 Nov 2010 00:00:00 +0900
+
+groonga (1.0.3-1) lucid; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 29 Oct 2010 16:00:22 +0900
+
+groonga (1.0.2-1) lucid; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 09 Sep 2010 15:19:24 +0900
+
+groonga (1.0.1-1) lucid; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Mon, 06 Sep 2010 16:21:35 +0900
+
+groonga (1.0.0-1) lucid; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Sun, 29 Aug 2010 00:07:53 +0900
+
+groonga (0.7.7-1) lucid; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 25 Aug 2010 17:05:58 +0900
+
+groonga (0.7.6-2) unstable; urgency=low
+
+  * Split packages.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 25 Aug 2010 22:11:14 +0900
+
+groonga (0.7.6) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 19 Aug 2010 22:11:14 +0900
+
+groonga (0.7.4) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Thu, 29 Jul 2010 14:24:00 +0900
+
+groonga (0.1.9) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Tue, 20 Apr 2010 15:10:04 +0900
+
+groonga (0.1.6) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Wed, 10 Feb 2010 13:00:55 +0900
+
+groonga (0.1.5) unstable; urgency=low
+
+  * Initial release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  Fri, 15 Jan 2010 16:41:04 +0900

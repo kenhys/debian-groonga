@@ -1,0 +1,2 @@
+Tests: build, status
+Depends: libgroonga-dev, build-essential, pkg-config, groonga-httpd, curl, jq
