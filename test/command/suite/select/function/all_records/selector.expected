@@ -1,0 +1,52 @@
+table_create Softwares TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+load --table Softwares
+[
+["_key"],
+["groonga"],
+["mroonga"],
+["rroonga"]
+]
+[[0,0.0,0.0],3]
+log_level --level info
+[[0,0.0,0.0],true]
+select Softwares --filter 'all_records()'
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        3
+      ],
+      [
+        [
+          "_id",
+          "UInt32"
+        ],
+        [
+          "_key",
+          "ShortText"
+        ]
+      ],
+      [
+        1,
+        "groonga"
+      ],
+      [
+        2,
+        "mroonga"
+      ],
+      [
+        3,
+        "rroonga"
+      ]
+    ]
+  ]
+]
+#|i| [table][select][index][selector][no-index][all_records] <Softwares>
+log_level --level notice
+[[0,0.0,0.0],true]

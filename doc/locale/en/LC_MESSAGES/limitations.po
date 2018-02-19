@@ -1,0 +1,104 @@
+# -*- po -*-
+# English translations for Groonga package.
+# Copyright (C) 2009-2018, Brazil, Inc
+# This file is distributed under the same license as the Groonga package.
+# Automatically generated, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Groonga 8.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2018-02-08 15:30+0900\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Limitations"
+msgstr "Limitations"
+
+msgid "Groonga has some limitations."
+msgstr "Groonga has some limitations."
+
+msgid "Limitations of table"
+msgstr "Limitations of table"
+
+msgid "A table has the following limitations."
+msgstr "A table has the following limitations."
+
+msgid "The maximum one key size: 4KiB"
+msgstr "The maximum one key size: 4KiB"
+
+msgid "The maximum total size of keys:"
+msgstr "The maximum total size of keys:"
+
+msgid "4GiB by default."
+msgstr "4GiB by default."
+
+msgid ""
+"1TiB by specifying ``KEY_LARGE`` flag to :ref:`table-create-flags`. "
+"``KEY_LARGE`` can be used only with :ref:`table-hash-key`."
+msgstr ""
+"1TiB by specifying ``KEY_LARGE`` flag to :ref:`table-create-flags`. "
+"``KEY_LARGE`` can be used only with :ref:`table-hash-key`."
+
+msgid "The maximum number of records:"
+msgstr "The maximum number of records:"
+
+msgid ":ref:`table-no-key`: 1,073,741,815 (2 :sup:`30` - 9)"
+msgstr ":ref:`table-no-key`: 1,073,741,815 (2 :sup:`30` - 9)"
+
+msgid ":ref:`table-hash-key`: 536,870,912 (2 :sup:`29`)"
+msgstr ":ref:`table-hash-key`: 536,870,912 (2 :sup:`29`)"
+
+msgid ":ref:`table-pat-key`: 1,073,741,823 (2 :sup:`30` - 1)"
+msgstr ":ref:`table-pat-key`: 1,073,741,823 (2 :sup:`30` - 1)"
+
+msgid ":ref:`table-dat-key`: 268,435,455 (2 :sup:`28` - 1)"
+msgstr ":ref:`table-dat-key`: 268,435,455 (2 :sup:`28` - 1)"
+
+msgid "Keep in mind that these limitations may vary depending on conditions."
+msgstr "Keep in mind that these limitations may vary depending on conditions."
+
+msgid ""
+"For example, you need to use small size type for key to store many records. "
+"Because the maximum total size of keys limitation is exceeded before the "
+"maximum number of records limitation is exceeded. If you use ``UInt64`` "
+"(8byte) type and store 2 :sup:`29` records, total key size is 4GiB (= 8 * "
+"(2 :sup:`29`)). You can't add more records. You need to choose decreasing "
+"key size (e.g. ``UInt32``) or using ``KEY_LARGE`` and :ref:`table-hash-key` "
+"to store more records."
+msgstr ""
+"For example, you need to use small size type for key to store many records. "
+"Because the maximum total size of keys limitation is exceeded before the "
+"maximum number of records limitation is exceeded. If you use ``UInt64`` "
+"(8byte) type and store 2 :sup:`29` records, total key size is 4GiB (= 8 * "
+"(2 :sup:`29`)). You can't add more records. You need to choose decreasing "
+"key size (e.g. ``UInt32``) or using ``KEY_LARGE`` and :ref:`table-hash-key` "
+"to store more records."
+
+msgid "Limitations of indexing"
+msgstr "Limitations of indexing"
+
+msgid "A full-text index has the following limitations."
+msgstr "A full-text index has the following limitations."
+
+msgid ""
+"The maximum number of distinct terms: 268,435,455 (more than 268 million)"
+msgstr ""
+"The maximum number of distinct terms: 268,435,455 (more than 268 million)"
+
+msgid "The maximum index size: 256GiB"
+msgstr "The maximum index size: 256GiB"
+
+msgid "Limitations of column"
+msgstr "Limitations of column"
+
+msgid "A column has the following limitation."
+msgstr "A column has the following limitation."
+
+msgid "The maximum stored data size of a column: 256GiB"
+msgstr "The maximum stored data size of a column: 256GiB"

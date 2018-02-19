@@ -1,0 +1,374 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.3. Plugin &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.24.4. grn_cache" href="grn_cache.html" />
+    <link rel="prev" title="7.24.2. 全体設定" href="global_configurations.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/api/plugin.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="grn_cache.html" title="7.24.4. grn_cache"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="global_configurations.html" title="7.24.2. 全体設定"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="plugin">
+<h1>7.24.3. Plugin<a class="headerlink" href="#plugin" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.3.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groonga supports plugin. You can create a new plugin with the
+following API.</p>
+<p>TOOD: Describe about how to create the minimum plugin here or create a
+tutorial about it.</p>
+</div>
+<div class="section" id="reference">
+<h2>7.24.3.2. リファレンス<a class="headerlink" href="#reference" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="function">
+<dt id="c.GRN_PLUGIN_INIT">
+grn_rc <code class="descname">GRN_PLUGIN_INIT</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_INIT" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.GRN_PLUGIN_REGISTER">
+grn_rc <code class="descname">GRN_PLUGIN_REGISTER</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_REGISTER" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.GRN_PLUGIN_FIN">
+grn_rc <code class="descname">GRN_PLUGIN_FIN</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_FIN" title="この定義へのパーマリンク">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="macro">
+<dt id="c.GRN_PLUGIN_MALLOC">
+<code class="descname">GRN_PLUGIN_MALLOC</code><span class="sig-paren">(</span>ctx, size<span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_MALLOC" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>GRN_PLUGIN_MALLOC() allocates <cite>size</cite> bytes and returns a pointer to the
+allocated memory space. Note that the memory space is associated with <cite>ctx</cite>.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.GRN_PLUGIN_REALLOC">
+<code class="descname">GRN_PLUGIN_REALLOC</code><span class="sig-paren">(</span>ctx, ptr, size<span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_REALLOC" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>GRN_PLUGIN_REALLOC() resizes the memory space pointed to by <cite>ptr</cite> or
+allocates a new memory space of <cite>size</cite> bytes. GRN_PLUGIN_REALLOC() returns
+a pointer to the memory space. The contents is unchanged or copied from the
+old memory space to the new memory space.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.GRN_PLUGIN_FREE">
+<code class="descname">GRN_PLUGIN_FREE</code><span class="sig-paren">(</span>ctx, ptr<span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_FREE" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>GRN_PLUGIN_FREE() frees a memory space allocated by GRN_PLUGIN_MALLOC() or
+GRN_PLUGIN_REALLOC(). This means that <cite>ptr</cite> must be a pointer returned by
+GRN_PLUGIN_MALLOC() or GRN_PLUGIN_REALLOC().</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.GRN_PLUGIN_LOG">
+<code class="descname">GRN_PLUGIN_LOG</code><span class="sig-paren">(</span>ctx, level, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_LOG" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>GRN_PLUGIN_LOG() reports a log of <cite>level</cite>. Its error message is generated
+from the varying number of arguments, in which the first one is the format
+string and the rest are its arguments. See grn_log_level in &quot;groonga.h&quot; for
+more details of <cite>level</cite>.</p>
+</dd></dl>
+
+<dl class="macro">
+<dt id="c.GRN_PLUGIN_ERROR">
+<code class="descname">GRN_PLUGIN_ERROR</code><span class="sig-paren">(</span>ctx, error_code, ...<span class="sig-paren">)</span><a class="headerlink" href="#c.GRN_PLUGIN_ERROR" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>GRN_PLUGIN_ERROR() reports an error of <cite>error_code</cite>. Its error message is
+generated from the varying number of arguments, in which the first one is the
+format string and the rest are its arguments. See grn_rc in &quot;groonga.h&quot; for
+more details of <cite>error_code</cite>.</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="c.grn_plugin_mutex">
+<code class="descname">grn_plugin_mutex</code><a class="headerlink" href="#c.grn_plugin_mutex" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_mutex is available to make a critical section. See the
+following functions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_mutex_open">
+<a class="reference internal" href="#c.grn_plugin_mutex" title="grn_plugin_mutex">grn_plugin_mutex</a> *<code class="descname">grn_plugin_mutex_open</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_mutex_open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_mutex_open() returns a pointer to a new object of
+grn_plugin_mutex. Memory for the new object is obtained with
+GRN_PLUGIN_MALLOC(). grn_plugin_mutex_open() returns NULL if sufficient
+memory is not available.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_mutex_close">
+void <code class="descname">grn_plugin_mutex_close</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_plugin_mutex" title="grn_plugin_mutex">grn_plugin_mutex</a><em>&nbsp;*mutex</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_mutex_close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_mutex_close() finalizes an object of grn_plugin_mutex and then
+frees memory allocated for that object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_mutex_lock">
+void <code class="descname">grn_plugin_mutex_lock</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_plugin_mutex" title="grn_plugin_mutex">grn_plugin_mutex</a><em>&nbsp;*mutex</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_mutex_lock" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_mutex_lock() locks a mutex object. If the object is already
+locked, the calling thread waits until the object will be unlocked.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_mutex_unlock">
+void <code class="descname">grn_plugin_mutex_unlock</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_plugin_mutex" title="grn_plugin_mutex">grn_plugin_mutex</a><em>&nbsp;*mutex</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_mutex_unlock" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_mutex_unlock() unlocks a mutex object. grn_plugin_mutex_unlock()
+should not be called for an unlocked object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_proc_alloc">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_plugin_proc_alloc</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_user_data.html#c.grn_user_data" title="grn_user_data">grn_user_data</a><em>&nbsp;*user_data</em>, grn_id<em>&nbsp;domain</em>, grn_obj_flags<em>&nbsp;flags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_proc_alloc" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_proc_alloc() allocates a <cite>grn_obj</cite> object.
+You can use it in function that is registered as GRN_PROC_FUNCTION.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_proc_get_var">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> <code class="descname">grn_plugin_proc_get_var</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_user_data.html#c.grn_user_data" title="grn_user_data">grn_user_data</a><em>&nbsp;*user_data</em>, const char<em>&nbsp;*name</em>, int<em>&nbsp;name_size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_proc_get_var" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>It gets a variable value from <cite>grn_user_data</cite> by specifying the variable name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> -- 変数名。</li>
+<li><strong>name_size</strong> -- The number of bytes of name. If <cite>name_size</cite> is negative, <cite>name</cite> must be NUL-terminated. <cite>name_size</cite> is computed by <cite>strlen(name)</cite> for the case.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">成功すると変数の値を返します。失敗するとNULLを返します。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_proc_get_var_by_offset">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_plugin_proc_get_var_by_offset</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_user_data.html#c.grn_user_data" title="grn_user_data">grn_user_data</a><em>&nbsp;*user_data</em>, unsigned int<em>&nbsp;offset</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_proc_get_var_by_offset" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>It gets a variable value from <cite>grn_user_data</cite> by specifying the offset position of the variable.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>offset</strong> -- The offset position of the variable.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">成功すると変数の値を返します。失敗するとNULLを返します。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_win32_base_dir">
+const char *<code class="descname">grn_plugin_win32_base_dir</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_win32_base_dir" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">バージョン 5.0.9. で撤廃: </span>Use <a class="reference internal" href="#c.grn_plugin_windows_base_dir" title="grn_plugin_windows_base_dir"><code class="xref c c-func docutils literal"><span class="pre">grn_plugin_windows_base_dir()</span></code></a>
+instead.</p>
+</div>
+<p>It returns the Groonga install directory. The install directory is
+computed from the directory that has <code class="docutils literal"><span class="pre">groonga.dll</span></code>. You can use
+the directory to generate install directory aware path. It only
+works on Windows. It returns <code class="docutils literal"><span class="pre">NULL</span></code> on other platforms.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_windows_base_dir">
+const char *<code class="descname">grn_plugin_windows_base_dir</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_windows_base_dir" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.9 で追加.</span></p>
+</div>
+<p>It returns the Groonga install directory. The install directory is
+computed from the directory that has <code class="docutils literal"><span class="pre">groonga.dll</span></code>. You can use
+the directory to generate install directory aware path. It only
+works on Windows. It returns <code class="docutils literal"><span class="pre">NULL</span></code> on other platforms.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_charlen">
+int <code class="descname">grn_plugin_charlen</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*str_ptr</em>, unsigned int<em>&nbsp;str_length</em>, <a class="reference internal" href="grn_encoding.html#c.grn_encoding" title="grn_encoding">grn_encoding</a><em>&nbsp;encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_charlen" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_charlen() returns the length (#bytes) of the first character
+in the string specified by <cite>str_ptr</cite> and <cite>str_length</cite>. If the starting bytes
+are invalid as a character, grn_plugin_charlen() returns 0. See
+grn_encoding in &quot;groonga.h&quot; for more details of <cite>encoding</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_isspace">
+int <code class="descname">grn_plugin_isspace</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*str_ptr</em>, unsigned int<em>&nbsp;str_length</em>, <a class="reference internal" href="grn_encoding.html#c.grn_encoding" title="grn_encoding">grn_encoding</a><em>&nbsp;encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_isspace" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>grn_plugin_isspace() returns the length (#bytes) of the first character
+in the string specified by <cite>str_ptr</cite> and <cite>str_length</cite> if it is a space
+character. Otherwise, grn_plugin_isspace() returns 0.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_expr_var_init">
+grn_rc <code class="descname">grn_plugin_expr_var_init</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, grn_expr_var<em>&nbsp;*var</em>, const char<em>&nbsp;*name</em>, int<em>&nbsp;name_size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_expr_var_init" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>It initializes a <cite>grn_expr_var</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>var</strong> -- The pointer of <cite>grn_expr_var</cite> object to be initialized.</li>
+<li><strong>name</strong> -- The name of <cite>grn_expr_var</cite> object to be initialized.</li>
+<li><strong>name_size</strong> -- The number of bytes of name. If <cite>name_size</cite> is negative, <cite>name</cite> must be NUL-terminated. <cite>name_size</cite> is computed by <cite>strlen(name)</cite> for the case.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 。この関数は失敗しません。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_plugin_command_create">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> * <code class="descname">grn_plugin_command_create</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*name</em>, int<em>&nbsp;name_size</em>, <a class="reference internal" href="grn_proc.html#c.grn_proc_func" title="grn_proc_func">grn_proc_func</a><em>&nbsp;func</em>, unsigned int<em>&nbsp;n_vars</em>, grn_expr_var<em>&nbsp;*vars</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_plugin_command_create" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>It creates a command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> -- The <cite>proc</cite> name of the command to be created.</li>
+<li><strong>name_size</strong> -- The number of bytes of name. If <cite>name_size</cite> is negative, <cite>name</cite> must be NUL-terminated. <cite>name_size</cite> is computed by <cite>strlen(name)</cite> for the case.</li>
+<li><strong>func</strong> -- The function name to be called by the created command.</li>
+<li><strong>n_vars</strong> -- The number of the variables of the command to create.</li>
+<li><strong>vars</strong> -- The pointer of initialized <cite>grn_expr_var</cite> object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">The created command object if it creates a command successfully,
+<cite>NULL</cite> otherwise. See <cite>ctx</cite> for error details.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.3. Plugin</a><ul>
+<li><a class="reference internal" href="#summary">7.24.3.1. 概要</a></li>
+<li><a class="reference internal" href="#reference">7.24.3.2. リファレンス</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="global_configurations.html"
+                        title="前の章へ">7.24.2. 全体設定</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="grn_cache.html"
+                        title="次の章へ">7.24.4. <code class="docutils literal"><span class="pre">grn_cache</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="grn_cache.html" title="7.24.4. grn_cache"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="global_configurations.html" title="7.24.2. 全体設定"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

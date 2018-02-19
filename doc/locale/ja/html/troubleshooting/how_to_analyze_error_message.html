@@ -1,0 +1,186 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>10.2. エラーメッセージの解析方法 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="10.3. mmap Cannot allocate memoryエラーを回避するには" href="mmap_cannot_allocate_memory.html" />
+    <link rel="prev" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる" href="different_results_with_the_same_keyword.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/troubleshooting/how_to_analyze_error_message.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="mmap_cannot_allocate_memory.html" title="10.3. mmap Cannot allocate memoryエラーを回避するには"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="different_results_with_the_same_keyword.html" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../troubleshooting.html" accesskey="U">10. トラブルシューティング</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-analyze-error-messages">
+<h1>10.2. エラーメッセージの解析方法<a class="headerlink" href="#how-to-analyze-error-messages" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaは様々なエラーメッセージを出力しますが、出力されたエラーメッセージ をもとに、原因を解析する方法はいままで、明文化していませんでした。 ここでは、エラーメッセージごとの解析方法を記載します。</p>
+<div class="section" id="how-to-analyze-socket-errors">
+<h2>10.2.1. ソケットエラーの解析方法<a class="headerlink" href="#how-to-analyze-socket-errors" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ここでは、Groongaで発生するソケットエラーの解析方法について説明します。</p>
+<div class="section" id="example">
+<h3>10.2.1.1. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Groongaのエラーログで以下のようなエラーログがあります。(xxxxxには任意の数字が入ります。):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>socket error[xxxxx]: no buffer: accept
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-analyze">
+<h3>10.2.1.2. 解析方法<a class="headerlink" href="#how-to-analyze" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>まず、ソケットエラーを扱うマクロである、SOERR というキーワードでGroongaのソースコードをgrepします。</p>
+<p>次に見つかったSOERRの引数にacceptが入っているSOERRをさがします。 すると次のSOERRが見つかります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>lib/com.c:      SOERR(&quot;listen - start accept&quot;);
+lib/com.c:      SOERR(&quot;listen - disable accept&quot;);
+lib/com.c:        SOERR(&quot;accept&quot;);
+</pre></div>
+</div>
+<p>ログに出ているのはacceptのみなので、最後の行が例で出力されたエラーメッセージに該当するとわかります。</p>
+<p>該当するエラー出力の周辺のコードを見ると以下のようになっています。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>grn_sock fd = accept(com-&gt;fd, NULL, NULL);
+if (fd == -1) {
+  if (errno == EMFILE) {
+    grn_com_event_stop_accept(ctx, ev);
+  } else {
+    SOERR(&quot;accept&quot;);
+  }
+  return;
+}
+</pre></div>
+</div>
+<p>上記のコードから、acceptを実行してエラーが発生したことが確認できます。 次は、acceptが失敗した原因を追っていきます。</p>
+<p>acceptが失敗した理由は、:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[10055]: no buffer
+</pre></div>
+</div>
+<p>から追うことができます。 10055はWindowsのソケットエラーコードを表しています。また、no bufferはSOERRマクロ内でGroongaが用意しているメッセージです。 Windowsのシステムエラーコードから調査しても良いですし、Groongaが出力しているエラーメッセージから調査しても良いです。</p>
+<p>Windowsのシステムエラーコードは以下のページに一覧があります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>https://msdn.microsoft.com/ja-jp/library/windows/desktop/ms740668(v=vs.85).aspx
+</pre></div>
+</div>
+<p>システムエラーコードまたは、エラーメッセージから調査すると、acceptが失敗した理由は、WSAENOBUFSであることがわかります。さらに、WSAENOBUFSが発生する原因を調査するとWSAENOBUFSが発生する原因は以下であることがわかります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>No buffer space available.
+
+An operation on a socket could not be performed because the system lacked sufficient buffer space or because a queue was full.
+</pre></div>
+</div>
+<p>上記のメッセージから、acceptが失敗する原因は、メモリー不足または、接続数が多すぎる場合であることがわかりました。 あとは、エラーメッセージが出た際の状況から、接続数が多かったのか、メモリ不足だったのかを判断します。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">10.2. エラーメッセージの解析方法</a><ul>
+<li><a class="reference internal" href="#how-to-analyze-socket-errors">10.2.1. ソケットエラーの解析方法</a><ul>
+<li><a class="reference internal" href="#example">10.2.1.1. 例</a></li>
+<li><a class="reference internal" href="#how-to-analyze">10.2.1.2. 解析方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="different_results_with_the_same_keyword.html"
+                        title="前の章へ">10.1. 同じ検索キーワードなのに全文検索結果が異なる</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="mmap_cannot_allocate_memory.html"
+                        title="次の章へ">10.3. mmap Cannot allocate memoryエラーを回避するには</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="mmap_cannot_allocate_memory.html" title="10.3. mmap Cannot allocate memoryエラーを回避するには"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="different_results_with_the_same_keyword.html" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../troubleshooting.html" >10. トラブルシューティング</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

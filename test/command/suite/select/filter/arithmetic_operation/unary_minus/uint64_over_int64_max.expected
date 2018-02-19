@@ -1,0 +1,24 @@
+table_create Values TABLE_NO_KEY
+[[0,0.0,0.0],true]
+column_create Values value COLUMN_SCALAR UInt64
+[[0,0.0,0.0],true]
+column_create Values output COLUMN_SCALAR Int64
+[[0,0.0,0.0],true]
+load --table Values
+[
+{"value": 9223372036854775808, "output": 0}
+]
+[[0,0.0,0.0],1]
+select Values   --scorer 'output = -value'   --output_columns 'value, output'
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[select][scorer] failed to execute: <output = -value>: too large UInt64 value to inverse sign: <9223372036854775808>"
+  ]
+]
+#|e| too large UInt64 value to inverse sign: <9223372036854775808>
+#|e| [select][scorer] failed to execute: <output = -value>: too large UInt64 value to inverse sign: <9223372036854775808>

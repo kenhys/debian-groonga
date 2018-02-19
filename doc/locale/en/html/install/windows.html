@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.1. Windows &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.2. Mac OS X" href="mac_os_x.html" />
+    <link rel="prev" title="2. Install" href="../install.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/install/windows.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mac_os_x.html" title="2.2. Mac OS X"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../install.html" title="2. Install"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. Install</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="windows">
+<h1>2.1. Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to install Groonga on Windows. You can
+install Groogna by extracting a zip package or running an installer.</p>
+<p>We distribute both 32-bit and 64-bit packages but we strongly
+recommend a 64-bit package for server. You should use a 32-bit package
+just only for tests or development. You will encounter an out of
+memory error with a 32-bit package even if you just process medium
+size data.</p>
+<div class="section" id="installer">
+<h2>2.1.1. Installer<a class="headerlink" href="#installer" title="Permalink to this headline">¶</a></h2>
+<p>For 32-bit environment, download x86 executable binary from
+packages.groonga.org:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://packages.groonga.org/windows/groonga/groonga-8.0.0-x86.exe">https://packages.groonga.org/windows/groonga/groonga-8.0.0-x86.exe</a></li>
+</ul>
+</div></blockquote>
+<p>Then run it.</p>
+<p>For 64-bit environment, download x64 executable binary from
+packages.goronga.org:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://packages.groonga.org/windows/groonga/groonga-8.0.0-x64.exe">https://packages.groonga.org/windows/groonga/groonga-8.0.0-x64.exe</a></li>
+</ul>
+</div></blockquote>
+<p>Then run it.</p>
+<p>Use command prompt in start menu to run
+<a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a>.</p>
+</div>
+<div class="section" id="zip">
+<h2>2.1.2. zip<a class="headerlink" href="#zip" title="Permalink to this headline">¶</a></h2>
+<p>For 32-bit environment, download x86 zip archive from
+packages.groonga.org:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://packages.groonga.org/windows/groonga/groonga-8.0.0-x86.zip">https://packages.groonga.org/windows/groonga/groonga-8.0.0-x86.zip</a></li>
+</ul>
+</div></blockquote>
+<p>Then extract it.</p>
+<p>For 64-bit environment, download x64 zip archive from
+packages.groonga.org:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://packages.groonga.org/windows/groonga/groonga-8.0.0-x64.zip">https://packages.groonga.org/windows/groonga/groonga-8.0.0-x64.zip</a></li>
+</ul>
+</div></blockquote>
+<p>Then extract it.</p>
+<p>You can find <a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a> in <code class="docutils literal"><span class="pre">bin</span></code> folder.</p>
+</div>
+<div class="section" id="build-from-source">
+<h2>2.1.3. Build from source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h2>
+<p>First, you need to install required tools for building Groonga on
+Windows. Here are required tools:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://www.visualstudio.com/downloads/#d-2013-express">Microsoft Visual Studio Express 2013 for Windows Desktop</a></li>
+<li><a class="reference external" href="http://www.cmake.org/">CMake</a></li>
+</ul>
+</div></blockquote>
+<p>Download zipped source from packages.groonga.org:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://packages.groonga.org/source/groonga/groonga-8.0.0.zip">https://packages.groonga.org/source/groonga/groonga-8.0.0.zip</a></li>
+</ul>
+</div></blockquote>
+<p>Then extract it.</p>
+<p>Move to the Groonga's source folder:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; cd c:\Users\%USERNAME%\Downloads\groonga-8.0.0
+</pre></div>
+</div>
+<p>Configure by <code class="docutils literal"><span class="pre">cmake</span></code>. The following commnad line is for 64-bit
+version. To build 32-bit version, use <code class="docutils literal"><span class="pre">-G</span> <span class="pre">&quot;Visual</span> <span class="pre">Studio</span> <span class="pre">12</span> <span class="pre">2013&quot;</span></code>
+parameter instead:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-8.0.0&gt; cmake . -G &quot;Visual Studio 12 2013 Win64&quot; -DCMAKE_INSTALL_PREFIX=C:\Groonga
+</pre></div>
+</div>
+<p>Build:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-8.0.0&gt; cmake --build . --config Release
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-8.0.0&gt; cmake --build . --config Release --target Install
+</pre></div>
+</div>
+<p>After the above steps, <a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a> is found at
+<code class="docutils literal"><span class="pre">c:\Groonga\bin\groonga.exe</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.1. Windows</a><ul>
+<li><a class="reference internal" href="#installer">2.1.1. Installer</a></li>
+<li><a class="reference internal" href="#zip">2.1.2. zip</a></li>
+<li><a class="reference internal" href="#build-from-source">2.1.3. Build from source</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../install.html"
+                        title="previous chapter">2. Install</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mac_os_x.html"
+                        title="next chapter">2.2. Mac OS X</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mac_os_x.html" title="2.2. Mac OS X"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../install.html" title="2. Install"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../install.html" >2. Install</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

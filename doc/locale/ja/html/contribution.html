@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>12. Groongaへのコントリビュート方法 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="12.1. バグレポートの送り方" href="contribution/report.html" />
+    <link rel="prev" title="11.1. Travis CI" href="development/travis-ci.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../en/html/contribution.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="contribution/report.html" title="12.1. バグレポートの送り方"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="development/travis-ci.html" title="11.1. Travis CI"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-contribute-to-groonga">
+<h1>12. Groongaへのコントリビュート方法<a class="headerlink" href="#how-to-contribute-to-groonga" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaプロジェクトではみなさんからのコントリビュートを歓迎します！コントリビュートの方法はいくつもあります。Groongaを使ったり誰かに紹介することもコントリビュートですし、バグレポートを送ったり、Groonga本体やGroonga関連の開発に参加することもコントリビュートです。プログラムではなく、ドキュメントでのコントリビュートも歓迎します！</p>
+<dl class="docutils">
+<dt>ユーザーの立場で:</dt>
+<dd>このドキュメントを読んでください。</dd>
+<dt>布教する立場で:</dt>
+<dd>Groongaについてまわりの人に話してください。</dd>
+<dt>開発者の立場で: 不具合報告や開発、ドキュメント</dt>
+<dd>これらについてはこのセクションで説明します。</dd>
+</dl>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribution/report.html">12.1. バグレポートの送り方</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html#submit-a-bug-to-the-issue-tracker">12.1.1. 課題追跡システムへ登録する</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html#report-a-bug-to-the-mailing-list">12.1.2. メーリングリストへ報告する</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution/documentation.html">12.2. ドキュメント関連のコントリビュート方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/introduction.html">12.2.1. 導入</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#install-depended-software">12.2.1.1. 必要なソフトウェアのインストール</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#run-configure-with-enable-document">12.2.1.2. <code class="docutils literal"><span class="pre">configure</span></code> を <code class="docutils literal"><span class="pre">--enable-document</span></code> 付きで実行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#generate-html">12.2.1.3. HTMLファイルを生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#update">12.2.1.4. 更新</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/i18n.html">12.2.2. 国際化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#translation-flow">12.2.2.1. 翻訳の流れ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-install-sphinx">12.2.2.2. Sphinxのインストール方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-clone-groonga-repository">12.2.2.3. Groongaリポジトリのcloneの仕方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-update-po-files">12.2.2.4. .poファイルの更新の仕方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-edit-po">12.2.2.5. .poの編集の仕方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-generate-html-files">12.2.2.6. HTMLファイルの生成方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-confirm-html-output">12.2.2.7. HTML出力の確認の仕方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-send-your-works">12.2.2.8. 翻訳の成果の送り方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-add-new-language">12.2.2.9. 新しい言語の追加方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/c-api.html">12.2.3. C API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution/development.html">12.3. Groonga開発者向け情報</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/repository.html">12.3.1. リポジトリ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/build.html">12.3.2. リポジトリーのGroongaをビルドする方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/unix_autotools.html">12.3.2.1. GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/unix_cmake.html">12.3.2.2. GNU/LinuxまたはUnix上でCMakeを使ってリポジトリーのGroongaをビルドする方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/windows_cmake.html">12.3.2.3. Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/com.html">12.3.3. Groonga 通信アーキテクチャ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/com.html#gqtp">12.3.3.1. GQTPでのアーキテクチャ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/cooperation.html">12.3.4. ユーザーと協力して開発をうまく進めていくための指針</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/cooperation.html#twitter">12.3.4.1. Twitter編</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/query.html">12.3.5. クエリの実現</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id2">12.3.5.1. クエリ実行のためのインタフェース</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id3">12.3.5.2. grn_exprで表現できるクエリ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#grn-table-select">12.3.5.3. grn_table_select()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id4">12.3.5.4. 関係式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/query.html#id5">12.3.6. クエリの実例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id6">12.3.6.1. 検索例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id7">12.3.6.2. 検索例2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id8">12.3.6.3. 検索例3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id9">12.3.6.4. 検索例4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/release.html">12.3.7. リリース手順</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id2">12.3.7.1. 前提条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id3">12.3.7.2. 最初の1回だけ行う手順</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id7">12.3.7.3. 毎回のリリースで行う手順</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/test.html">12.3.8. テスト方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id2">12.3.8.1. テスト環境の構築</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id5">12.3.8.2. テストの動作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id6">12.3.8.3. カバレッジ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id7">12.3.8.4. 様々なテスト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id12">12.3.8.5. 静的解析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="development/travis-ci.html"
+                        title="前の章へ">11.1. Travis CI</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="contribution/report.html"
+                        title="次の章へ">12.1. バグレポートの送り方</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="contribution/report.html" title="12.1. バグレポートの送り方"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="development/travis-ci.html" title="11.1. Travis CI"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

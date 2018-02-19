@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.10. grn_encoding &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.24.11. grn_expr" href="grn_expr.html" />
+    <link rel="prev" title="7.24.9. grn_db" href="grn_db.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/api/grn_encoding.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="grn_expr.html" title="7.24.11. grn_expr"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grn_db.html" title="7.24.9. grn_db"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-encoding">
+<h1>7.24.10. <code class="docutils literal"><span class="pre">grn_encoding</span></code><a class="headerlink" href="#grn-encoding" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.10.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.10.2. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="reference">
+<h2>7.24.10.3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="c.grn_encoding">
+<code class="descname">grn_encoding</code><a class="headerlink" href="#c.grn_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO...</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_get_default_encoding">
+<a class="reference internal" href="#c.grn_encoding" title="grn_encoding">grn_encoding</a> <code class="descname">grn_get_default_encoding</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.grn_get_default_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>デフォルトのencodingを返します。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_set_default_encoding">
+grn_rc <code class="descname">grn_set_default_encoding</code><span class="sig-paren">(</span><a class="reference internal" href="#c.grn_encoding" title="grn_encoding">grn_encoding</a><em>&nbsp;encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_set_default_encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>デフォルトのencodingを変更します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> -- 変更後のデフォルトのencodingを指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_encoding_to_string">
+const char *<code class="descname">grn_encoding_to_string</code><span class="sig-paren">(</span><a class="reference internal" href="#c.grn_encoding" title="grn_encoding">grn_encoding</a><em>&nbsp;encoding</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_encoding_to_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns string representation for the encoding. For example, 'grn_encoding_to_string(<code class="docutils literal"><span class="pre">GRN_ENC_UTF8</span></code>)' returns '&quot;utf8&quot;'.</p>
+<p>&quot;unknown&quot; is returned for invalid encoding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>encoding</strong> -- The encoding.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_encoding_parse">
+<a class="reference internal" href="#c.grn_encoding" title="grn_encoding">grn_encoding</a> <code class="descname">grn_encoding_parse</code><span class="sig-paren">(</span>const char<em>&nbsp;*name</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_encoding_parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses encoding name and returns grn_encoding. For example, 'grn_encoding_parse(&quot;UTF8&quot;)' returns '<code class="docutils literal"><span class="pre">GRN_ENC_UTF8</span></code>'.</p>
+<p><code class="docutils literal"><span class="pre">GRN_ENC_UTF8</span></code> is returned for invalid encoding name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> -- The encoding name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.10. <code class="docutils literal"><span class="pre">grn_encoding</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.24.10.1. Summary</a></li>
+<li><a class="reference internal" href="#example">7.24.10.2. Example</a></li>
+<li><a class="reference internal" href="#reference">7.24.10.3. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grn_db.html"
+                        title="previous chapter">7.24.9. <code class="docutils literal"><span class="pre">grn_db</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="grn_expr.html"
+                        title="next chapter">7.24.11. grn_expr</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="grn_expr.html" title="7.24.11. grn_expr"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grn_db.html" title="7.24.9. grn_db"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

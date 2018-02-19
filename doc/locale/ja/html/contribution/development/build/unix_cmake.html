@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>12.3.2.2. GNU/LinuxまたはUnix上でCMakeを使ってリポジトリーのGroongaをビルドする方法 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../../genindex.html" />
+    <link rel="search" title="検索" href="../../../search.html" />
+    <link rel="next" title="12.3.2.3. Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法" href="windows_cmake.html" />
+    <link rel="prev" title="12.3.2.1. GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法" href="unix_autotools.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../../en/html/contribution/development/build/unix_cmake.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="windows_cmake.html" title="12.3.2.3. Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="unix_autotools.html" title="12.3.2.1. GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../contribution.html" >12. Groongaへのコントリビュート方法</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../development.html" >12.3. Groonga開発者向け情報</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="../build.html" accesskey="U">12.3.2. リポジトリーのGroongaをビルドする方法</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-build-groonga-at-the-repository-by-cmake-on-gnu-linux-or-unix">
+<h1>12.3.2.2. GNU/LinuxまたはUnix上でCMakeを使ってリポジトリーのGroongaをビルドする方法<a class="headerlink" href="#how-to-build-groonga-at-the-repository-by-cmake-on-gnu-linux-or-unix" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このドキュメントではGNU/LinuxまたはUnix上でCMakeを使ってリポジトリーのGroongaをビルドする方法を説明します。</p>
+<p>Unixとは*BSDやSolaris、OS Xなどのことです。</p>
+<p>Groongaの開発にWindowsを使いたい場合は <a class="reference internal" href="windows_cmake.html"><span class="doc">Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法</span></a> を参照してください。</p>
+<p>Groongaをリリースするときはこの方法を使うことはできません。GroongaのリリースシステムはGNU Autotoolsを使ったビルドでしかサポートしてません。GNU Autotoolsを使ったビルドについては <a class="reference internal" href="unix_autotools.html"><span class="doc">GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法</span></a> を参照してください。</p>
+<div class="section" id="install-depended-software">
+<h2>12.3.2.2.1. 必要なソフトウェアのインストール<a class="headerlink" href="#install-depended-software" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.cmake.org/">CMake</a></li>
+<li><a class="reference external" href="https://www.ruby-lang.org/">Ruby</a></li>
+<li><a class="reference external" href="https://git-scm.com/">Git</a></li>
+<li><a class="reference external" href="http://cutter.sourceforge.net/">Cutter</a></li>
+<li>...</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="checkout-groonga-from-the-repository">
+<h2>12.3.2.2.2. リポジトリーからGroongaをチェックアウト<a class="headerlink" href="#checkout-groonga-from-the-repository" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ユーザーはリリースされたソースアーカイブを使います。しかし、開発者はリポジトリーからGroongaをビルドするべきです。なぜなら、リポジトリーにあるソースコードが最新のソースコードだからです。</p>
+<p>Groongaのリポジトリーは <a class="reference external" href="https://github.com/groonga/groonga">GitHub</a> にあります。リポジトリーから最新のソースコードをチェックアウトします:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% git clone --recursive git@github.com:groonga/groonga.git
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-cmake">
+<h2>12.3.2.2.3. <code class="docutils literal"><span class="pre">cmake</span></code> を実行<a class="headerlink" href="#run-cmake" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>あなたの環境用の <code class="docutils literal"><span class="pre">Makefile</span></code> を作る必要があります。</p>
+<p><code class="docutils literal"><span class="pre">cmake</span></code> へオプションを渡してビルドパラメーターをカスタマイズできます。</p>
+<p>開発者向けのオススメ <code class="docutils literal"><span class="pre">cmake</span></code> オプションは次の通りです:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% cmake . -DCMAKE_INSTALL_PREFIX=/tmp/local -DGRN_WITH_DEBUG=on -DGRN_WITH_MRUBY=on
+</pre></div>
+</div>
+<p>それぞれのオプションの説明です。</p>
+<p><code class="docutils literal"><span class="pre">-DCMAKE_INSTALL_PREFIX=/tmp/local</span></code></p>
+<blockquote>
+<div>あなたのGroongaを一時ディレクトリーにインストールように指定しています。 <code class="docutils literal"><span class="pre">/tmp/local</span></code> ディレクトリーを削除することで「クリーンインストール」を試すことができます。インストール処理をデバッグするときに便利です。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">-DGRN_WITH_DEBUG=on</span></code></p>
+<blockquote>
+<div>C/C++コンパイラーのデバッグオプションを有効にします。GDBやLLDBなどのデバッガーでデバッグするときに便利です。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">-DGRN_WITH_MRUBY=on</span></code></p>
+<blockquote>
+<div>mrubyサポートを有効にします。この機能はデフォルトで無効になっていますが、開発者はこの機能を有効にするべきです。</div></blockquote>
+</div>
+<div class="section" id="run-make">
+<h2>12.3.2.2.4. <code class="docutils literal"><span class="pre">make</span></code> を実行<a class="headerlink" href="#run-make" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>これでGroongaをビルドできるようになりました。</p>
+<p>開発者向けのオススメの <code class="docutils literal"><span class="pre">make</span></code> のコマンドラインです:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make -j8 &gt; /dev/null
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">-j8</span></code> はビルド時間を短縮します。並列ビルドが有効になっているためです。もし、CPUコアが8よりもたくさんあるのであれば、 <code class="docutils literal"><span class="pre">8</span></code> をもっと増やすとさらにビルドタイムを短縮できるでしょう。</p>
+<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">/dev/null</span></code> をつけることで警告メッセージとエラーメッセージだけが見えるようになります。開発者は新しいコミットで警告メッセージもエラーメッセージも増やすべきではありません。</p>
+</div>
+<div class="section" id="see-also">
+<h2>12.3.2.2.5. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../test.html"><span class="doc">テスト方法</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">12.3.2.2. GNU/LinuxまたはUnix上でCMakeを使ってリポジトリーのGroongaをビルドする方法</a><ul>
+<li><a class="reference internal" href="#install-depended-software">12.3.2.2.1. 必要なソフトウェアのインストール</a></li>
+<li><a class="reference internal" href="#checkout-groonga-from-the-repository">12.3.2.2.2. リポジトリーからGroongaをチェックアウト</a></li>
+<li><a class="reference internal" href="#run-cmake">12.3.2.2.3. <code class="docutils literal"><span class="pre">cmake</span></code> を実行</a></li>
+<li><a class="reference internal" href="#run-make">12.3.2.2.4. <code class="docutils literal"><span class="pre">make</span></code> を実行</a></li>
+<li><a class="reference internal" href="#see-also">12.3.2.2.5. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="unix_autotools.html"
+                        title="前の章へ">12.3.2.1. GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="windows_cmake.html"
+                        title="次の章へ">12.3.2.3. Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="windows_cmake.html" title="12.3.2.3. Windows上でCMakeを使ってリポジトリーのGroongaをビルドする方法"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="unix_autotools.html" title="12.3.2.1. GNU Autotoolsを使ってリポジトリーのGroongaをビルドする方法"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../contribution.html" >12. Groongaへのコントリビュート方法</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../development.html" >12.3. Groonga開発者向け情報</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="../build.html" >12.3.2. リポジトリーのGroongaをビルドする方法</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

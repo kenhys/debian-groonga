@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.8. パトリシア木による前方一致検索 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4.9. 全文検索用の語彙表の作成" href="lexicon.html" />
+    <link rel="prev" title="4.7. match_columnsパラメータ" href="match_columns.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/tutorial/patricia_trie.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="lexicon.html" title="4.9. 全文検索用の語彙表の作成"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columnsパラメータ"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="prefix-search-with-patricia-trie">
+<h1>4.8. パトリシア木による前方一致検索<a class="headerlink" href="#prefix-search-with-patricia-trie" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaのテーブルは、テーブル作成時にパトリシア木オプションを指定すると、前方一致検索を行うことができます。</p>
+<p>また、追加のオプションを指定することにより、主キーの後方一致検索をも行うことができます。</p>
+<div class="section" id="prefix-search-by-primary-key">
+<h2>4.8.1. 主キーによる前方一致検索<a class="headerlink" href="#prefix-search-by-primary-key" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>table_createコマンドのflagsオプションにTABLE_PAT_KEYを指定することで、主キーによる前方一致検索ができるようになります。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name PatPrefix --flags TABLE_PAT_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table PatPrefix
+[
+{&quot;_key&quot;:&quot;James&quot;}
+{&quot;_key&quot;:&quot;Jason&quot;}
+{&quot;_key&quot;:&quot;Jennifer&quot;},
+{&quot;_key&quot;:&quot;Jeff&quot;},
+{&quot;_key&quot;:&quot;John&quot;},
+{&quot;_key&quot;:&quot;Joseph&quot;},
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 6]
+select --table PatPrefix --query _key:^Je
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;Jennifer&quot;
+#       ],
+#       [
+#         4,
+#         &quot;Jeff&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="suffix-search-by-primary-key">
+<h2>4.8.2. 主キーによる後方一致検索<a class="headerlink" href="#suffix-search-by-primary-key" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>table_createコマンドのflagsオプションにTABLE_PAT_KEYとKEY_WITH_SISを指定することで、主キーによる前方一致検索・後方一致検索の両方が可能となります。</p>
+<p>KEY_WITH_SISフラグを付与すると、データを追加する際に後方一致用のレコードも追加されてしまいます。そのため、単純に検索すると、元のレコードに加えて自動的に追加されたレコードまでヒットしてしまいます。元のレコードのみ検索するために、一工夫必要になります。</p>
+<p>例えば、元のレコードと自動的に追加されたレコードとの区別をつけるために、元のレコードであることを示すoriginalカラムを追加して、検索時にはoriginalカラムが <code class="docutils literal"><span class="pre">true</span></code> も検索条件に加えます。 <code class="docutils literal"><span class="pre">--query</span></code> オプションでは <code class="docutils literal"><span class="pre">Bool</span></code> 型の値を直感的に指定することができないので <code class="docutils literal"><span class="pre">--filter</span></code> オプションを使っていることに注意してください。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name PatSuffix --flags TABLE_PAT_KEY|KEY_WITH_SIS --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table PatSuffix --name original --type Bool
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table PatSuffix
+[
+{&quot;_key&quot;:&quot;ひろゆき&quot;,&quot;original&quot;:true},
+{&quot;_key&quot;:&quot;まろゆき&quot;,&quot;original&quot;:true},
+{&quot;_key&quot;:&quot;ひろあき&quot;,&quot;original&quot;:true},
+{&quot;_key&quot;:&quot;ゆきひろ&quot;,&quot;original&quot;:true}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 4]
+select --table PatSuffix --query _key:$ゆき
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         4
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;original&quot;,
+#           &quot;Bool&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;ゆき&quot;,
+#         false
+#       ],
+#       [
+#         2,
+#         &quot;ろゆき&quot;,
+#         false
+#       ],
+#       [
+#         5,
+#         &quot;まろゆき&quot;,
+#         true
+#       ],
+#       [
+#         1,
+#         &quot;ひろゆき&quot;,
+#         true
+#       ]
+#     ]
+#   ]
+# ]
+select --table PatSuffix --filter &#39;_key @$ &quot;ゆき&quot; &amp;&amp; original == true&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;original&quot;,
+#           &quot;Bool&quot;
+#         ]
+#       ],
+#       [
+#         5,
+#         &quot;まろゆき&quot;,
+#         true
+#       ],
+#       [
+#         1,
+#         &quot;ひろゆき&quot;,
+#         true
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.8. パトリシア木による前方一致検索</a><ul>
+<li><a class="reference internal" href="#prefix-search-by-primary-key">4.8.1. 主キーによる前方一致検索</a></li>
+<li><a class="reference internal" href="#suffix-search-by-primary-key">4.8.2. 主キーによる後方一致検索</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="match_columns.html"
+                        title="前の章へ">4.7. match_columnsパラメータ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="lexicon.html"
+                        title="次の章へ">4.9. 全文検索用の語彙表の作成</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="lexicon.html" title="4.9. 全文検索用の語彙表の作成"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columnsパラメータ"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.23. Tuning &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.24. API" href="api.html" />
+    <link rel="prev" title="7.22. Log" href="log.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/tuning.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api.html" title="7.24. API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="log.html" title="7.22. Log"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tuning">
+<h1>7.23. Tuning<a class="headerlink" href="#tuning" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.23.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>There are some tuning parameters for handling a large database.</p>
+</div>
+<div class="section" id="parameters">
+<h2>7.23.2. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>This section describes tuning parameters.</p>
+<div class="section" id="the-max-number-of-open-files-per-process">
+<span id="tuning-max-n-open-files"></span><h3>7.23.2.1. The max number of open files per process<a class="headerlink" href="#the-max-number-of-open-files-per-process" title="Permalink to this headline">¶</a></h3>
+<p>This parameter is for handling a large database.</p>
+<p>Groonga creates one or more files per table and column. If your
+database has many tables and columns, Groonga process needs to open
+many files.</p>
+<p>System limits the max number of open files per process. So you need to
+relax the limitation.</p>
+<p>Here is an expression that compute how many files are opened by
+Groonga:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>3 (for DB) +
+  N tables +
+  N columns (except index clumns) +
+  (N index columns * 2) +
+  X (the number of plugins etc.)
+</pre></div>
+</div>
+<p>Here is an example schema:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Entries TABLE_HASH_KEY ShortText
+column_create Entries content COLUMN_SCALAR Text
+column_create Entries n_likes COLUMN_SCALAR UInt32
+table_create Terms TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+column_create Terms entries_key_index COLUMN_INDEX|WITH_POSITION Entries _key
+column_create Terms entries_content_index COLUMN_INDEX|WITH_POSITION Entries content
+</pre></div>
+</div>
+<p>This example opens at least 11 files:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>3 +
+  2 (Entries and Terms) +
+  2 (Entries.content and Entries.n_likes) +
+  4 (Terms.entries_key_index and Terms.entries_content_index) +
+  X = 11 + X
+</pre></div>
+</div>
+</div>
+<div class="section" id="memory-usage">
+<span id="tuning-memory-usage"></span><h3>7.23.2.2. Memory usage<a class="headerlink" href="#memory-usage" title="Permalink to this headline">¶</a></h3>
+<p>This parameter is for handling a large database.</p>
+<p>Groonga maps database files onto memory and accesses to them. Groonga
+doesn't maps unnecessary files onto memory. Groonga maps files when
+they are needed.</p>
+<p>If you access to all data in database, all database files are mapped
+onto memory. If total size of your database files is 6GiB, your
+Groonga process uses 6GiB memory.</p>
+<p>Normally, your all database files aren't mapped onto memory. But it may
+be occurred. It is an example case that you dump your database.</p>
+<p>Normally, you must have memory and swap that is larger than
+database. Linux has tuning parameter to work with less memory and swap
+than database size.</p>
+</div>
+</div>
+<div class="section" id="linux">
+<span id="tuning-linux"></span><h2>7.23.3. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how to configure parameters on Linux.</p>
+<div class="section" id="nofile">
+<span id="tuning-linux-nofile"></span><h3>7.23.3.1. <code class="docutils literal"><span class="pre">nofile</span></code><a class="headerlink" href="#nofile" title="Permalink to this headline">¶</a></h3>
+<p>You can relax the <a class="reference internal" href="#tuning-max-n-open-files"><span class="std std-ref">The max number of open files per process</span></a> parameter by creating
+a configuration file <code class="docutils literal"><span class="pre">/etc/security/limits.d/groonga.conf</span></code> that has
+the following content:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>${USER} soft nofile ${MAX_VALUE}
+${USER} hard nofile ${MAX_VALUE}
+</pre></div>
+</div>
+<p>If you run Groonga process by <code class="docutils literal"><span class="pre">groonga</span></code> user and your Groonga
+process needs to open less than 10000 files, use the following
+configuration:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga soft nofile 10000
+groonga hard nofile 10000
+</pre></div>
+</div>
+<p>The configuration is applied after your Groonga service is restarted
+or re-login as your <code class="docutils literal"><span class="pre">groonga</span></code> user.</p>
+</div>
+<div class="section" id="vm-overcommit-memory">
+<span id="tuning-linux-overcommit-memory"></span><h3>7.23.3.2. <code class="docutils literal"><span class="pre">vm.overcommit_memory</span></code><a class="headerlink" href="#vm-overcommit-memory" title="Permalink to this headline">¶</a></h3>
+<p>This is <a class="reference internal" href="#tuning-memory-usage"><span class="std std-ref">Memory usage</span></a> related parameter. You can handle a
+database that is larger than your memory and swap by setting
+<code class="docutils literal"><span class="pre">vm.overcommit_memory</span></code> kernel parameter to <code class="docutils literal"><span class="pre">1</span></code>. <code class="docutils literal"><span class="pre">1</span></code> means that
+Groonga can always map database files onto memory. Groonga recommends
+the configuration.</p>
+<p>See <a class="reference external" href="https://www.kernel.org/doc/Documentation/vm/overcommit-accounting">Linux kernel documentation about overcommit</a>
+about <code class="docutils literal"><span class="pre">vm.overcommit_memory</span></code> parameter details.</p>
+<p>You can set the configuration by putting a configuration file
+<code class="docutils literal"><span class="pre">/etc/sysctl.d/groonga.conf</span></code> that has the following content:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>vm.overcommit_memory = 1
+</pre></div>
+</div>
+<p>The configuration can be applied by restarting your system or run the
+following command:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo sysctl --system
+</pre></div>
+</div>
+</div>
+<div class="section" id="vm-max-map-count">
+<span id="tuning-linux-max-map-count"></span><h3>7.23.3.3. <code class="docutils literal"><span class="pre">vm.max_map_count</span></code><a class="headerlink" href="#vm-max-map-count" title="Permalink to this headline">¶</a></h3>
+<p>This is <a class="reference internal" href="#tuning-memory-usage"><span class="std std-ref">Memory usage</span></a> related parameter. You can handle a
+16GiB or more larger size database by increasing <code class="docutils literal"><span class="pre">vm.max_map_count</span></code>
+kernel parameter. The parameter limits the max number of memory maps.</p>
+<p>The default value of the kernel parameter may be <code class="docutils literal"><span class="pre">65530</span></code> or
+<code class="docutils literal"><span class="pre">65536</span></code>.  Groonga maps 256KiB memory chunk at one time. If a
+database is larger than 16GiB, Groonga reaches the
+limitation. (<code class="docutils literal"><span class="pre">256KiB</span> <span class="pre">*</span> <span class="pre">65536</span> <span class="pre">=</span> <span class="pre">16GiB</span></code>)</p>
+<p>You needs to increase the value of the kernel parameter to handle
+16GiB or more larger size database. For example, you can handle almost
+32GiB size database by <code class="docutils literal"><span class="pre">65536</span> <span class="pre">*</span> <span class="pre">2</span> <span class="pre">=</span> <span class="pre">131072</span></code>. You can set the
+configuration by putting a configuration file
+<code class="docutils literal"><span class="pre">/etc/sysctl.d/groonga.conf</span></code> that has the following content:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>vm.max_map_count = 131072
+</pre></div>
+</div>
+<p>Note that your real configuration file will be the following because
+you already have <code class="docutils literal"><span class="pre">vm.overcommit_memory</span></code> configuration:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>vm.overcommit_memory = 1
+vm.max_map_count = 131072
+</pre></div>
+</div>
+<p>The configuration can be applied by restarting your system or run the
+following command:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo sysctl -p
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="freebsd">
+<h2>7.23.4. FreeBSD<a class="headerlink" href="#freebsd" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how to configure parameters on FreeBSD.</p>
+<div class="section" id="kern-maxfileperproc">
+<span id="tuning-freebsd-maxfilesperproc"></span><h3>7.23.4.1. <code class="docutils literal"><span class="pre">kern.maxfileperproc</span></code><a class="headerlink" href="#kern-maxfileperproc" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.23. Tuning</a><ul>
+<li><a class="reference internal" href="#summary">7.23.1. Summary</a></li>
+<li><a class="reference internal" href="#parameters">7.23.2. Parameters</a><ul>
+<li><a class="reference internal" href="#the-max-number-of-open-files-per-process">7.23.2.1. The max number of open files per process</a></li>
+<li><a class="reference internal" href="#memory-usage">7.23.2.2. Memory usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#linux">7.23.3. Linux</a><ul>
+<li><a class="reference internal" href="#nofile">7.23.3.1. <code class="docutils literal"><span class="pre">nofile</span></code></a></li>
+<li><a class="reference internal" href="#vm-overcommit-memory">7.23.3.2. <code class="docutils literal"><span class="pre">vm.overcommit_memory</span></code></a></li>
+<li><a class="reference internal" href="#vm-max-map-count">7.23.3.3. <code class="docutils literal"><span class="pre">vm.max_map_count</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#freebsd">7.23.4. FreeBSD</a><ul>
+<li><a class="reference internal" href="#kern-maxfileperproc">7.23.4.1. <code class="docutils literal"><span class="pre">kern.maxfileperproc</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="log.html"
+                        title="previous chapter">7.22. Log</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="next chapter">7.24. API</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api.html" title="7.24. API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="log.html" title="7.22. Log"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+[Unit]
+Description=Groonga full text search HTTP server (naive version)
+After=network.target
+Conflicts=groonga-httpd.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/sysconfig/groonga-server-http
+User=groonga
+Group=groonga
+ExecStart=/usr/bin/groonga --bind-address $ADDRESS --log-path $LOG_PATH --query-log-path $QUERY_LOG_PATH --protocol $PROTOCOL --port $PORT -s $DATABASE
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.19. grn_proc &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.24.20. grn_search" href="grn_search.html" />
+    <link rel="prev" title="7.24.18. grn_obj" href="grn_obj.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/api/grn_proc.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="grn_search.html" title="7.24.20. grn_search"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="grn_obj.html" title="7.24.18. grn_obj"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-proc">
+<h1>7.24.19. <code class="docutils literal"><span class="pre">grn_proc</span></code><a class="headerlink" href="#grn-proc" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.19.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.19.2. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="reference">
+<h2>7.24.19.3. リファレンス<a class="headerlink" href="#reference" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="type">
+<dt id="c.grn_proc_type">
+<code class="descname">grn_proc_type</code><a class="headerlink" href="#c.grn_proc_type" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>TODO...</p>
+</dd></dl>
+
+<dl class="type">
+<dt id="c.grn_proc_func">
+<code class="descname">grn_proc_func</code><a class="headerlink" href="#c.grn_proc_func" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>TODO...</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_proc_create">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_proc_create</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*name</em>, int<em>&nbsp;name_size</em>, <a class="reference internal" href="#c.grn_proc_type" title="grn_proc_type">grn_proc_type</a><em>&nbsp;type</em>, <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func">grn_proc_func</a><em>&nbsp;*init</em>, <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func">grn_proc_func</a><em>&nbsp;*next</em>, <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func">grn_proc_func</a><em>&nbsp;*fin</em>, unsigned int<em>&nbsp;nvars</em>, grn_expr_var<em>&nbsp;*vars</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_proc_create" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>nameに対応する新たなproc(手続き)をctxが使用するdbに定義します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> -- 作成するprocの名前を指定します。</li>
+<li><strong>name_size</strong> -- The number of bytes of name parameter. If negative value is specified, name parameter is assumed that NULL-terminated string.</li>
+<li><strong>type</strong> -- procの種類を指定します。</li>
+<li><strong>init</strong> -- 初期化関数のポインタを指定します。</li>
+<li><strong>next</strong> -- 実処理関数のポインタを指定します。</li>
+<li><strong>fin</strong> -- 終了関数のポインタを指定します。</li>
+<li><strong>nvars</strong> -- procで使用する変数の数を指定します。</li>
+<li><strong>vars</strong> -- procで使用する変数の定義を指定します。( <code class="xref c c-type docutils literal"><span class="pre">grn_expr_var</span></code> 構造体の配列)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_proc_get_info">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_proc_get_info</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_user_data.html#c.grn_user_data" title="grn_user_data">grn_user_data</a><em>&nbsp;*user_data</em>, grn_expr_var<em>&nbsp;**vars</em>, unsigned int<em>&nbsp;*nvars</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;**caller</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_proc_get_info" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>user_dataをキーとして、現在実行中の <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func"><code class="xref c c-type docutils literal"><span class="pre">grn_proc_func</span></code></a> 関数および定義されている変数( <code class="xref c c-type docutils literal"><span class="pre">grn_expr_var</span></code> )の配列とその数を取得します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>user_data</strong> -- <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func"><code class="xref c c-type docutils literal"><span class="pre">grn_proc_func</span></code></a> に渡されたuser_dataを指定します。</li>
+<li><strong>nvars</strong> -- 変数の数を取得します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_obj_set_finalizer">
+grn_rc <code class="descname">grn_obj_set_finalizer</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, <a class="reference internal" href="#c.grn_proc_func" title="grn_proc_func">grn_proc_func</a><em>&nbsp;*func</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_obj_set_finalizer" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>objectを破棄するときに呼ばれる関数を設定します。</p>
+<p>table, column, proc, exprのみ設定可能です。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> -- 対象objectを指定します。</li>
+<li><strong>func</strong> -- objectを破棄するときに呼ばれる関数を指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.19. <code class="docutils literal"><span class="pre">grn_proc</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.24.19.1. 概要</a></li>
+<li><a class="reference internal" href="#example">7.24.19.2. 例</a></li>
+<li><a class="reference internal" href="#reference">7.24.19.3. リファレンス</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="grn_obj.html"
+                        title="前の章へ">7.24.18. <code class="docutils literal"><span class="pre">grn_obj</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="grn_search.html"
+                        title="次の章へ">7.24.20. <code class="docutils literal"><span class="pre">grn_search</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="grn_search.html" title="7.24.20. grn_search"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="grn_obj.html" title="7.24.18. grn_obj"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.7. Normalizers &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.8. Tokenizers" href="tokenizers.html" />
+    <link rel="prev" title="7.6.4. Index column" href="columns/index.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/normalizers.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tokenizers.html" title="7.8. Tokenizers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="columns/index.html" title="7.6.4. Index column"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="normalizers">
+<h1>7.7. Normalizers<a class="headerlink" href="#normalizers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.7.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Groonga has normalizer module that normalizes text. It is used when
+tokenizing text and storing table key. For example, <code class="docutils literal"><span class="pre">A</span></code> and <code class="docutils literal"><span class="pre">a</span></code>
+are processed as the same character after normalization.</p>
+<p>Normalizer module can be added as a plugin. You can customize text
+normalization by registering your normalizer plugins to Groonga.</p>
+<p>A normalizer module is attached to a table. A table can have zero or
+one normalizer module. You can attach a normalizer module to a table
+by <a class="reference internal" href="commands/table_create.html#table-create-normalizer"><span class="std std-ref">normalizer</span></a> option in
+<a class="reference internal" href="commands/table_create.html"><span class="doc">table_create</span></a>.</p>
+<p>Here is an example <code class="docutils literal"><span class="pre">table_create</span></code> that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code>
+normalizer module:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Dictionary TABLE_HASH_KEY ShortText --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Groonga 2.0.9 or earlier doesn't have <code class="docutils literal"><span class="pre">--normalizer</span></code> option in
+<code class="docutils literal"><span class="pre">table_create</span></code>. <code class="docutils literal"><span class="pre">KEY_NORMALIZE</span></code> flag was used instead.</p>
+<p class="last">You can open an old database by Groonga 2.1.0 or later. An old
+database means that the database is created by Groonga 2.0.9 or
+earlier. But you cannot open the opened old database by Groonga
+2.0.9 or earlier. Once you open the old database by Groonga 2.1.0
+or later, <code class="docutils literal"><span class="pre">KEY_NORMALIZE</span></code> flag information in the old database is
+converted to normalizer information. So Groonga 2.0.9 or earlier
+cannot find <code class="docutils literal"><span class="pre">KEY_NORMALIZE</span></code> flag information in the opened old
+database.</p>
+</div>
+<p>Keys of a table that has a normalizer module are normalized:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Dictionary
+[
+{&quot;_key&quot;: &quot;Apple&quot;},
+{&quot;_key&quot;: &quot;black&quot;},
+{&quot;_key&quot;: &quot;COLOR&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+select Dictionary
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;apple&quot;
+#       ],
+#       [
+#         2,
+#         &quot;black&quot;
+#       ],
+#       [
+#         3,
+#         &quot;color&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer normalizes a text as a downcased text.
+For example, <code class="docutils literal"><span class="pre">&quot;Apple&quot;</span></code> is normalized to <code class="docutils literal"><span class="pre">&quot;apple&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;black&quot;</span></code> is
+normalized to <code class="docutils literal"><span class="pre">&quot;black&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;COLOR&quot;</span></code> is normalized to
+<code class="docutils literal"><span class="pre">&quot;color&quot;</span></code>.</p>
+<p>If a table is a lexicon for fulltext search, tokenized tokens are
+normalized. Because tokens are stored as table keys. Table keys are
+normalized as described above.</p>
+</div>
+<div class="section" id="built-in-normalizers">
+<h2>7.7.2. Built-in normalizers<a class="headerlink" href="#built-in-normalizers" title="Permalink to this headline">¶</a></h2>
+<p>Here is a list of built-in normalizers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">NormalizerAuto</span></code></li>
+<li><code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code></li>
+</ul>
+</div></blockquote>
+<div class="section" id="normalizerauto">
+<span id="normalizer-auto"></span><h3>7.7.2.1. <code class="docutils literal"><span class="pre">NormalizerAuto</span></code><a class="headerlink" href="#normalizerauto" title="Permalink to this headline">¶</a></h3>
+<p>Normally you should use <code class="docutils literal"><span class="pre">NormalizerAuto</span></code>
+normalizer. <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> was the normalizer for Groonga 2.0.9 or
+earlier. <code class="docutils literal"><span class="pre">KEY_NORMALIZE</span></code> flag in <code class="docutils literal"><span class="pre">table_create</span></code> on Groonga 2.0.9
+or earlier equals to <code class="docutils literal"><span class="pre">--normalizer</span> <span class="pre">NormalizerAuto</span></code> option in
+<code class="docutils literal"><span class="pre">table_create</span></code> on Groonga 2.1.0 or later.</p>
+<p><code class="docutils literal"><span class="pre">NormalizerAuto</span></code> supports all encoding. It uses Unicode NFKC
+(Normalization Form Compatibility Composition) for UTF-8 encoding
+text. It uses encoding specific original normalization for other
+encodings. The results of those original normalization are similar to
+NFKC.</p>
+<p>For example, half-width katakana (such as U+FF76 HALFWIDTH KATAKANA
+LETTER KA) + half-width katakana voiced sound mark (U+FF9E HALFWIDTH
+KATAKANA VOICED SOUND MARK) is normalized to full-width katakana with
+voiced sound mark (U+30AC KATAKANA LETTER GA). The former is two
+characters but the latter is one character.</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> normalizer:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create NormalLexicon TABLE_HASH_KEY ShortText --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+</div>
+<div class="section" id="normalizernfkc51">
+<span id="normalizer-nfkc51"></span><h3>7.7.2.2. <code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code><a class="headerlink" href="#normalizernfkc51" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code> normalizes texts by Unicode NFKC (Normalization
+Form Compatibility Composition) for Unicode version 5.1. It supports
+only UTF-8 encoding.</p>
+<p>Normally you don't need to use <code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code> explicitly. You can
+use <code class="docutils literal"><span class="pre">NormalizerAuto</span></code> instead.</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code> normalizer:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create NFKC51Lexicon TABLE_HASH_KEY ShortText --normalizer NormalizerNFKC51
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="additional-normalizers">
+<h2>7.7.3. Additional normalizers<a class="headerlink" href="#additional-normalizers" title="Permalink to this headline">¶</a></h2>
+<p>There are additional normalizers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://github.com/groonga/groonga-normalizer-mysql">groonga-normalizer-mysql</a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.7.4. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="commands/table_create.html"><span class="doc">table_create</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.7. Normalizers</a><ul>
+<li><a class="reference internal" href="#summary">7.7.1. Summary</a></li>
+<li><a class="reference internal" href="#built-in-normalizers">7.7.2. Built-in normalizers</a><ul>
+<li><a class="reference internal" href="#normalizerauto">7.7.2.1. <code class="docutils literal"><span class="pre">NormalizerAuto</span></code></a></li>
+<li><a class="reference internal" href="#normalizernfkc51">7.7.2.2. <code class="docutils literal"><span class="pre">NormalizerNFKC51</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#additional-normalizers">7.7.3. Additional normalizers</a></li>
+<li><a class="reference internal" href="#see-also">7.7.4. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="columns/index.html"
+                        title="previous chapter">7.6.4. Index column</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tokenizers.html"
+                        title="next chapter">7.8. Tokenizers</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tokenizers.html" title="7.8. Tokenizers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="columns/index.html" title="7.6.4. Index column"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

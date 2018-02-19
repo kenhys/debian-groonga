@@ -1,0 +1,158 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.6.3. Pseudo column &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.6.4. Index column" href="index.html" />
+    <link rel="prev" title="7.6.2. Vector column" href="vector.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/columns/pseudo.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="7.6.4. Index column"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="vector.html" title="7.6.2. Vector column"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../column.html" accesskey="U">7.6. Column</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pseudo-column">
+<h1>7.6.3. Pseudo column<a class="headerlink" href="#pseudo-column" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>7.6.3.1. 名前<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>疑似カラム</p>
+</div>
+<div class="section" id="id2">
+<h2>7.6.3.2. 説明<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Groongaのデータベースで作成したテーブルには、いくつかのカラムが自動的に定義されます。</p>
+<p>これらのカラムはいずれもアンダースコア('_')で始まる名前が付与されます。定義される疑似カラムは、テーブルの種類によって異なります。</p>
+<p><code class="docutils literal"><span class="pre">_id</span></code></p>
+<blockquote>
+<div>レコードに付与される一意な番号です。全てのテーブルに定義されます。値の範囲は1〜1073741824の整数で、通常はレコードを追加した順に1ずつ加算されます。_idの値は不変で、レコードが存在する限り変更することはできません。ただし、削除されたレコードの_idの値は再利用されます。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">_key</span></code></p>
+<blockquote>
+<div>レコードの主キー値を表します。主キーを持つテーブルのみに定義されます。主キー値はテーブルの中で一意であり、変更することはできません。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">_value</span></code></p>
+<blockquote>
+<div>レコードの値を表します。value_typeを指定したテーブルのみに定義されます。自由に変更可能です。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">_score</span></code></p>
+<blockquote>
+<div><p>各レコードのスコア値を表します。検索結果として生成されたテーブルのみに定義されます。</p>
+<p>検索処理を実行する過程で値が設定されますが、自由に変更可能です。</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">_nsubrecs</span></code></p>
+<blockquote>
+<div>主キーの値が同一であったレコードの件数を表します。検索結果として生成されたテーブルのみに定義されます。グループ化(drilldown)処理を実行すると、グループ化前のテーブルにおいて、グループ化キーの値が同一であったレコードの件数が、グループ化処理の結果を格納するテーブルの_nsubrecsに記録されます。</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.6.3. Pseudo column</a><ul>
+<li><a class="reference internal" href="#id1">7.6.3.1. 名前</a></li>
+<li><a class="reference internal" href="#id2">7.6.3.2. 説明</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="vector.html"
+                        title="previous chapter">7.6.2. Vector column</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="next chapter">7.6.4. Index column</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="7.6.4. Index column"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="vector.html" title="7.6.2. Vector column"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../column.html" >7.6. Column</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

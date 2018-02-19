@@ -1,0 +1,293 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.4. grn_cache &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.24.5. grn_column" href="grn_column.html" />
+    <link rel="prev" title="7.24.3. Plugin" href="plugin.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/api/grn_cache.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="grn_column.html" title="7.24.5. grn_column"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="plugin.html" title="7.24.3. Plugin"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-cache">
+<h1>7.24.4. <code class="docutils literal"><span class="pre">grn_cache</span></code><a class="headerlink" href="#grn-cache" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.4.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このAPIは実験的です。</p>
+</div>
+<p><code class="docutils literal"><span class="pre">grn_cache</span></code> は <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドのレスポンスを保持するためのデータストアです。一般的なオブジェクトのキャッシュとして使うものではありません。あくまで <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドのためのものです。</p>
+<p><a class="reference internal" href="#c.grn_cache_current_set" title="grn_cache_current_set"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_current_set()</span></code></a> を使うことで現在のキャッシュオブジェクトを変更することができます。 <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドのレスポンスが内部的に用いられます。</p>
+<p><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドは、一つのグローバルキャッシュオブジェクトを利用します。もし複数のデータベースをオープンしていた場合、そのキャッシュオブジェクトは共有されます。これは重要な問題です。</p>
+<p>もし複数のデータベースを開き、 <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドを使用するのであれば、 <code class="docutils literal"><span class="pre">grn_cache</span></code> オブジェクトを使う必要があります。 <a class="reference internal" href="../executables/groonga-httpd.html"><span class="doc">groonga-httpd</span></a> のようなケースが該当します。もし一つのデータベースのみを開く場合や、 <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドを使わない場合は、 <code class="docutils literal"><span class="pre">grn_cache</span></code> オブジェクトを使う必要はありません。 <cite>Rroonga &lt;http://ranguba.org/ja/#about-rroonga&gt;</cite> のようなケースです。</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.4.2. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下はキャッシュを変更する例です。</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">grn_cache</span> <span class="o">*</span><span class="n">cache</span><span class="p">;</span>
+<span class="n">grn_cache</span> <span class="o">*</span><span class="n">cache_previous</span><span class="p">;</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">grn_cache_open</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="n">cache_previous</span> <span class="o">=</span> <span class="n">grn_cache_current_get</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="n">grn_cache_current_set</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cache</span><span class="p">);</span>
+<span class="cm">/* grn_ctx_send(ctx, ...); */</span>
+<span class="n">grn_cache_current_set</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cache_previous</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>7.24.4.3. リファレンス<a class="headerlink" href="#reference" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="type">
+<dt id="c.grn_cache">
+<code class="descname">grn_cache</code><a class="headerlink" href="#c.grn_cache" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">grn_cache</span></code> は詳細を公開していないオブジェクトです。 <a class="reference internal" href="#c.grn_cache_open" title="grn_cache_open"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_open()</span></code></a> で作成し、 <a class="reference internal" href="#c.grn_cache_close" title="grn_cache_close"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_close()</span></code></a> で解放できます。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_open">
+<a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a> *<code class="descname">grn_cache_open</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_open" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新規にキャッシュオブジェクトを作成します。</p>
+<p>新しいキャッシュオブジェクト作成のためのメモリ割り当てに失敗した場合、 <code class="docutils literal"><span class="pre">NULL</span></code> を返します。エラー情報は <code class="docutils literal"><span class="pre">ctx</span></code> に格納されます。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">新しいキャッシュオブジェクトの作成に成功した場合は <code class="docutils literal"><span class="pre">NULL</span></code> 以外の値を返します。このキャッシュオブジェクトは <a class="reference internal" href="#c.grn_cache_close" title="grn_cache_close"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_close()</span></code></a> で解放されなければなりません。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_close">
+grn_rc <code class="descname">grn_cache_close</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_close" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">cache</span></code> のリソースを解放。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+<li><strong>cache</strong> -- キャッシュオブジェクトを解放する。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">成功時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 、エラー時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 以外。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_current_set">
+grn_rc <code class="descname">grn_cache_current_set</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_current_set" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドで使われるキャッシュオブジェクトを設定します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+<li><strong>cache</strong> -- <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドで使われるキャッシュオブジェクト。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">成功時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 、エラー時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 以外。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_current_get">
+<a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a> *<code class="descname">grn_cache_current_get</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_current_get" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドで使われるキャッシュオブジェクトを取得します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last"><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> コマンドで使われるキャッシュオブジェクト。 <code class="docutils literal"><span class="pre">NULL</span></code> のこともあります。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_set_max_n_entries">
+grn_rc <code class="descname">grn_cache_set_max_n_entries</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em>, unsigned int<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_set_max_n_entries" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キャッシュオブジェクトのエントリの最大数を設定します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+<li><strong>cache</strong> -- 変更するキャッシュオブジェクト。</li>
+<li><strong>n</strong> -- キャッシュオブジェクトの新しい最大エントリ数。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">成功時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 、エラー時は <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> 以外。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_get_max_n_entries">
+unsigned int <code class="descname">grn_cache_get_max_n_entries</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_get_max_n_entries" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キャッシュオブジェクトのエントリの最大数を取得します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">パラメータ:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- その時点のコンテキスト。</li>
+<li><strong>cache</strong> -- ターゲットキャッシュオブジェクト。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">戻り値:</th><td class="field-body"><p class="first last">キャッシュオブジェクトの最大エントリ数。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.4. <code class="docutils literal"><span class="pre">grn_cache</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.24.4.1. 概要</a></li>
+<li><a class="reference internal" href="#example">7.24.4.2. 例</a></li>
+<li><a class="reference internal" href="#reference">7.24.4.3. リファレンス</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="plugin.html"
+                        title="前の章へ">7.24.3. Plugin</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="grn_column.html"
+                        title="次の章へ">7.24.5. <code class="docutils literal"><span class="pre">grn_column</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="grn_column.html" title="7.24.5. grn_column"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="plugin.html" title="7.24.3. Plugin"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

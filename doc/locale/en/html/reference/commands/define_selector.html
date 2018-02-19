@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.19. define_selector &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.20. defrag" href="defrag.html" />
+    <link rel="prev" title="7.3.18. database_unmap" href="database_unmap.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/define_selector.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="defrag.html" title="7.3.20. defrag"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="database_unmap.html" title="7.3.18. database_unmap"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="define-selector">
+<h1>7.3.19. <code class="docutils literal"><span class="pre">define_selector</span></code><a class="headerlink" href="#define-selector" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.19.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>define_selector - 検索コマンドを定義</p>
+<p>Groonga組込コマンドの一つであるdefine_selectorについて説明します。組込コマンドは、groonga実行ファイルの引数、標準入力、またはソケット経由でgroongaサーバにリクエストを送信することによって実行します。</p>
+<p>define_selectorは、検索条件をカスタマイズした新たな検索コマンドを定義します。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.19.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>define_selector name table [match_columns [query [filter [scorer [sortby
+                [output_columns [offset [limit [drilldown [drilldown_sortby
+                [drilldown_output_columns [drilldown_offset [drilldown_limit]]]]]]]]]]]]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.19.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>テーブルEntryの全レコード・全カラムの値を出力するselectorコマンドを定義します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>define_selector entry_selector Entry
+[true]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.19.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">name</span></code></p>
+<blockquote>
+<div>定義するselectorコマンドの名前を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">table</span></code></p>
+<blockquote>
+<div>検索対象のテーブルを指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">match_columns</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのmatch_columns引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">query</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのquery引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">filter</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのfilter引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">scorer</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのscorer引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">sortby</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのsortby引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">output_columns</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのoutput_columns引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">offset</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのoffset引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">limit</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのlimit引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">drilldown</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのdrilldown引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">drilldown_sortby</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのdrilldown_sortby引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">drilldown_output_columns</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのdrilldown_output_columns引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">drilldown_offset</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのdrilldown_offset引数のデフォルト値を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">drilldown_limit</span></code></p>
+<blockquote>
+<div>追加するselectorコマンドのdrilldown_limit引数のデフォルト値を指定します。</div></blockquote>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.19.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[成功かどうかのフラグ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">成功かどうかのフラグ</span></code></p>
+<blockquote>
+<div>エラーが生じなかった場合にはtrue、エラーが生じた場合にはfalseを返す。</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.19.6. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../grn_expr.html"><span class="doc">grn_expr</span></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.19. <code class="docutils literal"><span class="pre">define_selector</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.19.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.19.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.19.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">7.3.19.4. Parameters</a></li>
+<li><a class="reference internal" href="#return-value">7.3.19.5. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.19.6. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="database_unmap.html"
+                        title="previous chapter">7.3.18. <code class="docutils literal"><span class="pre">database_unmap</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="defrag.html"
+                        title="next chapter">7.3.20. <code class="docutils literal"><span class="pre">defrag</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="defrag.html" title="7.3.20. defrag"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="database_unmap.html" title="7.3.18. database_unmap"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

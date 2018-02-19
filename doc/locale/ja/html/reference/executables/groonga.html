@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.3. groonga 実行ファイル &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.1.4. groonga-benchmark" href="groonga-benchmark.html" />
+    <link rel="prev" title="7.1.2. grnslap" href="grnslap.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/executables/groonga.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="groonga-benchmark.html" title="7.1.4. groonga-benchmark"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="groonga-executable-file">
+<h1>7.1.3. <code class="docutils literal"><span class="pre">groonga</span></code> 実行ファイル<a class="headerlink" href="#groonga-executable-file" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.1.3.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga</span></code> 実行ファイルは以下の機能を提供します。:</p>
+<blockquote>
+<div><ul class="simple">
+<li>全文検索サーバー</li>
+<li>全文検索シェル</li>
+<li>Groonga全文検索サーバーのクライアント</li>
+</ul>
+</div></blockquote>
+<p>Groongaはライブラリーとして使えます。Groongaをライブラリーとして使う場合、C、C++などの言語でプログラムを書く必要があります。ライブラリーとして使う使い方はアプリケーションに全文検索機能を組み込む場合に便利です。しかし、全文検索サーバーや全文検索シェルほどは使いやすい使い方ではありません。</p>
+<p>全文検索機能を使うために <code class="docutils literal"><span class="pre">groonga</span></code> 実行ファイルを使うことができます。</p>
+<p>Groongaを試したいときは全文検索シェルの使い方が便利です。サーバーもクライアントも必要ありません。ターミナルが1つあれば十分です。次のようにしてGroongaを試すことができます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -n db
+&gt; status
+[[0,1429687763.70845,0.000115633010864258],{&quot;alloc_count&quot;:195,...}]
+&gt; quit
+%
+</pre></div>
+</div>
+<p>全文検索機能を持ったアプリケーションを作る場合は全文検索サーバーとして使う使い方が便利です。RDBMS（リレーショナル・データベース管理システム）のようにGroongaをサーバーとして使うことができます。クライアント・サーバーモデルはよくあるアーキテクチャーです。</p>
+<p>Groonga全文検索サーバーのクライアントとして使う使い方はあまり使いません。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.1.3.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga</span></code> 実行ファイルには以下の4つのモードがあります。</p>
+<blockquote>
+<div><ul class="simple">
+<li>Standalone mode</li>
+<li>Server mode</li>
+<li>Daemon mode</li>
+<li>Client mode</li>
+</ul>
+</div></blockquote>
+<p>There are common options in these modes. These common options is
+described later section.</p>
+<div class="section" id="standalone-mode">
+<span id="groonga-executable-file-standalone-mode"></span><h3>7.1.3.2.1. Standalone mode<a class="headerlink" href="#standalone-mode" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In standalone mode, <code class="docutils literal"><span class="pre">groonga</span></code> executable file runs one or more
+Groonga <a class="reference internal" href="../command.html"><span class="doc">コマンド</span></a> against a local Groonga database.</p>
+<p>Here is the syntax to run shell that executes Groonga command against
+temporary database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options]
+</pre></div>
+</div>
+<p>Here is the syntax to create a new database and run shell that
+executes Groonga command against the new database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] -n DB_PATH
+</pre></div>
+</div>
+<p>Here is the syntax to run shell that executes Groonga command against
+existing database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] DB_PATH
+</pre></div>
+</div>
+<p>Here is the syntax to run Groonga command against existing database
+and exit:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] DB_PATH COMMAND [command arguments]
+</pre></div>
+</div>
+</div>
+<div class="section" id="server-mode">
+<span id="groonga-executable-file-server-mode"></span><h3>7.1.3.2.2. Server mode<a class="headerlink" href="#server-mode" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In server mode, <code class="docutils literal"><span class="pre">groonga</span></code> executable file runs as a server. The
+server accepts connections from other processes at local machine or
+remote machine and executes received Groonga <a class="reference internal" href="../command.html"><span class="doc">コマンド</span></a>
+against a local Groonga database.</p>
+<p>You can choose one protocol from <a class="reference internal" href="../../server/http.html"><span class="doc">HTTP</span></a> and
+<a class="reference internal" href="../../server/gqtp.html"><span class="doc">GQTP</span></a>. Normally, HTTP is suitable but GQTP is the
+default protocol. This section describes only about HTTP protocol
+usage.</p>
+<p>In server mode, <code class="docutils literal"><span class="pre">groonga</span></code> executable file runs in the foreground. If
+you want to run Groonga server in the background, see
+<a class="reference internal" href="#groonga-executable-file-daemon-mode"><span class="std std-ref">Daemon mode</span></a>.</p>
+<p>Here is the syntax to run Groonga server with temporary database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -s
+</pre></div>
+</div>
+<p>Here is the syntax to create a new database and run Groonga server
+with the new database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -s -n DB_PATH
+</pre></div>
+</div>
+<p>Here is the syntax to run Groonga server with existing database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -s DB_PATH
+</pre></div>
+</div>
+</div>
+<div class="section" id="daemon-mode">
+<span id="groonga-executable-file-daemon-mode"></span><h3>7.1.3.2.3. Daemon mode<a class="headerlink" href="#daemon-mode" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In daemon mode, <code class="docutils literal"><span class="pre">groonga</span></code> executable file runs as a daemon. Daemon
+is similar to server but it runs in the background. See
+<a class="reference internal" href="#groonga-executable-file-server-mode"><span class="std std-ref">Server mode</span></a> about server.</p>
+<p>Here is the syntax to run Groonga daemon with temporary database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -d
+</pre></div>
+</div>
+<p>Here is the syntax to create a new database and run Groonga daemon
+with the new database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -d -n DB_PATH
+</pre></div>
+</div>
+<p>Here is the syntax to run Groonga daemon with existing database:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] --protocol http -d DB_PATH
+</pre></div>
+</div>
+<p><a class="reference internal" href="#cmdoption-groonga-pid-path"><code class="xref std std-option docutils literal"><span class="pre">--pid-path</span></code></a> option will be useful for daemon mode.</p>
+</div>
+<div class="section" id="client-mode">
+<span id="groonga-executable-file-client-mode"></span><h3>7.1.3.2.4. Client mode<a class="headerlink" href="#client-mode" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>In client mode, <code class="docutils literal"><span class="pre">groonga</span></code> executable file runs as a client for GQTP
+protocol Groonga server. Its usage is similar to
+<a class="reference internal" href="#groonga-executable-file-standalone-mode"><span class="std std-ref">Standalone mode</span></a>. You can run shell and
+execute one command. You need to specify server address instead of
+local database.</p>
+<p>Note that you can use <code class="docutils literal"><span class="pre">groonga</span></code> executable file as a client for HTTP
+protocol Groonga server.</p>
+<p>Here is the syntax to run shell that executes Groonga command against
+Groonga server that is running at <code class="docutils literal"><span class="pre">192.168.0.1:10043</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] -c --host 192.168.0.1 --port 10043
+</pre></div>
+</div>
+<p>Here is the syntax to run Groonga command against Groonga server that
+is running at <code class="docutils literal"><span class="pre">192.168.0.1:10043</span></code> and exit:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [options] -c --host 192.168.0.1 --port 10043 COMMAND [command arguments]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="options">
+<h2>7.1.3.3. オプション<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-groonga-n">
+<code class="descname">-n</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-n" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>新しいデータベースを作成します。</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-c">
+<code class="descname">-c</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-c" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Executes <code class="docutils literal"><span class="pre">groonga</span></code> command in client mode.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-s">
+<code class="descname">-s</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-s" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Executes <code class="docutils literal"><span class="pre">groonga</span></code> command in server mode. Use &quot;Ctrl+C&quot; to stop the <code class="docutils literal"><span class="pre">groonga</span></code> process.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-d">
+<code class="descname">-d</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-d" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Executes <code class="docutils literal"><span class="pre">groonga</span></code> command in daemon mode. In contrast to server mode, <code class="docutils literal"><span class="pre">groonga</span></code> command forks in daemon mode. For example, to stop local daemon process, use &quot;curl <a class="reference external" href="http://127.0.0.1:10041/d/shutdown">http://127.0.0.1:10041/d/shutdown</a>&quot;.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-e">
+<code class="descname">-e</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--encoding</code><code class="descclassname"> &lt;encoding&gt;</code><a class="headerlink" href="#cmdoption-groonga-e" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Specifies encoding which is used for Groonga database. This option is effective when you create new Groonga database.  This parameter specifies one of the following values: <code class="docutils literal"><span class="pre">none</span></code>, <code class="docutils literal"><span class="pre">euc</span></code>, <code class="docutils literal"><span class="pre">utf8</span></code>, <code class="docutils literal"><span class="pre">sjis</span></code>, <code class="docutils literal"><span class="pre">latin</span></code> or <code class="docutils literal"><span class="pre">koi8r</span></code>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-l">
+<code class="descname">-l</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--log-level</code><code class="descclassname"> &lt;log level&gt;</code><a class="headerlink" href="#cmdoption-groonga-l" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ログレベルを指定します。ログレベルはログレベル名または整数値です。利用可能なログレベルは以下の通りです。</p>
+</dd></dl>
+
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ログレベル</th>
+<th class="head">名前</th>
+<th class="head">整数値</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>なし</td>
+<td><code class="docutils literal"><span class="pre">none</span></code></td>
+<td><code class="docutils literal"><span class="pre">0</span></code></td>
+</tr>
+<tr class="row-odd"><td>緊急</td>
+<td><code class="docutils literal"><span class="pre">E</span></code>, <code class="docutils literal"><span class="pre">emerge</span></code>, <code class="docutils literal"><span class="pre">emergency</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">1</span></code></td>
+</tr>
+<tr class="row-even"><td>アラート</td>
+<td><code class="docutils literal"><span class="pre">A</span></code>, <code class="docutils literal"><span class="pre">alert</span></code> のどれか&lt;</td>
+<td><code class="docutils literal"><span class="pre">2</span></code></td>
+</tr>
+<tr class="row-odd"><td>危機的</td>
+<td><code class="docutils literal"><span class="pre">C</span></code>, <code class="docutils literal"><span class="pre">crit</span></code>, <code class="docutils literal"><span class="pre">critical</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">3</span></code></td>
+</tr>
+<tr class="row-even"><td>エラー</td>
+<td><code class="docutils literal"><span class="pre">e</span></code>, <code class="docutils literal"><span class="pre">error</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">4</span></code></td>
+</tr>
+<tr class="row-odd"><td>警告</td>
+<td><code class="docutils literal"><span class="pre">w</span></code>, <code class="docutils literal"><span class="pre">warn</span></code>, <code class="docutils literal"><span class="pre">warning</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">5</span></code></td>
+</tr>
+<tr class="row-even"><td>通知</td>
+<td><code class="docutils literal"><span class="pre">n</span></code>, <code class="docutils literal"><span class="pre">notice</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">6</span></code></td>
+</tr>
+<tr class="row-odd"><td>情報</td>
+<td><code class="docutils literal"><span class="pre">i</span></code>, <code class="docutils literal"><span class="pre">info</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">7</span></code></td>
+</tr>
+<tr class="row-even"><td>デバッグ</td>
+<td><code class="docutils literal"><span class="pre">d</span></code>, <code class="docutils literal"><span class="pre">debug</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">8</span></code></td>
+</tr>
+<tr class="row-odd"><td>ダンプ</td>
+<td><code class="docutils literal"><span class="pre">-</span></code>, <code class="docutils literal"><span class="pre">dump</span></code> のどれか</td>
+<td><code class="docutils literal"><span class="pre">9</span></code></td>
+</tr>
+</tbody>
+</table>
+<dl class="option">
+<dt id="cmdoption-groonga-a">
+<code class="descname">-a</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--address</code><code class="descclassname"> &lt;ip/hostname&gt;</code><a class="headerlink" href="#cmdoption-groonga-a" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="deprecated">
+<p><span class="versionmodified">バージョン 1.2.2 で撤廃: </span>Use <a class="reference internal" href="#cmdoption-groonga-bind-address"><code class="xref std std-option docutils literal"><span class="pre">--bind-address</span></code></a> instead.</p>
+</div>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-bind-address">
+<code class="descname">--bind-address</code><code class="descclassname"> &lt;ip/hostname&gt;</code><a class="headerlink" href="#cmdoption-groonga-bind-address" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">バージョン 1.2.2 で追加.</span></p>
+</div>
+<p>サーバモードかデーモンモードで実行するとき、listenするアドレスを指定します。(デフォルトは <cite>hostname</cite> の返すホスト名)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-p">
+<code class="descname">-p</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--port</code><code class="descclassname"> &lt;port number&gt;</code><a class="headerlink" href="#cmdoption-groonga-p" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クライアント、サーバ、またはデーモンモードで使用するTCPポート番号。
+(クライアントモードのデフォルトは10043番、サーバ、またはデーモンモードのデフォルトは、HTTPの場合、10041番、GQTPの場合、10043番)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-i">
+<code class="descname">-i</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--server-id</code><code class="descclassname"> &lt;ip/hostname&gt;</code><a class="headerlink" href="#cmdoption-groonga-i" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>サーバモードかデーモンモードで実行するとき、サーバのIDとなるアドレスを指定します。(デフォルトは`hostname`の返すホスト名)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-h">
+<code class="descname">-h</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--help</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-h" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ヘルプメッセージを出力します。</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-document-root">
+<code class="descname">--document-root</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-document-root" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>httpサーバとしてgroongaを使用する場合に静的ページを格納するディレクトリを指定します。</p>
+<p>デフォルトでは、データベースを管理するための汎用的なページに対応するファイルが/usr/share/groonga/admin_html以下にインストールされます。このディレクトリをdocument-rootオプションの値に指定して起動した場合、ウェブブラウザでhttp://hostname:port/index.htmlにアクセスすると、ウェブベースのデータベース管理ツールを使用できます。</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-protocol">
+<code class="descname">--protocol</code><code class="descclassname"> &lt;protocol&gt;</code><a class="headerlink" href="#cmdoption-groonga-protocol" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>http,gqtpのいずれかを指定します。(デフォルトはgqtp)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-log-path">
+<code class="descname">--log-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-log-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>ログを出力するファイルのパスを指定します。(デフォルトは/var/log/groonga/groonga.logです)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-log-rotate-threshold-size">
+<code class="descname">--log-rotate-threshold-size</code><code class="descclassname"> &lt;threshold&gt;</code><a class="headerlink" href="#cmdoption-groonga-log-rotate-threshold-size" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.3 で追加.</span></p>
+</div>
+<p>ログローテーションの閾値を指定します。ログファイルのサイズが閾値に指定した値以上になると、ローテートされます。（デフォルトは0（無効）です）</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-query-log-path">
+<code class="descname">--query-log-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-query-log-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>クエリーログを出力するファイルのパスを指定します。(デフォルトでは出力されません)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-query-log-rotate-threshold-size">
+<code class="descname">--query-log-rotate-threshold-size</code><code class="descclassname"> &lt;threshold&gt;</code><a class="headerlink" href="#cmdoption-groonga-query-log-rotate-threshold-size" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.3 で追加.</span></p>
+</div>
+<p>クエリーログのローテーションの閾値を指定します。クエリーログファイルのサイズが閾値に指定した値以上になると、ローテートされます。（デフォルトは0（無効）です）</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-t">
+<code class="descname">-t</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--max-threads</code><code class="descclassname"> &lt;max threasd&gt;</code><a class="headerlink" href="#cmdoption-groonga-t" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>最大で利用するスレッド数を指定します。(デフォルトはマシンのCPUコア数と同じ数です)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-pid-path">
+<code class="descname">--pid-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-pid-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>PIDを保存するパスを指定します。(デフォルトでは保存しません)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-config-path">
+<code class="descname">--config-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-config-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>設定ファイルのパスを指定します。設定ファイルは以下のようなフォーマットになります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># &#39;#&#39;以降はコメント。
+; &#39;;&#39;以降もコメント。
+
+# &#39;キー = 値&#39;でオプションを指定。
+pid-path = /var/run/groonga.pid
+
+# &#39;=&#39;の前後の空白はは無視される。↓は↑と同じ意味。
+pid-path=/var/run/groonga.pid
+
+# &#39;キー&#39;は&#39;--XXX&#39;スタイルのオプション名と同じものが使える。
+# 例えば、&#39;--pid-path&#39;に対応するキーは&#39;pid-path&#39;。
+# ただし、キーが&#39;config-path&#39;のオプションは無視される。
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-cache-limit">
+<code class="descname">--cache-limit</code><code class="descclassname"> &lt;limit&gt;</code><a class="headerlink" href="#cmdoption-groonga-cache-limit" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>キャッシュ数の最大値を指定します。(デフォルトは100です)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-default-match-escalation-threshold">
+<code class="descname">--default-match-escalation-threshold</code><code class="descclassname"> &lt;threshold&gt;</code><a class="headerlink" href="#cmdoption-groonga-default-match-escalation-threshold" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>検索の挙動をエスカレーションする閾値を指定します。(デフォルトは0です)</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-default-request-timeout">
+<code class="descname">--default-request-timeout</code><code class="descclassname"> &lt;timeout&gt;</code><a class="headerlink" href="#cmdoption-groonga-default-request-timeout" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>デフォルトのリクエストタイムアウトを指定します。単位は秒です。</p>
+<p><code class="docutils literal"><span class="pre">0.1</span></code> のように小数で指定することで1秒未満のタイムアウトを設定できます。 <code class="docutils literal"><span class="pre">0.1</span></code> は100ミリ秒のタイムアウトという意味です。</p>
+<p><code class="docutils literal"><span class="pre">0</span></code> 未満の値を指定するとデフォルトでリクエストタイムアウトは無効になります。</p>
+<p>デフォルト値は <code class="docutils literal"><span class="pre">0</span></code> です。</p>
+<div class="admonition seealso">
+<p class="first admonition-title">参考</p>
+<p class="last"><a class="reference internal" href="../command/request_timeout.html"><span class="doc">リクエストタイムアウト</span></a></p>
+</div>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-cache-base-path">
+<code class="descname">--cache-base-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-cache-base-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.2 で追加.</span></p>
+</div>
+<p>キャッシュの保存先のベースとなるパスを指定します。これを指定すると永続キャッシュ機能が有効になります。</p>
+<p>永続キャッシュ機能を使うと次のメリットがあります。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">groonga</span></code> プロセスが再起動した後もキャッシュを再利用できます。再起動する毎にキャッシュをウォームアップする必要はありません。</li>
+<li>複数の <code class="docutils literal"><span class="pre">groonga</span></code> プロセス間でキャッシュを共有できます。</li>
+</ul>
+</div></blockquote>
+<p>このベースとなるパスはメモリーファイルシステム上のパスを指定するべきです。ディスク上にベースとなるパスを指定するとキャッシュが遅くなります。これでは意味がありません。</p>
+<p>デフォルト値はありません。これは永続キャッシュは無効だということです。代わりにメモリーキャッシュが使われます。</p>
+<p>永続キャッシュはメモリーキャッシュよりも少し遅いです。通常、この差によるパフォーマンスの影響は軽微です。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="command-line-parameters">
+<h2>7.1.3.4. コマンドライン引数<a class="headerlink" href="#command-line-parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-groonga-arg-dest">
+<code class="descname">dest</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-arg-dest" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>使用するデータベースのパス名を指定します。</p>
+<p>クライアントモードの場合は接続先のホスト名とポート番号を指定します(デフォルト値は'localhost:10043')。ポート番号を指定しない場合には、10043が指定されたものとします。</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-arg-command">
+<code class="descname">command</code><code class="descclassname"> [args]</code><a class="headerlink" href="#cmdoption-groonga-arg-command" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>スタンドアロンおよびクライアントモードの場合は、実行するコマンドとその引数をコマンドライン引数に指定できます。コマンドライン引数にcommandを与えなかった場合は、標準入力から一行ずつEOFに達するまでコマンド文字列を読み取り、順次実行します。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="command">
+<span id="command-list-with-continuous-line"></span><h2>7.1.3.5. コマンド<a class="headerlink" href="#command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groongaコマンドを通してデータベースを操作する命令をコマンドと呼びます。コマンドは主にC言語で記述され、groongaプロセスにロードすることによって使用できるようになります。
+それぞれのコマンドは一意な名前と、0個以上の引数を持ちます。</p>
+<p>引数は以下の2種類の方法のいずれかで指定することができます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>形式1: コマンド名 値1 値2,..
+
+形式2: コマンド名 --引数名1 値1 --引数名2 値2,..
+</pre></div>
+</div>
+<p>形式1でコマンドを実行する場合は、定義された順番で値を指定しなければならず、途中の引数の値を省略することはできません。形式2でコマンドを実行する場合は、「--引数名」のように引数の名前を明示しなければならない代わりに、任意の順番で引数を指定することが可能で、途中の引数の指定を省略することもできます。</p>
+<p>標準入力からコマンド文字列を与える場合は、コマンド名と引数名と値は、空白( )で区切ります。空白や、記号「&quot;'()」のうちいずれかを含む値を指定したい場合は、シングルクォート(')かダブルクォート(&quot;)で値を囲みます。値として指定する文字列の中では、改行文字は'n'に置き換えて指定します。また、引用符に使用した文字を値の中で指定する場合には、その文字の前にバックスラッシュ('') を指定します。バックスラッシュ文字自身を値として指定する場合には、その前にバックスラッシュを指定します。</p>
+<p>'\'文字で継続行であることを明示してコマンドリストを記述することができます。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name Terms \
+             --flags TABLE_PAT_KEY \
+             --key_type ShortText \
+             --default_tokenizer TokenBigram
+</pre></div>
+</div>
+</div>
+<div class="section" id="builtin-command">
+<h2>7.1.3.6. 組み込みコマンド<a class="headerlink" href="#builtin-command" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下のコマンドは組み込みコマンドとして予め定義されています。</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">status</span></code></dt>
+<dd>groongaプロセスの状態を表示します。</dd>
+<dt><code class="docutils literal"><span class="pre">table_list</span></code></dt>
+<dd>DBに定義されているテーブルのリストを表示します。</dd>
+<dt><code class="docutils literal"><span class="pre">column_list</span></code></dt>
+<dd>テーブルに定義されているカラムのリストを表示します。</dd>
+<dt><code class="docutils literal"><span class="pre">table_create</span></code></dt>
+<dd>DBにテーブルを追加します。</dd>
+<dt><code class="docutils literal"><span class="pre">column_create</span></code></dt>
+<dd>テーブルにカラムを追加します。</dd>
+<dt><code class="docutils literal"><span class="pre">table_remove</span></code></dt>
+<dd>DBに定義されているテーブルを削除します。</dd>
+<dt><code class="docutils literal"><span class="pre">column_remove</span></code></dt>
+<dd>テーブルに定義されているカラムを削除します。</dd>
+<dt><code class="docutils literal"><span class="pre">load</span></code></dt>
+<dd>テーブルにレコードを挿入します。</dd>
+<dt><code class="docutils literal"><span class="pre">select</span></code></dt>
+<dd>テーブルに含まれるレコードを検索して表示します。</dd>
+<dt><code class="docutils literal"><span class="pre">define_selector</span></code></dt>
+<dd>検索条件をカスタマイズした新たな検索コマンドを定義します。</dd>
+<dt><code class="docutils literal"><span class="pre">quit</span></code></dt>
+<dd>データベースとのセッションを終了します。</dd>
+<dt><code class="docutils literal"><span class="pre">shutdown</span></code></dt>
+<dd>サーバ(デーモン)プロセスを停止します。</dd>
+<dt><code class="docutils literal"><span class="pre">log_level</span></code></dt>
+<dd>ログ出力レベルを設定します。</dd>
+<dt><code class="docutils literal"><span class="pre">log_put</span></code></dt>
+<dd>ログ出力を行います。</dd>
+<dt><code class="docutils literal"><span class="pre">clearlock</span></code></dt>
+<dd>ロックを解除します。</dd>
+</dl>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>7.1.3.7. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>新しいデータベースを作成します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -n /tmp/hoge.db quit
+%
+</pre></div>
+</div>
+<p>作成済みのデータベースにテーブルを定義します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga /tmp/hoge.db table_create Table 0 ShortText
+[[0]]
+%
+</pre></div>
+</div>
+<p>サーバを起動します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -d /tmp/hoge.db
+%
+</pre></div>
+</div>
+<p>httpサーバとして起動します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -d -p 80 --protocol http --document-root /usr/share/groonga/admin_html /tmp/hoge.db
+%
+</pre></div>
+</div>
+<p>サーバに接続し、テーブル一覧を表示します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -c localhost table_list
+[[0],[[&quot;id&quot;,&quot;name&quot;,&quot;path&quot;,&quot;flags&quot;,&quot;domain&quot;],[256,&quot;Table&quot;,&quot;/tmp/hoge.db.0000100&quot;,49152,14]]]
+%
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.3. <code class="docutils literal"><span class="pre">groonga</span></code> 実行ファイル</a><ul>
+<li><a class="reference internal" href="#summary">7.1.3.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.1.3.2. 構文</a><ul>
+<li><a class="reference internal" href="#standalone-mode">7.1.3.2.1. Standalone mode</a></li>
+<li><a class="reference internal" href="#server-mode">7.1.3.2.2. Server mode</a></li>
+<li><a class="reference internal" href="#daemon-mode">7.1.3.2.3. Daemon mode</a></li>
+<li><a class="reference internal" href="#client-mode">7.1.3.2.4. Client mode</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#options">7.1.3.3. オプション</a></li>
+<li><a class="reference internal" href="#command-line-parameters">7.1.3.4. コマンドライン引数</a></li>
+<li><a class="reference internal" href="#command">7.1.3.5. コマンド</a></li>
+<li><a class="reference internal" href="#builtin-command">7.1.3.6. 組み込みコマンド</a></li>
+<li><a class="reference internal" href="#usage">7.1.3.7. 使い方</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="grnslap.html"
+                        title="前の章へ">7.1.2. grnslap</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="groonga-benchmark.html"
+                        title="次の章へ">7.1.4. groonga-benchmark</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="groonga-benchmark.html" title="7.1.4. groonga-benchmark"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

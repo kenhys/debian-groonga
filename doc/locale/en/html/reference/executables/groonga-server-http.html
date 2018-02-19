@@ -1,0 +1,173 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.6. Groonga HTTP server &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.1.7. groonga-suggest-create-dataset" href="groonga-suggest-create-dataset.html" />
+    <link rel="prev" title="7.1.5. groonga-httpd" href="groonga-httpd.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/executables/groonga-server-http.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="groonga-suggest-create-dataset.html" title="7.1.7. groonga-suggest-create-dataset"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="groonga-httpd.html" title="7.1.5. groonga-httpd"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="groonga-http-server">
+<h1>7.1.6. Groonga HTTP server<a class="headerlink" href="#groonga-http-server" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="name">
+<h2>7.1.6.1. Name<a class="headerlink" href="#name" title="Permalink to this headline">¶</a></h2>
+<p>Groonga HTTP server</p>
+</div>
+<div class="section" id="synopsis">
+<h2>7.1.6.2. Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga -d --protocol http DB_PATH
+</pre></div>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>7.1.6.3. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>You can communicate by HTTP if you specify <code class="docutils literal"><span class="pre">http</span></code> to <code class="docutils literal"><span class="pre">--protocol</span></code> option. And output a file that is put under the path, and correspond to specified URI to HTTP request if you specify static page path by <code class="docutils literal"><span class="pre">--document-root</span></code>.</p>
+<p>Groonga has an Web-based administration tool implemented with HTML and JavaScript. If you don't specify <code class="docutils literal"><span class="pre">--document-root</span></code>, regarded as administration tool installed path is specified, so you can use administration tool to access <code class="docutils literal"><span class="pre">http://HOSTNAME:PORT/</span></code> in Web browser.</p>
+</div>
+<div class="section" id="command">
+<h2>7.1.6.4. Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h2>
+<p>You can use the same commands of Groonga that starts of the other mode to Groonga server that starts to specify <code class="docutils literal"><span class="pre">http</span></code>.</p>
+<p>A command takes the arguments. An argument has a name. And there are special arguments <code class="docutils literal"><span class="pre">output_type</span></code> and <code class="docutils literal"><span class="pre">command_version</span></code>.</p>
+<p>In standalone mode or client mode, a command is specified by the following format.</p>
+<blockquote>
+<div><p>Format 1: COMMAND_NAME VALUE1 VALUE2,..</p>
+<p>Format 2: COMMAND_NAME --PARAMETER_NAME1 VALUE1 --PARAMETER_NAME2 VALUE2,..</p>
+</div></blockquote>
+<p>Format 1 and Format 2 are possible to mix. Output type is specified by <code class="docutils literal"><span class="pre">output_type</span></code> in the formats.</p>
+<p>In HTTP server mode, the following formats to specify command:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Format: /d/COMMAND_NAME.OUTPUT_TYPE?ARGUMENT_NAME1=VALUE1&amp;ARGUMENT_NAME2=VALUE2&amp;...
+</pre></div>
+</div>
+<p>But, they need URL encode for command names, arguments names and values.</p>
+<p>You can use GET method only.</p>
+<p>You can specify JSON, TSV and XML to output type.</p>
+<p><code class="docutils literal"><span class="pre">command_version</span></code> is specified for command specification compatibility. See <a class="reference internal" href="../command/command_version.html"><span class="doc">Command version</span></a> for details.</p>
+</div>
+<div class="section" id="return-value">
+<h2>7.1.6.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p>The execution result is output that follows output type specification by the command.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.6. Groonga HTTP server</a><ul>
+<li><a class="reference internal" href="#name">7.1.6.1. Name</a></li>
+<li><a class="reference internal" href="#synopsis">7.1.6.2. Synopsis</a></li>
+<li><a class="reference internal" href="#summary">7.1.6.3. Summary</a></li>
+<li><a class="reference internal" href="#command">7.1.6.4. Command</a></li>
+<li><a class="reference internal" href="#return-value">7.1.6.5. Return value</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="groonga-httpd.html"
+                        title="previous chapter">7.1.5. groonga-httpd</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="groonga-suggest-create-dataset.html"
+                        title="next chapter">7.1.7. groonga-suggest-create-dataset</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="groonga-suggest-create-dataset.html" title="7.1.7. groonga-suggest-create-dataset"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="groonga-httpd.html" title="7.1.5. groonga-httpd"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

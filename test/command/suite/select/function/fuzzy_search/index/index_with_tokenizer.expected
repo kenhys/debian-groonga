@@ -1,0 +1,53 @@
+table_create Users TABLE_NO_KEY
+[[0,0.0,0.0],true]
+column_create Users name COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+table_create Names TABLE_PAT_KEY ShortText --default_tokenizer TokenDelimit
+[[0,0.0,0.0],true]
+column_create Names user COLUMN_INDEX|WITH_POSITION Users name
+[[0,0.0,0.0],true]
+load --table Users
+[
+{"name": "Tom Yamada"},
+{"name": "Tomy Yamada"},
+{"name": "Ken Yamada"},
+{"name": "Tom Yamad"}
+]
+[[0,0.0,0.0],4]
+select Users --filter 'fuzzy_search(name, "Tom Yamad")'   --output_columns 'name, _score'   --match_escalation_threshold -1
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        3
+      ],
+      [
+        [
+          "name",
+          "ShortText"
+        ],
+        [
+          "_score",
+          "Int32"
+        ]
+      ],
+      [
+        "Tom Yamada",
+        2
+      ],
+      [
+        "Tomy Yamada",
+        1
+      ],
+      [
+        "Tom Yamad",
+        3
+      ]
+    ]
+  ]
+]

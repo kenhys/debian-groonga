@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.1. grndb &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.1.2. grnslap" href="grnslap.html" />
+    <link rel="prev" title="7.1. Executables" href="../executables.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/executables/grndb.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../executables.html" title="7.1. Executables"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grndb">
+<h1>7.1.1. <code class="docutils literal"><span class="pre">grndb</span></code><a class="headerlink" href="#grndb" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.1.1.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 4.0.9.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> manages a Groonga database.</p>
+<p>Here are features:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Checks whether database is broken or not.</li>
+<li>Recovers broken database automatically if the database is
+recoverable.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="syntax">
+<h2>7.1.1.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> requires command and database path:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>grndb COMMAND [OPTIONS] DATABASE_PATH
+</pre></div>
+</div>
+<p>Here are available commands:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">check</span></code> - Checks whether database is broken or not.</li>
+<li><code class="docutils literal"><span class="pre">recover</span></code> - Recovers database.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>7.1.1.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example to check the database at <code class="docutils literal"><span class="pre">/var/lib/groonga/db/db</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>Here is an example to recover the database at <code class="docutils literal"><span class="pre">/var/lib/groonga/db/db</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+<div class="section" id="commands">
+<h2>7.1.1.4. Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p>This section describes available commands.</p>
+<div class="section" id="check">
+<h3>7.1.1.4.1. <code class="docutils literal"><span class="pre">check</span></code><a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h3>
+<p>It checks an existing Groonga database. If the database is broken,
+<code class="docutils literal"><span class="pre">grndb</span></code> reports reasons and exits with non-<code class="docutils literal"><span class="pre">0</span></code> exit status.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must not use this command for opened database. If the database
+is opened, this command may report wrong result.</p>
+</div>
+<p><code class="docutils literal"><span class="pre">check</span></code> has some options.</p>
+<div class="section" id="target">
+<h4>7.1.1.4.1.1. <code class="docutils literal"><span class="pre">--target</span></code><a class="headerlink" href="#target" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 5.1.2.</span></p>
+</div>
+<p>It specifies a check target object.</p>
+<p>If your database is large and you know an unreliable object, this
+option will help you. <code class="docutils literal"><span class="pre">check</span></code> need more time for large database. You
+can reduce check time by <code class="docutils literal"><span class="pre">--target</span></code> option to reduce check target.</p>
+<p>The check target is checked recursive. Because related objects of
+unreliable object will be unreliable.</p>
+<p>If the check target is a table, all columns of the table are also
+checked recursive.</p>
+<p>If the check target is a table and its key type is another table, the
+another table is also checked recursive.</p>
+<p>If the check target is a column and its value type is a table, the
+table is also checked recursive.</p>
+<p>If the check target is an index column, the table specified as value
+type and all sources are also checked recursive.</p>
+<p>Here is an example that checks only <code class="docutils literal"><span class="pre">Entries</span></code> table and its
+columns:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --target Entries /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>Here is an example that checks only <code class="docutils literal"><span class="pre">Entries.name</span></code> column:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --target Entries.name /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-level">
+<h4>7.1.1.4.1.2. <code class="docutils literal"><span class="pre">--log-level</span></code><a class="headerlink" href="#log-level" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.0.4.</span></p>
+</div>
+<p>It specifies a log level of <code class="docutils literal"><span class="pre">grndb</span></code> log.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--log-level</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../commands/log_level.html"><span class="doc">log_level</span></a> to know about supported log level.</p>
+</div>
+<div class="section" id="log-path">
+<h4>7.1.1.4.1.3. <code class="docutils literal"><span class="pre">--log-path</span></code><a class="headerlink" href="#log-path" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.0.4.</span></p>
+</div>
+<p>It specifies a path of <code class="docutils literal"><span class="pre">grndb</span></code> log.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--log-path</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="recover">
+<h3>7.1.1.4.2. <code class="docutils literal"><span class="pre">recover</span></code><a class="headerlink" href="#recover" title="Permalink to this headline">¶</a></h3>
+<p>It recovers an existing broken Groonga database.</p>
+<p>If the database is not broken, <code class="docutils literal"><span class="pre">grndb</span></code> does nothing and exits with
+<code class="docutils literal"><span class="pre">0</span></code> exit status.</p>
+<p>If the database is broken and one or more index columns are only
+broken, <code class="docutils literal"><span class="pre">grndb</span></code> recovers these index columns and exists with <code class="docutils literal"><span class="pre">0</span></code>
+exit status. It may take a long time for large indexed data.</p>
+<p>If the database is broken and tables or data columns are broken,
+<code class="docutils literal"><span class="pre">grndb</span></code> reports broken reasons and exits with non-<code class="docutils literal"><span class="pre">0</span></code> exit
+status. You can know whether the database is recoverable or not by
+<code class="docutils literal"><span class="pre">check</span></code> command.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must not use this command for opened database. If the database
+is opened, this command may break the database.</p>
+</div>
+<p><code class="docutils literal"><span class="pre">recover</span></code> has some options.</p>
+<div class="section" id="force-truncate">
+<h4>7.1.1.4.2.1. <code class="docutils literal"><span class="pre">--force-truncate</span></code><a class="headerlink" href="#force-truncate" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.0.4.</span></p>
+</div>
+<p>It forces to truncate a corrupted database object.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--force-truncate</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --force-truncate --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>When this option is specified, <code class="docutils literal"><span class="pre">grndb</span></code> does the followings:</p>
+<ul class="simple">
+<li>check whether there is a corrupted database object (table, column, indexes)</li>
+<li>truncate a corrupted database object (table, column, indexes)</li>
+<li>remove incremental files with .00N suffix which is created when large amount of data is loaded</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">--force-truncate</span></code> option is destructive one. Even though lock is still remained, <code class="docutils literal"><span class="pre">grndb</span></code> truncates a targeted corrupted database object.</p>
+<p>After <code class="docutils literal"><span class="pre">grndb</span> <span class="pre">recover</span></code> command has finished, you need to load data
+against truncated tables or columns to recreate database.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must use this option only when necessary. It means that you use it when there is a mismatch between database meta information and database object files which exists actually. This options should be used when there is no other way to recover database.</p>
+</div>
+</div>
+<div class="section" id="force-lock-clear">
+<span id="grndb-force-lock-clear"></span><h4>7.1.1.4.2.2. <code class="docutils literal"><span class="pre">--force-lock-clear</span></code><a class="headerlink" href="#force-lock-clear" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.1.1.</span></p>
+</div>
+<p>It forces to clear lock of database, table and data column. It doesn't
+clear lock of index column. If index column has lock, the index column
+is recreated instead of clearing lock.</p>
+<p>Normally, you should truncate and load data again instead of just
+clearing lock. Because objects that have lock may be broken. This
+option is provided only for users who know the risk that &quot;the database
+may be broken but I want to keep using it&quot;.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--force-lock-clear</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --force-lock-clear --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>When this option is specified, <code class="docutils literal"><span class="pre">grndb</span></code> does the followings:</p>
+<ul class="simple">
+<li>check whether there are database, table or data column that have lock</li>
+<li>clear lock of these objects</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You must use this option only when necessary. Because your database
+may not be recovered. The database that has objects that have lock
+may be broken or not be broken. You can keep using the database but
+Groonga may crash if the database is broken.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>7.1.1.4.2.3. <code class="docutils literal"><span class="pre">--log-level</span></code><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.0.4.</span></p>
+</div>
+<p>It specifies a log level of <code class="docutils literal"><span class="pre">grndb</span></code> log.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--log-level</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../commands/log_level.html"><span class="doc">log_level</span></a> to know about supported log level.</p>
+</div>
+<div class="section" id="id2">
+<h4>7.1.1.4.2.4. <code class="docutils literal"><span class="pre">--log-path</span></code><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 7.0.4.</span></p>
+</div>
+<p>It specifies a path of <code class="docutils literal"><span class="pre">grndb</span></code> log.</p>
+<p>Here is an example that specifies <code class="docutils literal"><span class="pre">--log-path</span></code> option:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.1. <code class="docutils literal"><span class="pre">grndb</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.1.1.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.1.1.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.1.1.3. Usage</a></li>
+<li><a class="reference internal" href="#commands">7.1.1.4. Commands</a><ul>
+<li><a class="reference internal" href="#check">7.1.1.4.1. <code class="docutils literal"><span class="pre">check</span></code></a><ul>
+<li><a class="reference internal" href="#target">7.1.1.4.1.1. <code class="docutils literal"><span class="pre">--target</span></code></a></li>
+<li><a class="reference internal" href="#log-level">7.1.1.4.1.2. <code class="docutils literal"><span class="pre">--log-level</span></code></a></li>
+<li><a class="reference internal" href="#log-path">7.1.1.4.1.3. <code class="docutils literal"><span class="pre">--log-path</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recover">7.1.1.4.2. <code class="docutils literal"><span class="pre">recover</span></code></a><ul>
+<li><a class="reference internal" href="#force-truncate">7.1.1.4.2.1. <code class="docutils literal"><span class="pre">--force-truncate</span></code></a></li>
+<li><a class="reference internal" href="#force-lock-clear">7.1.1.4.2.2. <code class="docutils literal"><span class="pre">--force-lock-clear</span></code></a></li>
+<li><a class="reference internal" href="#id1">7.1.1.4.2.3. <code class="docutils literal"><span class="pre">--log-level</span></code></a></li>
+<li><a class="reference internal" href="#id2">7.1.1.4.2.4. <code class="docutils literal"><span class="pre">--log-path</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../executables.html"
+                        title="previous chapter">7.1. Executables</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="grnslap.html"
+                        title="next chapter">7.1.2. grnslap</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../executables.html" title="7.1. Executables"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

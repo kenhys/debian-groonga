@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.2. grnslap &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.1.3. groonga executable file" href="groonga.html" />
+    <link rel="prev" title="7.1.1. grndb" href="grndb.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/executables/grnslap.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="groonga.html" title="7.1.3. groonga executable file"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grndb.html" title="7.1.1. grndb"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grnslap">
+<h1>7.1.2. grnslap<a class="headerlink" href="#grnslap" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>7.1.2.1. 名前<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>grnslap - groongaプロセスの通信層のパフォーマンスをチェックするツール</p>
+</div>
+<div class="section" id="id2">
+<h2>7.1.2.2. 書式<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>grnslap [options] [dest]
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>7.1.2.3. 説明<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>grnslapは、groongaプロセスに対してリクエストを多重に行い、パフォーマンスをチェックするためのツールです。</p>
+<p>Groonga独自プロトコルであるGQTPと、httpの両プロトコルでリクエストを行うことができます。また、リクエストの多重度を指定することができます。</p>
+<p>クエリの内容を標準入力から与えることができます。実稼動環境でのクエリパタンに近いクエリを標準入力に与えることによって、実稼動環境に近い状態での検証を行うことができます。</p>
+<p>現在は、make installしてもインストールは行われない。</p>
+</div>
+<div class="section" id="id4">
+<h2>7.1.2.4. オプション<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-grnslap-p">
+<code class="descname">-P</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-grnslap-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>リクエストのプロトコルを指定します。</p>
+<p><cite>http</cite></p>
+<blockquote>
+<div>httpでリクエストします。対象のhttpのパス群(GETパラメータを含む)をLF区切り形式で標準入力に与えると、それらのパスに順次アクセスします。</div></blockquote>
+<p><cite>gqtp</cite></p>
+<blockquote>
+<div>gqtpでリクエストします。gqtpのリクエストをLF区切り形式で標準入力に与えると、それらのリクエストを順次行います。</div></blockquote>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-grnslap-m">
+<code class="descname">-m</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-grnslap-m" title="Permalink to this definition">¶</a></dt>
+<dd><p>リクエストの多重度を指定します。初期値は10です。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id5">
+<h2>7.1.2.5. 引数<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-grnslap-arg-dest">
+<code class="descname">dest</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-grnslap-arg-dest" title="Permalink to this definition">¶</a></dt>
+<dd><p>接続先のホスト名とポート番号をを指定します(デフォルト値は'localhost:10041')。ポート番号を指定しない場合には、10041が指定されたものとします。</p>
+</dd></dl>
+
+</div>
+<div class="section" id="id6">
+<h2>7.1.2.6. サンプル<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://localhost:10041/d/status">http://localhost:10041/d/status</a> に、多重度100でリクエストを行う。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; yes /d/status | head -n 100 | grnslap -P http -m 100 localhost:10041
+2009-11-12 19:34:09.998696|begin: max_concurrency=100 max_tp=10000
+2009-11-12 19:34:10.011208|end  : n=100 min=46 max=382 avg=0 qps=7992.966190 etime=0.012511
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.2. grnslap</a><ul>
+<li><a class="reference internal" href="#id1">7.1.2.1. 名前</a></li>
+<li><a class="reference internal" href="#id2">7.1.2.2. 書式</a></li>
+<li><a class="reference internal" href="#id3">7.1.2.3. 説明</a></li>
+<li><a class="reference internal" href="#id4">7.1.2.4. オプション</a></li>
+<li><a class="reference internal" href="#id5">7.1.2.5. 引数</a></li>
+<li><a class="reference internal" href="#id6">7.1.2.6. サンプル</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grndb.html"
+                        title="previous chapter">7.1.1. <code class="docutils literal"><span class="pre">grndb</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="groonga.html"
+                        title="next chapter">7.1.3. <code class="docutils literal"><span class="pre">groonga</span></code> executable file</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="groonga.html" title="7.1.3. groonga executable file"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grndb.html" title="7.1.1. grndb"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. Executables</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

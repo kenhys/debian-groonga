@@ -1,0 +1,18 @@
+Execution example::
+
+  select Nonexistent
+  # [
+  #   [
+  #     -22, 
+  #     1337566253.89858, 
+  #     0.000355720520019531, 
+  #     "[select][table] invalid name: <Nonexistent>", 
+  #     [
+  #       [
+  #         "grn_select", 
+  #         "proc_select.c", 
+  #         3095
+  #       ]
+  #     ]
+  #   ]
+  # ]

@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>5.1. サーバーパッケージ &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="5.2. HTTP" href="http.html" />
+    <link rel="prev" title="5. サーバー" href="../server.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/server/package.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="http.html" title="5.2. HTTP"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../server.html" title="5. サーバー"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" accesskey="U">5. サーバー</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="server-packages">
+<h1>5.1. サーバーパッケージ<a class="headerlink" href="#server-packages" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p><code class="docutils literal"><span class="pre">groonga</span></code> パッケージは全文検索を行うための最小構成のパッケージです。サーバー用途で使うために、設定済みのパッケージを追加でインストールすることができます。</p>
+<p>サーバー用途の2つのパッケージがあります。</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">groonga-httpd</span></code> (nginxをベースにしたHTTPサーバー)</li>
+<li><code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code> (<a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> サーバー)</li>
+</ul>
+<p>groongaがGQTPだけでなく、2つのHTTPサーバーパッケージをサポートしているのには理由があります。 <a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> - Groonga Query Transfer Protocol はオーバーヘッドを低減し、パフォーマンスを向上させるように設計されていますが、HTTPプロトコルほどクライアントライブラリのサポートがありません。HTTPは枯れたプロトコルなので既存のツールを活用できたり、多くのクライアントライブラリが存在します。(詳細は <a class="reference external" href="http://groonga.org/ja/related-projects.html">関連プロジェクト</a> を参照) <code class="docutils literal"><span class="pre">groonga-httpd</span></code> パッケージを使うと nginxの機能の恩恵を受けることができます。</p>
+<p>最初は <code class="docutils literal"><span class="pre">groonga-httpd</span></code> パッケージを使うことをおすすめします。プロトコルのオーバーヘッドがパフォーマンス上問題となったら <code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code> を検討してください。</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">In the previous versions, there is a <code class="docutils literal"><span class="pre">groonga-server-http</span></code> package (simple HTTP protocol
+based server package). It is now marked as obsolete, please use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> packages
+instead. <code class="docutils literal"><span class="pre">groonga-server-http</span></code> package became a transitional package for <code class="docutils literal"><span class="pre">groonga-httpd</span></code>.</p>
+</div>
+</div></blockquote>
+<div class="section" id="groonga-httpd">
+<h2>5.1.1. groonga-httpd<a class="headerlink" href="#groonga-httpd" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-httpd</span></code> はnginxをベースにしたHTTPサーバーパッケージです。</p>
+<p>設定済みの内容:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">既定値</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ポート番号</td>
+<td>10041</td>
+</tr>
+<tr class="row-odd"><td>アクセスログ</td>
+<td>/var/log/groonga/httpd/acccess.log</td>
+</tr>
+<tr class="row-even"><td>エラーログ</td>
+<td>/var/log/groonga/http-query.log</td>
+</tr>
+<tr class="row-odd"><td>データベース</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+<tr class="row-even"><td>設定ファイル</td>
+<td>/etc/groonga/httpd/groonga-httpd.conf</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="start-http-server">
+<h3>5.1.1.1. HTTPサーバーを起動<a class="headerlink" href="#start-http-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd start
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-httpd
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-http-server">
+<h3>5.1.1.2. HTTPサーバーを終了<a class="headerlink" href="#stop-http-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを終了(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd stop
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-httpd
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-http-server">
+<h3>5.1.1.3. HTTPサーバーを再起動<a class="headerlink" href="#restart-http-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを再起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd restart
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを再起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-httpd
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="groonga-server-gqtp">
+<h2>5.1.2. groonga-server-gqtp<a class="headerlink" href="#groonga-server-gqtp" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code> は <a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> サーバーパッケージです。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">既定値</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ポート番号</td>
+<td>10043</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../reference/log.html#process-log"><span class="std std-ref">プロセスログ</span></a></td>
+<td>/var/log/groonga/groonga-gqtp.log</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../reference/log.html#query-log"><span class="std std-ref">クエリーログ</span></a></td>
+<td>/var/log/groonga/gqtp-query.log</td>
+</tr>
+<tr class="row-odd"><td>データベース</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+</tbody>
+</table>
+<p>サーバー設定ファイル (Debian/Ubuntu):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/default/groonga/groonga-server-gqtp
+</pre></div>
+</div>
+<p>サーバー設定ファイル(CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/sysconfig/groonga-server-gqtp
+</pre></div>
+</div>
+<div class="section" id="start-gqtp-server">
+<h3>5.1.2.1. GQTPサーバーを起動<a class="headerlink" href="#start-gqtp-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga GQTPサーバーを起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-gqtp start
+</pre></div>
+</div>
+<p>groonga GQTPサーバーを起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-gqtp-server">
+<h3>5.1.2.2. GQTPサーバーを終了<a class="headerlink" href="#stop-gqtp-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga GQTPサーバーを終了(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http stop
+</pre></div>
+</div>
+<p>groonga GQTPサーバーを終了(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-gqtp-server">
+<h3>5.1.2.3. GQTPサーバーを再起動<a class="headerlink" href="#restart-gqtp-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを再起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-gqtp restart
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを再起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="groonga-server-http">
+<h2>5.1.3. groonga-server-http<a class="headerlink" href="#groonga-server-http" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-server-http</span></code> は簡易HTTPサーバーパッケージです。</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last"><code class="docutils literal"><span class="pre">groonga-server-http</span></code> package is the transitional package since Groonga 4.0.8.
+Please use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> instead.</p>
+</div>
+</div></blockquote>
+<p>設定済みの内容:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項目</th>
+<th class="head">既定値</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ポート番号</td>
+<td>10041</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../reference/log.html#process-log"><span class="std std-ref">プロセスログ</span></a></td>
+<td>/var/log/groonga/groonga-http.log</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../reference/log.html#query-log"><span class="std std-ref">クエリーログ</span></a></td>
+<td>/var/log/groonga/http-query.log</td>
+</tr>
+<tr class="row-odd"><td>データベース</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+</tbody>
+</table>
+<p>サーバー設定ファイル (Debian/Ubuntu):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/default/groonga/groonga-server-http
+</pre></div>
+</div>
+<p>サーバー設定ファイル(CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/sysconfig/groonga-server-http
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h3>5.1.3.1. HTTPサーバーを起動<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http start
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-server-http
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>5.1.3.2. HTTPサーバーを終了<a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを終了(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http stop
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを終了(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-server-http
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>5.1.3.3. HTTPサーバーを再起動<a class="headerlink" href="#id3" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groonga HTTPサーバーを再起動(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http restart
+</pre></div>
+</div>
+<p>groonga HTTPサーバーを再起動(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-server-http
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.1. サーバーパッケージ</a><ul>
+<li><a class="reference internal" href="#groonga-httpd">5.1.1. groonga-httpd</a><ul>
+<li><a class="reference internal" href="#start-http-server">5.1.1.1. HTTPサーバーを起動</a></li>
+<li><a class="reference internal" href="#stop-http-server">5.1.1.2. HTTPサーバーを終了</a></li>
+<li><a class="reference internal" href="#restart-http-server">5.1.1.3. HTTPサーバーを再起動</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#groonga-server-gqtp">5.1.2. groonga-server-gqtp</a><ul>
+<li><a class="reference internal" href="#start-gqtp-server">5.1.2.1. GQTPサーバーを起動</a></li>
+<li><a class="reference internal" href="#stop-gqtp-server">5.1.2.2. GQTPサーバーを終了</a></li>
+<li><a class="reference internal" href="#restart-gqtp-server">5.1.2.3. GQTPサーバーを再起動</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#groonga-server-http">5.1.3. groonga-server-http</a><ul>
+<li><a class="reference internal" href="#id1">5.1.3.1. HTTPサーバーを起動</a></li>
+<li><a class="reference internal" href="#id2">5.1.3.2. HTTPサーバーを終了</a></li>
+<li><a class="reference internal" href="#id3">5.1.3.3. HTTPサーバーを再起動</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../server.html"
+                        title="前の章へ">5. サーバー</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="http.html"
+                        title="次の章へ">5.2. HTTP</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="http.html" title="5.2. HTTP"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../server.html" title="5. サーバー"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" >5. サーバー</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.9. Token filters &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.10. Query expanders" href="query_expanders.html" />
+    <link rel="prev" title="7.8. Tokenizers" href="tokenizers.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/token_filters.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="query_expanders.html" title="7.10. Query expanders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tokenizers.html" title="7.8. Tokenizers"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="token-filters">
+<h1>7.9. Token filters<a class="headerlink" href="#token-filters" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.9.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Groonga has token filter module that some processes tokenized token.</p>
+<p>Token filter module can be added as a plugin.</p>
+<p>You can customize tokenized token by registering your token filters plugins to Groonga.</p>
+<p>A table can have zero or more token filters. You can attach token
+filters to a table by <a class="reference internal" href="commands/table_create.html#table-create-token-filters"><span class="std std-ref">token_filters</span></a> option in
+<a class="reference internal" href="commands/table_create.html"><span class="doc">table_create</span></a>.</p>
+<p>Here is an example <code class="docutils literal"><span class="pre">table_create</span></code> that uses <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code>
+token filter module:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>plugin_register token_filters/stop_word
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto \
+  --token_filters TokenFilterStopWord
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+</div>
+<div class="section" id="available-token-filters">
+<h2>7.9.2. Available token filters<a class="headerlink" href="#available-token-filters" title="Permalink to this headline">¶</a></h2>
+<p>Here is the list of available token filters:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code></li>
+<li><code class="docutils literal"><span class="pre">TokenFilterStem</span></code></li>
+</ul>
+<div class="section" id="tokenfilterstopword">
+<span id="token-filter-stop-word"></span><h3>7.9.2.1. <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code><a class="headerlink" href="#tokenfilterstopword" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> removes stop words from tokenized token
+in searching the documents.</p>
+<p><code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> can specify stop word after adding the
+documents because it removes token in searching the documents.</p>
+<p>The stop word is specified <code class="docutils literal"><span class="pre">is_stop_word</span></code> column on lexicon table.</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code> token filter:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>plugin_register token_filters/stop_word
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Memos TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Memos content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto \
+  --token_filters TokenFilterStopWord
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms memos_content COLUMN_INDEX|WITH_POSITION Memos content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms is_stop_word COLUMN_SCALAR Bool
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Terms
+[
+{&quot;_key&quot;: &quot;and&quot;, &quot;is_stop_word&quot;: true}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 1]
+load --table Memos
+[
+{&quot;content&quot;: &quot;Hello&quot;},
+{&quot;content&quot;: &quot;Hello and Good-bye&quot;},
+{&quot;content&quot;: &quot;Good-bye&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+select Memos --match_columns content --query &quot;Hello and&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;Hello&quot;
+#       ],
+#       [
+#         2,
+#         &quot;Hello and Good-bye&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">and</span></code> token is marked as stop word in <code class="docutils literal"><span class="pre">Terms</span></code> table.</p>
+<p><code class="docutils literal"><span class="pre">&quot;Hello&quot;</span></code> that doesn't have <code class="docutils literal"><span class="pre">and</span></code> in content is matched. Because
+<code class="docutils literal"><span class="pre">and</span></code> is a stop word and <code class="docutils literal"><span class="pre">and</span></code> is removed from query.</p>
+</div>
+<div class="section" id="tokenfilterstem">
+<span id="token-filter-stem"></span><h3>7.9.2.2. <code class="docutils literal"><span class="pre">TokenFilterStem</span></code><a class="headerlink" href="#tokenfilterstem" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">TokenFilterStem</span></code> stems tokenized token.</p>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">TokenFilterStem</span></code> token filter:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>plugin_register token_filters/stem
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Memos TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Memos content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto \
+  --token_filters TokenFilterStem
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms memos_content COLUMN_INDEX|WITH_POSITION Memos content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Memos
+[
+{&quot;content&quot;: &quot;I develop Groonga&quot;},
+{&quot;content&quot;: &quot;I&#39;m developing Groonga&quot;},
+{&quot;content&quot;: &quot;I developed Groonga&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+select Memos --match_columns content --query &quot;develops&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;I develop Groonga&quot;
+#       ],
+#       [
+#         2,
+#         &quot;I&#39;m developing Groonga&quot;
+#       ],
+#       [
+#         3,
+#         &quot;I developed Groonga&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>All of <code class="docutils literal"><span class="pre">develop</span></code>, <code class="docutils literal"><span class="pre">developing</span></code>, <code class="docutils literal"><span class="pre">developed</span></code> and <code class="docutils literal"><span class="pre">develops</span></code>
+tokens are stemmed as <code class="docutils literal"><span class="pre">develop</span></code>. So we can find <code class="docutils literal"><span class="pre">develop</span></code>,
+<code class="docutils literal"><span class="pre">developing</span></code> and <code class="docutils literal"><span class="pre">developed</span></code> by <code class="docutils literal"><span class="pre">develops</span></code> query.</p>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>7.9.3. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="commands/table_create.html"><span class="doc">table_create</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.9. Token filters</a><ul>
+<li><a class="reference internal" href="#summary">7.9.1. Summary</a></li>
+<li><a class="reference internal" href="#available-token-filters">7.9.2. Available token filters</a><ul>
+<li><a class="reference internal" href="#tokenfilterstopword">7.9.2.1. <code class="docutils literal"><span class="pre">TokenFilterStopWord</span></code></a></li>
+<li><a class="reference internal" href="#tokenfilterstem">7.9.2.2. <code class="docutils literal"><span class="pre">TokenFilterStem</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">7.9.3. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tokenizers.html"
+                        title="previous chapter">7.8. Tokenizers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="query_expanders.html"
+                        title="next chapter">7.10. Query expanders</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="query_expanders.html" title="7.10. Query expanders"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tokenizers.html" title="7.8. Tokenizers"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

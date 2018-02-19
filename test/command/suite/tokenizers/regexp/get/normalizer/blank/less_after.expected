@@ -1,0 +1,67 @@
+table_create Lexicon TABLE_PAT_KEY ShortText   --default_tokenizer TokenRegexp   --normalizer NormalizerAuto
+[[0,0.0,0.0],true]
+table_tokenize Lexicon "abc\nd" --mode ADD
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "￯",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "ab",
+      "position": 1,
+      "force_prefix": false
+    },
+    {
+      "value": "bc",
+      "position": 2,
+      "force_prefix": false
+    },
+    {
+      "value": "c",
+      "position": 3,
+      "force_prefix": false
+    },
+    {
+      "value": "d",
+      "position": 5,
+      "force_prefix": false
+    },
+    {
+      "value": "￰",
+      "position": 6,
+      "force_prefix": false
+    }
+  ]
+]
+table_tokenize Lexicon "abc\nd" --mode GET
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "ab",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "bc",
+      "position": 1,
+      "force_prefix": false
+    },
+    {
+      "value": "d",
+      "position": 3,
+      "force_prefix": true
+    }
+  ]
+]

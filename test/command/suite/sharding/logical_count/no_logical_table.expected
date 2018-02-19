@@ -1,0 +1,4 @@
+plugin_register sharding
+[[0,0.0,0.0],true]
+logical_count
+[[[-22,0.0,0.0],"[logical_count] logical_table is missing"]]

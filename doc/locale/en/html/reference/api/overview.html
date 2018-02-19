@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.1. Overview &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.24.2. Global configurations" href="global_configurations.html" />
+    <link rel="prev" title="7.24. API" href="../api.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/api/overview.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="global_configurations.html" title="7.24.2. Global configurations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../api.html" title="7.24. API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<h1>7.24.1. Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.1.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>You can use Groonga as a library. You need to use the following APIs to
+initialize and finalize Groonga.</p>
+<p><a class="reference internal" href="#c.grn_init" title="grn_init"><code class="xref c c-func docutils literal"><span class="pre">grn_init()</span></code></a> initializes Groonga.
+In contrast, <a class="reference internal" href="#c.grn_fin" title="grn_fin"><code class="xref c c-func docutils literal"><span class="pre">grn_fin()</span></code></a> finalizes Groonga.</p>
+<p>You must call <a class="reference internal" href="#c.grn_init" title="grn_init"><code class="xref c c-func docutils literal"><span class="pre">grn_init()</span></code></a> only once before you use APIs which
+are provided by Groonga. You must call <a class="reference internal" href="#c.grn_fin" title="grn_fin"><code class="xref c c-func docutils literal"><span class="pre">grn_fin()</span></code></a> only once
+after you finish to use APIs which are provided by Groonga.</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.1.2. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example that uses Groonga as a full-text search library.</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">grn_rc</span> <span class="n">rc</span><span class="p">;</span>
+<span class="cm">/* It initializes resources used by Groonga. */</span>
+<span class="n">rc</span> <span class="o">=</span> <span class="n">grn_init</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rc</span> <span class="o">!=</span> <span class="n">GRN_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="cm">/* Some Groonga API calling codes... */</span>
+<span class="cm">/* It releases resources used by Groonga. */</span>
+<span class="n">grn_fin</span><span class="p">();</span>
+<span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>7.24.1.3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="c.grn_init">
+grn_rc <code class="descname">grn_init</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.grn_init" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">grn_init()</span></code> initializes resources that are used by Groonga. You
+must call it just once before you call other Groonga APIs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on error.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_fin">
+grn_rc <code class="descname">grn_fin</code><span class="sig-paren">(</span>void<span class="sig-paren">)</span><a class="headerlink" href="#c.grn_fin" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">grn_fin()</span></code> releases resources that are used by Groonga. You can't
+call other Groonga APIs after you call <code class="docutils literal"><span class="pre">grn_fin()</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on error.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.1. Overview</a><ul>
+<li><a class="reference internal" href="#summary">7.24.1.1. Summary</a></li>
+<li><a class="reference internal" href="#example">7.24.1.2. Example</a></li>
+<li><a class="reference internal" href="#reference">7.24.1.3. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../api.html"
+                        title="previous chapter">7.24. API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="global_configurations.html"
+                        title="next chapter">7.24.2. Global configurations</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="global_configurations.html" title="7.24.2. Global configurations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../api.html" title="7.24. API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+table_create LandMarks TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create LandMarks location COLUMN_SCALAR WGS84GeoPoint
+[[0,0.0,0.0],true]
+column_create LandMarks code COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+load --table LandMarks
+[
+{"_key":"a","location":"x","code":"a0000000"},
+{"_key":"b","location":"x","code":"b0000000"},
+{"_key":"b","location":"x","code":"b0000001"},
+{"_key":"b","location":"x","code":"b0000002"},
+{"_key":"b","location":"x","code":"b0000003"},
+{"_key":"b","location":"x","code":"b0000004"},
+{"_key":"b","location":"x","code":"b0000005"},
+{"_key":"b","location":"x","code":"b0000006"}
+]
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "<LandMarks.location>: failed to cast to <WGS84GeoPoint>: <\"x\">"
+  ],
+  8
+]
+#|e| <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"a">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+#|e| [table][load] failed to set column value: <LandMarks.location>: failed to cast to <WGS84GeoPoint>: <"x">: key: <"b">, column: <location>, value: <"x">
+select LandMarks --filter 'code == "a0000000"' --output_columns _key
+[[0,0.0,0.0],[[[1],[["_key","ShortText"]],["a"]]]]

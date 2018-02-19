@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.10.1. QueryExpanderTSV &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.11. スコアラー" href="../scorer.html" />
+    <link rel="prev" title="7.10. クエリー展開オブジェクト一覧" href="../query_expanders.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/query_expanders/tsv.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../scorer.html" title="7.11. スコアラー"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../query_expanders.html" title="7.10. クエリー展開オブジェクト一覧"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../query_expanders.html" accesskey="U">7.10. クエリー展開オブジェクト一覧</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="queryexpandertsv">
+<h1>7.10.1. QueryExpanderTSV<a class="headerlink" href="#queryexpandertsv" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.10.1.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">QueryExpanderTSV</span></code> はクエリー展開プラグインです。同義語はTSV（データをタブで区切るファイルフォーマット）ファイルから読み込みます。このプラグインは組み込みのクエリー展開機能よりも機能が少ないです。例えば、単語の正規化をサポートしていません。しかし、TSVファイルで同義語を管理できるためこちらの方が使いやすいかもしれません。TSVファイルなのでExcelなどの表計算ソフトで同義語を編集できます。組み込みのクエリー展開機能では、Groongaのテーブルとして同義語を管理します。</p>
+</div>
+<div class="section" id="install">
+<h2>7.10.1.2. インストール<a class="headerlink" href="#install" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">QueryExpanderTSV</span></code> を使う前に <code class="docutils literal"><span class="pre">query_expanders/tsv</span></code> をプラグインとして登録します:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>plugin_register query_expanders/tsv
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.10.1.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">select</span></code> コマンドに <code class="docutils literal"><span class="pre">--query_expander</span> <span class="pre">QueryExpanderTSV</span></code> パラメーターを追加します:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;QUERY&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">QUERY</span></code> 内に登録済みの同義語がある場合はそれらが展開されます。例えば、以下の同義語があるとします。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="32%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">単語</th>
+<th class="head">同義語1</th>
+<th class="head">同義語2</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>groonga</td>
+<td>groonga</td>
+<td>Senna</td>
+</tr>
+<tr class="row-odd"><td>mroonga</td>
+<td>mroonga</td>
+<td>groonga MySQL</td>
+</tr>
+</tbody>
+</table>
+<p>この表は、 <code class="docutils literal"><span class="pre">単語</span></code> の同義語は <code class="docutils literal"><span class="pre">同義語1</span></code> と <code class="docutils literal"><span class="pre">同義語2</span></code> という意味です。例えば、 <code class="docutils literal"><span class="pre">groonga</span></code> の同義語は <code class="docutils literal"><span class="pre">groonga</span></code> と <code class="docutils literal"><span class="pre">Senna</span></code> です。また、 <code class="docutils literal"><span class="pre">mroonga</span></code> の同義語は <code class="docutils literal"><span class="pre">mroonga</span></code> と <code class="docutils literal"><span class="pre">groonga</span> <span class="pre">MySQL</span></code> です。</p>
+<p>クエリーが <code class="docutils literal"><span class="pre">groonga</span></code> のときのクエリー展開の例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;groonga&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>上記のコマンドは以下のコマンドと同じ意味です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;groonga OR Senna&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>クエリーが <code class="docutils literal"><span class="pre">mroonga</span> <span class="pre">search</span></code> のときのクエリー展開の例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;mroonga search&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>上記のコマンドは以下のコマンドと同じ意味です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;(mroonga OR (groonga MySQL)) search&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>登録されている単語だけ（ここでは <code class="docutils literal"><span class="pre">groonga</span></code> と <code class="docutils literal"><span class="pre">mroonga</span></code> ）クエリー展開されて、登録されていない単語（ここでは <code class="docutils literal"><span class="pre">search</span></code> ）はクエリー展開されていないことが大事なポイントです。また、再帰的にクエリー展開しません。クエリー展開した結果の <code class="docutils literal"><span class="pre">(mroonga</span> <span class="pre">OR</span> <span class="pre">(groonga</span> <span class="pre">MySQL))</span></code> の中に <code class="docutils literal"><span class="pre">groonga</span></code> がありますが、これは展開されません。</p>
+<p>通常、同義語の中に <code class="docutils literal"><span class="pre">単語</span></code> 自身も含める必要があります。例えば、 <code class="docutils literal"><span class="pre">groonga</span></code> と <code class="docutils literal"><span class="pre">mroonga</span></code> が同義語の中に含まれています。もし、 <code class="docutils literal"><span class="pre">単語</span></code> 自身を無視したい場合は同義語の中に <code class="docutils literal"><span class="pre">単語</span></code> を含めないでください。例えば、クエリー展開機能をスペル訂正機能として使う場合は、以下のような同義語を使ってください。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="54%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">単語</th>
+<th class="head">同義語</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>gronga</td>
+<td>groonga</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal"><span class="pre">単語</span></code> の <code class="docutils literal"><span class="pre">gronga</span></code> には誤字があります。 <code class="docutils literal"><span class="pre">o</span></code> がひとつ足りません。 <code class="docutils literal"><span class="pre">同義語</span></code> の <code class="docutils literal"><span class="pre">groonga</span></code> が正しい単語です。</p>
+<p>スペル訂正機能としてクエリー展開機能を使う例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;gronga&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>上記のコマンドは以下のコマンドと同じ意味です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --query &quot;groonga&quot; --query_expander QueryExpanderTSV
+</pre></div>
+</div>
+<p>前者のコマンドは <code class="docutils literal"><span class="pre">--query</span></code> の値に誤字がありますが、後者のコマンドは誤字がありません。</p>
+</div>
+<div class="section" id="tsv-file">
+<h2>7.10.1.4. TSVファイル<a class="headerlink" href="#tsv-file" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>同義語はTSVフォーマットのファイルで定義します。このセクションでは定義方法について説明します。</p>
+<div class="section" id="location">
+<h3>7.10.1.4.1. 場所<a class="headerlink" href="#location" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>TSVファイルのファイル名は <code class="docutils literal"><span class="pre">synonyms.tsv</span></code> で、設定ディレクトリに置かなければいけません。例えば、 <code class="docutils literal"><span class="pre">/etc/groonga/synonyms.tsv</span></code> がTSVファイルの場所になります。場所はビルド時に決まります。</p>
+<p>環境変数 <code class="docutils literal"><span class="pre">GRN_QUERY_EXPANDER_TSV_SYNONYMS_FILE</span></code> を指定することで実行時に場所を変更することもできます:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% env GRN_QUERY_EXPANDER_TSV_SYNONYMS_FILE=/tmp/synonyms.tsv groonga
+</pre></div>
+</div>
+<p>上述のコマンドでは <code class="docutils literal"><span class="pre">/tmp/synonyms.tsv</span></code> ファイルが使われます。</p>
+</div>
+<div class="section" id="format">
+<h3>7.10.1.4.2. フォーマット<a class="headerlink" href="#format" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>TSVファイル内に0個以上の同義語を定義することができます。1行につき <code class="docutils literal"><span class="pre">単語</span></code> と <code class="docutils literal"><span class="pre">同義語リスト</span></code> のペアを定義します。 <code class="docutils literal"><span class="pre">--query</span></code> の値の中にでてきた <code class="docutils literal"><span class="pre">単語</span></code> は <code class="docutils literal"><span class="pre">同義語リスト</span></code> に展開されます。 <code class="docutils literal"><span class="pre">同義語リスト</span></code> は <code class="docutils literal"><span class="pre">OR</span></code> でまとめます。例えば、同義語リスト <code class="docutils literal"><span class="pre">groonga</span></code> と <code class="docutils literal"><span class="pre">Senna</span></code> は <code class="docutils literal"><span class="pre">groonga</span> <span class="pre">OR</span> <span class="pre">Senna</span></code> と展開されます。</p>
+<p>最初のカラムが <code class="docutils literal"><span class="pre">単語</span></code> で、残りのカラムが <code class="docutils literal"><span class="pre">単語</span></code> の <code class="docutils literal"><span class="pre">同義語リスト</span></code> になります。以下は、 <code class="docutils literal"><span class="pre">単語</span></code> が <code class="docutils literal"><span class="pre">groonga</span></code> で、 <code class="docutils literal"><span class="pre">同義語リスト</span></code> が <code class="docutils literal"><span class="pre">groonga</span></code> と <code class="docutils literal"><span class="pre">synonyms</span></code> の例です。 <code class="docutils literal"><span class="pre">(TAB)</span></code> はタブ文字（ <code class="docutils literal"><span class="pre">U+0009</span></code> ）という意味です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga(TAB)groonga(TAB)Senna
+</pre></div>
+</div>
+<p>コメント行をサポートしています。 <code class="docutils literal"><span class="pre">#</span></code> から始まる行は無視します。以下はコメント行の例です。 <code class="docutils literal"><span class="pre">groonga</span></code> とある行はコメント行として無視されます:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>#groonga(TAB)groonga(TAB)Senna
+mroonga(TAB)mroonga(TAB)groonga MySQL
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="limitation">
+<h2>7.10.1.5. 制限<a class="headerlink" href="#limitation" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>同義語を再読み込みするにはgroongaを再起動する必要があります。TSVファイルはプラグイン読み込み時に一度だけ読み込みます。</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.10.1.6. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>詳細については <a class="reference internal" href="../commands/select.html#select-query-expander"><span class="std std-ref">query_expander</span></a> を参照してください。</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.10.1. QueryExpanderTSV</a><ul>
+<li><a class="reference internal" href="#summary">7.10.1.1. 概要</a></li>
+<li><a class="reference internal" href="#install">7.10.1.2. インストール</a></li>
+<li><a class="reference internal" href="#usage">7.10.1.3. 使い方</a></li>
+<li><a class="reference internal" href="#tsv-file">7.10.1.4. TSVファイル</a><ul>
+<li><a class="reference internal" href="#location">7.10.1.4.1. 場所</a></li>
+<li><a class="reference internal" href="#format">7.10.1.4.2. フォーマット</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limitation">7.10.1.5. 制限</a></li>
+<li><a class="reference internal" href="#see-also">7.10.1.6. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../query_expanders.html"
+                        title="前の章へ">7.10. クエリー展開オブジェクト一覧</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../scorer.html"
+                        title="次の章へ">7.11. スコアラー</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../scorer.html" title="7.11. スコアラー"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../query_expanders.html" title="7.10. クエリー展開オブジェクト一覧"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../query_expanders.html" >7.10. クエリー展開オブジェクト一覧</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

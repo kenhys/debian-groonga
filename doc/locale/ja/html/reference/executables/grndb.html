@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.1. grndb &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.1.2. grnslap" href="grnslap.html" />
+    <link rel="prev" title="7.1. 実行ファイル" href="../executables.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/executables/grndb.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../executables.html" title="7.1. 実行ファイル"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grndb">
+<h1>7.1.1. <code class="docutils literal"><span class="pre">grndb</span></code><a class="headerlink" href="#grndb" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.1.1.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 4.0.9 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> はGroongaのデータベースを管理します。</p>
+<p>機能は次の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li>データベースが壊れているかどうかをチェックする。</li>
+<li>壊れたデータベースが復旧可能なら自動でデータベースを復旧する。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="syntax">
+<h2>7.1.1.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> にはコマンドとデータベースのパスを渡します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>grndb COMMAND [OPTIONS] DATABASE_PATH
+</pre></div>
+</div>
+<p>利用可能なコマンドは以下の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">check</span></code> - データベースが壊れているかどうかをチェックします。</li>
+<li><code class="docutils literal"><span class="pre">recover</span></code> - データベースを復旧します。</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>7.1.1.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下は <code class="docutils literal"><span class="pre">/var/lib/groonga/db/db</span></code> にあるデータベースをチェックする例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>以下は <code class="docutils literal"><span class="pre">/var/lib/groonga/db/db</span></code> にあるデータベースを復旧する例です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+<div class="section" id="commands">
+<h2>7.1.1.4. コマンド一覧<a class="headerlink" href="#commands" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションでは利用可能なコマンドについて説明します。</p>
+<div class="section" id="check">
+<h3>7.1.1.4.1. <code class="docutils literal"><span class="pre">check</span></code><a class="headerlink" href="#check" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>既存のGroongaデータベースをチェックします。もし、データベースが壊れていたら <code class="docutils literal"><span class="pre">grndb</span></code> は詳細を報告し、 <code class="docutils literal"><span class="pre">0</span></code> 以外の終了ステータスで終了します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このコマンドを他のプロセスが開いているデータベースに対しては使ってはいけません。もし、データベースが他のプロセスから開かれていると、このコマンドは間違った結果を報告する可能性があります。</p>
+</div>
+<p><code class="docutils literal"><span class="pre">check</span></code> にはいくつかオプションがあります。</p>
+<div class="section" id="target">
+<h4>7.1.1.4.1.1. <code class="docutils literal"><span class="pre">--target</span></code><a class="headerlink" href="#target" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.1.2 で追加.</span></p>
+</div>
+<p>チェック対象のオブジェクトを指定します。</p>
+<p>もし、データベースが大きく、かつ、信頼できないオブジェクトがわかっているなら、このオプションが役に立つでしょう。 <code class="docutils literal"><span class="pre">check</span></code> は大きなデータベースほど処理に時間がかかります。 <code class="docutils literal"><span class="pre">--target</span></code> オプションでチェック対象を限定することでチェック時間を削減できます。</p>
+<p><code class="docutils literal"><span class="pre">check</span></code> はチェック対象を再帰的にチェックします。なぜなら、信頼できないオブジェクトに関連するオブジェクトも信頼できないことが多いからです。</p>
+<p>チェック対象がテーブルの場合、そのテーブルのすべてのカラムも再帰的にチェックします。</p>
+<p>チェック対象がテーブルでテーブルのキーの型が他のテーブルの場合、他のテーブルも再帰的にチェックします。</p>
+<p>チェック対象がカラムで値の型がテーブルの場合、そのテーブルも再帰的にチェックします。</p>
+<p>チェック対象がインデックスカラムの場合、値の型に指定したテーブルとすべてのソースも再帰的にチェックします。</p>
+<p>以下は <code class="docutils literal"><span class="pre">Entries</span></code> テーブルとそのカラムだけをチェックする例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --target Entries /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>以下は <code class="docutils literal"><span class="pre">Entries.name</span></code> カラムだけをチェックする例です。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --target Entries.name /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-level">
+<h4>7.1.1.4.1.2. <code class="docutils literal"><span class="pre">--log-level</span></code><a class="headerlink" href="#log-level" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.4 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> のログレベルを指定します。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--log-level</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>サポートされているログレベルについては <a class="reference internal" href="../commands/log_level.html"><span class="doc">log_level</span></a> を参照してください。</p>
+</div>
+<div class="section" id="log-path">
+<h4>7.1.1.4.1.3. <code class="docutils literal"><span class="pre">--log-path</span></code><a class="headerlink" href="#log-path" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.4 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> のログ出力先のパスを指定します。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--log-path</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb check --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="recover">
+<h3>7.1.1.4.2. <code class="docutils literal"><span class="pre">recover</span></code><a class="headerlink" href="#recover" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>既存の壊れたGroongaデータベースを復旧します。</p>
+<p>もしデータベースが壊れていなかったら、 <code class="docutils literal"><span class="pre">grndb</span></code> は何もせず終了ステータス <code class="docutils literal"><span class="pre">0</span></code> で終了します。</p>
+<p>もしデータベースが壊れていて、壊れているのがインデックスカラムだけなら、 <code class="docutils literal"><span class="pre">grndb</span></code> は壊れているインデックスカラムを復旧して終了ステータス <code class="docutils literal"><span class="pre">0</span></code> で終了します。インデックス対象のデータが大きい場合は復旧に長時間かかることもあります。</p>
+<p>もしデータベースが壊れていて、壊れているのがテーブルまたはデータカラムの場合は、 <code class="docutils literal"><span class="pre">grndb</span></code> は壊れている原因を報告して <code class="docutils literal"><span class="pre">0</span></code> 以外の終了ステータスで終了します。データベースを復旧可能かどうかは <code class="docutils literal"><span class="pre">check</span></code> コマンドで確認できます。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このコマンドを他のプロセスが開いているデータベースに対しては使ってはいけません。もし、データベースが他のプロセスから開かれていると、このコマンドはデータベースを壊してしまう可能性があります。</p>
+</div>
+<p><code class="docutils literal"><span class="pre">recover</span></code> にはいくつかオプションがあります。</p>
+<div class="section" id="force-truncate">
+<h4>7.1.1.4.2.1. <code class="docutils literal"><span class="pre">--force-truncate</span></code><a class="headerlink" href="#force-truncate" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.4 で追加.</span></p>
+</div>
+<p>壊れたデータベースオブジェクトを強制的に初期化します。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--force-truncate</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --force-truncate --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>このオプションが指定されたとき、 <code class="docutils literal"><span class="pre">grndb</span></code> は次のことを実行します。:</p>
+<ul class="simple">
+<li>壊れたデータベースオブジェクト(テーブル、カラム、インデックス)がないかチェックします</li>
+<li>壊れたデータベースオブジェクト(テーブル、カラム、インデックス)を初期化します</li>
+<li>大量のデータをロードしたときに作られる増分ファイル(末尾に.00Nがつきます)を削除します</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">--force-truncate</span></code> は破壊的なオプションです。ロックが残留していても、 <code class="docutils literal"><span class="pre">grndb</span></code> は構わず対象となる壊れたデータベースオブジェクトを初期化します。</p>
+<p><code class="docutils literal"><span class="pre">grndb</span> <span class="pre">recover</span></code> の処理が終わったら、データベースを再構築するために初期化されたテーブルやカラムに対して再びデータをロードする必要があります。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このオプションは必要なときのみ使用します。つまりデータベースのメタ情報と実際に存在するデータベースのオブジェクトファイルの情報が食い違っているときです。 他にデータベースを復旧する方法がないときのみ使うべきです。</p>
+</div>
+</div>
+<div class="section" id="force-lock-clear">
+<span id="grndb-force-lock-clear"></span><h4>7.1.1.4.2.2. <code class="docutils literal"><span class="pre">--force-lock-clear</span></code><a class="headerlink" href="#force-lock-clear" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.1.1 で追加.</span></p>
+</div>
+<p>データベース・テーブル・データカラムのロックをクリアーします。インデックスカラムのロックはクリアーしません。インデックスカラムにロックが残っている場合はロックをクリアーするのではなく作り直します。</p>
+<p>通常、ロックをクリアーするのではなく、初期化（truncate）してデータをロードし直すべきです。なぜならロックが残留しているオブジェクトは壊れているかもしれないからです。このオプションは「データベースは壊れているかもしれないけどそのまま使い続けたい」というリスクをわかったユーザーだけのために用意されています。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--force-lock-clear</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --force-lock-clear --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>このオプションが指定されたとき、 <code class="docutils literal"><span class="pre">grndb</span></code> は次のことを実行します。:</p>
+<ul class="simple">
+<li>ロックが残留したデータベース・テーブル・データカラムがないかチェック</li>
+<li>これらのオブジェクトのロックをクリアー</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">このオプションは必要なときのみ使用するべきです。なぜならこのデータベースは実は復旧できていないかもしれないからです。ロックが残留しているデータベースは壊れているかもしれませんし壊れていないかもしれません。このオプションを使うことでデータベースを使い続けることはできますが、もしデータベースが壊れていたらGroongaがクラッシュするかもしれません。</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h4>7.1.1.4.2.3. <code class="docutils literal"><span class="pre">--log-level</span></code><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.4 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> のログレベルを指定します。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--log-level</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --log-level info --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+<p>サポートされているログレベルについては <a class="reference internal" href="../commands/log_level.html"><span class="doc">log_level</span></a> を参照してください。</p>
+</div>
+<div class="section" id="id2">
+<h4>7.1.1.4.2.4. <code class="docutils literal"><span class="pre">--log-path</span></code><a class="headerlink" href="#id2" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 7.0.4 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">grndb</span></code> のログ出力先のパスを指定します。</p>
+<p>以下は <code class="docutils literal"><span class="pre">--log-path</span></code> オプションを指定する例です。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% grndb recover --log-path /var/log/groonga/grndb.log /var/lib/groonga/db/db
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.1. <code class="docutils literal"><span class="pre">grndb</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.1.1.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.1.1.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">7.1.1.3. 使い方</a></li>
+<li><a class="reference internal" href="#commands">7.1.1.4. コマンド一覧</a><ul>
+<li><a class="reference internal" href="#check">7.1.1.4.1. <code class="docutils literal"><span class="pre">check</span></code></a><ul>
+<li><a class="reference internal" href="#target">7.1.1.4.1.1. <code class="docutils literal"><span class="pre">--target</span></code></a></li>
+<li><a class="reference internal" href="#log-level">7.1.1.4.1.2. <code class="docutils literal"><span class="pre">--log-level</span></code></a></li>
+<li><a class="reference internal" href="#log-path">7.1.1.4.1.3. <code class="docutils literal"><span class="pre">--log-path</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#recover">7.1.1.4.2. <code class="docutils literal"><span class="pre">recover</span></code></a><ul>
+<li><a class="reference internal" href="#force-truncate">7.1.1.4.2.1. <code class="docutils literal"><span class="pre">--force-truncate</span></code></a></li>
+<li><a class="reference internal" href="#force-lock-clear">7.1.1.4.2.2. <code class="docutils literal"><span class="pre">--force-lock-clear</span></code></a></li>
+<li><a class="reference internal" href="#id1">7.1.1.4.2.3. <code class="docutils literal"><span class="pre">--log-level</span></code></a></li>
+<li><a class="reference internal" href="#id2">7.1.1.4.2.4. <code class="docutils literal"><span class="pre">--log-path</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../executables.html"
+                        title="前の章へ">7.1. 実行ファイル</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="grnslap.html"
+                        title="次の章へ">7.1.2. grnslap</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="grnslap.html" title="7.1.2. grnslap"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../executables.html" title="7.1. 実行ファイル"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

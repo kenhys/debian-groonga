@@ -1,0 +1,20 @@
+#@omit "tokenized delimiter is disabled for now."
+
+#@on-error omit
+plugin_register tokenizers/kytea
+#@on-error default
+
+table_create Memos TABLE_NO_KEY
+column_create Memos content COLUMN_SCALAR Text
+
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenKytea
+column_create Terms memos_content COLUMN_INDEX Memos content
+
+load --table Memos
+[
+{"content": "Th\uFFFEis is a p\uFFFEen."},
+{"content": "これは\uFFFEペン\uFFFEです。"}
+]
+
+select Terms --output_columns _key --limit -1

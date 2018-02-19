@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.19. Suggest &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.19.1. Introduction" href="suggest/introduction.html" />
+    <link rel="prev" title="7.18. Alias" href="alias.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/suggest.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="suggest/introduction.html" title="7.19.1. Introduction"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="alias.html" title="7.18. Alias"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="suggest">
+<h1>7.19. Suggest<a class="headerlink" href="#suggest" title="Permalink to this headline">¶</a></h1>
+<p>Groonga has the suggest feature. This section describes how to use it and how it works.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="suggest/introduction.html">7.19.1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#completion">7.19.1.1. Completion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#correction">7.19.1.2. Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#suggestion">7.19.1.3. Suggestion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#learning">7.19.1.4. Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/completion.html">7.19.2. Completion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-it-works">7.19.2.1. How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-to-use">7.19.2.2. How to use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-it-learns">7.19.2.3. How it learns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-to-update-reading-data">7.19.2.4. How to update reading data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/correction.html">7.19.3. Correction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-it-works">7.19.3.1. How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-to-use">7.19.3.2. How to use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-it-learns">7.19.3.3. How it learns</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/suggestion.html">7.19.4. Suggestion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-it-works">7.19.4.1. How it works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-to-use">7.19.4.2. How to use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-it-learns">7.19.4.3. How it learns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-to-extract-learning-data">7.19.4.4. How to extract learning data</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="alias.html"
+                        title="previous chapter">7.18. Alias</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="suggest/introduction.html"
+                        title="next chapter">7.19.1. Introduction</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="suggest/introduction.html" title="7.19.1. Introduction"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="alias.html" title="7.18. Alias"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

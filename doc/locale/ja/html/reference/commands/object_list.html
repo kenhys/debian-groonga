@@ -1,0 +1,966 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.41. object_list &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.3.42. object_remove" href="object_remove.html" />
+    <link rel="prev" title="7.3.40. object_inspect" href="object_inspect.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/commands/object_list.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="object_remove.html" title="7.3.42. object_remove"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="object_inspect.html" title="7.3.40. object_inspect"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="object-list">
+<h1>7.3.41. <code class="docutils literal"><span class="pre">object_list</span></code><a class="headerlink" href="#object-list" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.41.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 6.0.7 で追加.</span></p>
+</div>
+<p><code class="docutils literal"><span class="pre">object_list</span></code> はデータベース内のオブジェクトの一覧を返します。オブジェクトの情報はデータベース内のメタデータから取得します。 <code class="docutils literal"><span class="pre">object_list</span></code> はオブジェクトの実体を開きません。そのため、 <code class="docutils literal"><span class="pre">object_list</span></code> は多くのテーブル・カラムがあるデータベースに対しても軽い処理のコマンドです。</p>
+<p>通常、 <code class="docutils literal"><span class="pre">object_list</span></code> より <a class="reference internal" href="schema.html"><span class="doc">schema</span></a> の方が便利なコマンドです。なぜなら、 <a class="reference internal" href="schema.html"><span class="doc">schema</span></a> は <code class="docutils literal"><span class="pre">object_list</span></code> より多くの情報を返すからです。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.41.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このコマンドに引数はありません:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>object_list
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.41.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下は出力例を示すためのサンプルスキーマです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Memos TABLE_HASH_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Memos content COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms memos_content_index \
+  COLUMN_INDEX|WITH_POSITION \
+  Memos content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>このデータベースに対する <code class="docutils literal"><span class="pre">object_list</span></code> コマンドの出力は次の通りです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>object_list
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;UInt64&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 11,
+#       &quot;name&quot;: &quot;UInt64&quot;
+#     },
+#     &quot;Int32&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_INT&quot;,
+#         &quot;value&quot;: 8
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 4,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 8,
+#       &quot;name&quot;: &quot;Int32&quot;
+#     },
+#     &quot;Int16&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_INT&quot;,
+#         &quot;value&quot;: 8
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 2,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 6,
+#       &quot;name&quot;: &quot;Int16&quot;
+#     },
+#     &quot;Float&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_FLOAT&quot;,
+#         &quot;value&quot;: 16
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 12,
+#       &quot;name&quot;: &quot;Float&quot;
+#     },
+#     &quot;LongText&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_VAR_SIZE&quot;,
+#         &quot;value&quot;: 16384
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 2147483648,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 16,
+#       &quot;name&quot;: &quot;LongText&quot;
+#     },
+#     &quot;TokyoGeoPoint&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_GEO_POINT&quot;,
+#         &quot;value&quot;: 24
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 17,
+#       &quot;name&quot;: &quot;TokyoGeoPoint&quot;
+#     },
+#     &quot;Text&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_VAR_SIZE&quot;,
+#         &quot;value&quot;: 16384
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 65536,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 15,
+#       &quot;name&quot;: &quot;Text&quot;
+#     },
+#     &quot;ShortText&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_VAR_SIZE&quot;,
+#         &quot;value&quot;: 16384
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 4096,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 14,
+#       &quot;name&quot;: &quot;ShortText&quot;
+#     },
+#     &quot;Object&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 2,
+#       &quot;name&quot;: &quot;Object&quot;
+#     },
+#     &quot;Terms.memos_content_index&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;sources&quot;: [
+#         {
+#           &quot;id&quot;: 257,
+#           &quot;name&quot;: &quot;Memos.content&quot;
+#         }
+#       ],
+#       &quot;range&quot;: {
+#         &quot;id&quot;: 256,
+#         &quot;name&quot;: &quot;Memos&quot;
+#       },
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;COLUMN_INDEX|WITH_POSITION|PERSISTENT&quot;,
+#         &quot;value&quot;: 33282
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: &quot;/tmp/groonga-databases/commands_object_list.0000103&quot;,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 72,
+#         &quot;name&quot;: &quot;column:index&quot;
+#       },
+#       &quot;id&quot;: 259,
+#       &quot;name&quot;: &quot;Terms.memos_content_index&quot;
+#     },
+#     &quot;UInt8&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 1,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 5,
+#       &quot;name&quot;: &quot;UInt8&quot;
+#     },
+#     &quot;UInt32&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 4,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 9,
+#       &quot;name&quot;: &quot;UInt32&quot;
+#     },
+#     &quot;Terms&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;token_filters&quot;: [],
+#       &quot;range&quot;: {
+#         &quot;id&quot;: 0,
+#         &quot;name&quot;: null
+#       },
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;TABLE_PAT_KEY|PERSISTENT&quot;,
+#         &quot;value&quot;: 49153
+#       },
+#       &quot;n_elements&quot;: 5,
+#       &quot;path&quot;: &quot;/tmp/groonga-databases/commands_object_list.0000102&quot;,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 49,
+#         &quot;name&quot;: &quot;table:pat_key&quot;
+#       },
+#       &quot;id&quot;: 258,
+#       &quot;name&quot;: &quot;Terms&quot;
+#     },
+#     &quot;UInt16&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 2,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 7,
+#       &quot;name&quot;: &quot;UInt16&quot;
+#     },
+#     &quot;Bool&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_UINT&quot;,
+#         &quot;value&quot;: 0
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 1,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 3,
+#       &quot;name&quot;: &quot;Bool&quot;
+#     },
+#     &quot;Memos.content&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;range&quot;: {
+#         &quot;id&quot;: 15,
+#         &quot;name&quot;: &quot;Text&quot;
+#       },
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;COLUMN_SCALAR|PERSISTENT&quot;,
+#         &quot;value&quot;: 49152
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: &quot;/tmp/groonga-databases/commands_object_list.0000101&quot;,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 65,
+#         &quot;name&quot;: &quot;column:var_size&quot;
+#       },
+#       &quot;id&quot;: 257,
+#       &quot;name&quot;: &quot;Memos.content&quot;
+#     },
+#     &quot;Time&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_INT&quot;,
+#         &quot;value&quot;: 8
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 13,
+#       &quot;name&quot;: &quot;Time&quot;
+#     },
+#     &quot;Int64&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_INT&quot;,
+#         &quot;value&quot;: 8
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 10,
+#       &quot;name&quot;: &quot;Int64&quot;
+#     },
+#     &quot;WGS84GeoPoint&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_GEO_POINT&quot;,
+#         &quot;value&quot;: 24
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 8,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 18,
+#       &quot;name&quot;: &quot;WGS84GeoPoint&quot;
+#     },
+#     &quot;Memos&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;token_filters&quot;: [],
+#       &quot;range&quot;: {
+#         &quot;id&quot;: 0,
+#         &quot;name&quot;: null
+#       },
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;TABLE_HASH_KEY|PERSISTENT&quot;,
+#         &quot;value&quot;: 49152
+#       },
+#       &quot;n_elements&quot;: 5,
+#       &quot;path&quot;: &quot;/tmp/groonga-databases/commands_object_list.0000100&quot;,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 48,
+#         &quot;name&quot;: &quot;table:hash_key&quot;
+#       },
+#       &quot;id&quot;: 256,
+#       &quot;name&quot;: &quot;Memos&quot;
+#     },
+#     &quot;Int8&quot;: {
+#       &quot;opened&quot;: true,
+#       &quot;flags&quot;: {
+#         &quot;names&quot;: &quot;KEY_INT&quot;,
+#         &quot;value&quot;: 8
+#       },
+#       &quot;n_elements&quot;: 4,
+#       &quot;path&quot;: null,
+#       &quot;size&quot;: 1,
+#       &quot;type&quot;: {
+#         &quot;id&quot;: 32,
+#         &quot;name&quot;: &quot;type&quot;
+#       },
+#       &quot;id&quot;: 4,
+#       &quot;name&quot;: &quot;Int8&quot;
+#     }
+#   }
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.41.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではすべての引数について説明します。</p>
+<div class="section" id="required-parameters">
+<h3>7.3.41.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>必須の引数はありません。</p>
+</div>
+<div class="section" id="optional-parameters">
+<h3>7.3.41.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>省略可能な引数はありません。</p>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.41.5. 戻り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">object_list</span></code> はデータベース内のオブジェクトの情報一覧を返します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, OBJECTS]
+</pre></div>
+</div>
+<div class="section" id="header">
+<h3>7.3.41.5.1. <code class="docutils literal"><span class="pre">HEADER</span></code><a class="headerlink" href="#header" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> については <a class="reference internal" href="../command/output_format.html"><span class="doc">出力形式</span></a> を参照してください。</p>
+</div>
+<div class="section" id="objects">
+<h3>7.3.41.5.2. <code class="docutils literal"><span class="pre">OBJECTS</span></code><a class="headerlink" href="#objects" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">OBJECTS</span></code> はオブジェクト名とオブジェクト詳細のペアの集合です。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;OBJECT_1&quot;: OBJECT_1,
+  &quot;OBJECT_2&quot;: OBJECT_2,
+  ...,
+  &quot;OBJECT_n&quot;: OBJECT_n,
+}
+</pre></div>
+</div>
+<p>各 <code class="docutils literal"><span class="pre">OBJECT</span></code> は共通のプロパティとオブジェクトの種類固有のプロパティを持っています。</p>
+</div>
+<div class="section" id="object-common-properties">
+<h3>7.3.41.5.3. <code class="docutils literal"><span class="pre">OBJECT</span></code> （共通のプロパティ）<a class="headerlink" href="#object-common-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下は共通のプロパティです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;:         ID,
+  &quot;name&quot;:       NAME,
+  &quot;opened&quot;:     OPENED,
+  &quot;value_size&quot;: N_BYTES,
+  &quot;n_elements&quot;: N_ELEMENTS,
+  &quot;type&quot;:       OBJECT_TYPE,
+  &quot;flags&quot;:      FLAGS,
+  &quot;path&quot;:       PATH
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">id</span></code></td>
+<td>このオブジェクトのID。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>このオブジェクトの名前。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">opened</span></code></td>
+<td>このオブジェクトが開かれているかどうか。 <code class="docutils literal"><span class="pre">true</span></code> または <code class="docutils literal"><span class="pre">false</span></code> 。もし、このオブジェクトが開かれていれば値は <code class="docutils literal"><span class="pre">true</span></code> になります。そうでなければ値は <code class="docutils literal"><span class="pre">false</span></code> になります。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">value_size</span></code></td>
+<td><p class="first">このメタデータのバイト数。数値。</p>
+<p class="last">これはこのメタデータが壊れているときだけ現れます。もしこのプロパティが現れたら、 <code class="docutils literal"><span class="pre">type</span></code> 、 <code class="docutils literal"><span class="pre">n_elements</span></code> 、 <code class="docutils literal"><span class="pre">flags</span></code> 、 <code class="docutils literal"><span class="pre">path</span></code> は現れません。なぜなら、これらのプロパティは壊れたメタデータからは取得できないからです。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">n_elements</span></code></td>
+<td>このメタデータ中の内部的な要素の数。数値。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">type</span></code></td>
+<td>このオブジェクトの種類。詳細は <a class="reference internal" href="#object-list-return-value-object-type"><span class="std std-ref">OBJECT_TYPE</span></a> を参照してください。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">flags</span></code></td>
+<td>このオブジェクトのフラグ。詳細は <a class="reference internal" href="#object-list-return-value-flags"><span class="std std-ref">FLAGS</span></a> を参照してください。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">path</span></code></td>
+<td>このオブジェクトのデータを格納しているパス。データを持たないオブジェクトでは <code class="docutils literal"><span class="pre">null</span></code> になります。たとえば、コマンドオブジェクトはデータを持ちません。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-type">
+<span id="object-list-return-value-object-type"></span><h3>7.3.41.5.4. <code class="docutils literal"><span class="pre">OBJECT_TYPE</span></code><a class="headerlink" href="#object-type" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">OBJECT_TYPE</span></code> はオブジェクトの種類を表します。たとえば、パトリシアトライテーブル、ハッシュテーブル、インデックスカラムなどがオブジェクトの種類です。</p>
+<p><code class="docutils literal"><span class="pre">OBJECT_TYPE</span></code> は次のプロパティを持ちます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;:   ID,
+  &quot;name&quot;: NAME
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">id</span></code></td>
+<td>この種類のID。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>この種類の名前。たとえば、 <a class="reference internal" href="../tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a> は <code class="docutils literal"><span class="pre">&quot;table:hash_key&quot;</span></code> 、 <a class="reference internal" href="../columns/vector.html"><span class="doc">ベクターカラム</span></a> は <code class="docutils literal"><span class="pre">&quot;column:var_size&quot;</span></code> 、 <a class="reference internal" href="../columns/index.html"><span class="doc">インデックスカラム</span></a> は <code class="docutils literal"><span class="pre">&quot;column:index&quot;</span></code> となります。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="flags">
+<span id="object-list-return-value-flags"></span><h3>7.3.41.5.5. <code class="docutils literal"><span class="pre">FLAGS</span></code><a class="headerlink" href="#flags" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">FLAGS</span></code> はオブジェクトのフラグを表します。フラグの多くは <a class="reference internal" href="table_create.html"><span class="doc">table_create</span></a> あるいは <a class="reference internal" href="column_create.html"><span class="doc">column_create</span></a> で指定したフラグになるでしょう。いくつかのフラグは内部的に追加されたものです。</p>
+<p><code class="docutils literal"><span class="pre">FLAGS</span></code> は以下のプロパティを持っています。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;value&quot;: VALUE,
+  &quot;names&quot;: NAMES
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">value</span></code></td>
+<td>フラグの値。数値。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">names</span></code></td>
+<td>各フラグの名前一覧。文字列。各フラグ名は <code class="docutils literal"><span class="pre">TABLE_HASH_KEY|PERSISTENT</span></code> というように <code class="docutils literal"><span class="pre">|</span></code> で区切られています。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-type-object-type-specific-properties">
+<h3>7.3.41.5.6. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;type&quot;</span></code> というオブジェクトの種類に固有のプロパティ）<a class="headerlink" href="#object-type-object-type-specific-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">&quot;type&quot;</span></code> というオブジェクトの種類に固有の <code class="docutils literal"><span class="pre">OBJECT</span></code> 中のプロパティは次の通りです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;size&quot;: SIZE
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">size</span></code></td>
+<td>型のサイズ。型が固定サイズの型だった場合は各値のサイズになります。型が可変長サイズの型だった場合は各値の最大サイズになります。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-proc-object-type-specific-properties">
+<h3>7.3.41.5.7. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> というオブジェクトの種類に固有のプロパティ）<a class="headerlink" href="#object-proc-object-type-specific-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下は <code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> という種類のオブジェクト一覧です。</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../command.html"><span class="doc">コマンド</span></a></li>
+<li><a class="reference internal" href="../function.html"><span class="doc">関数</span></a></li>
+<li><a class="reference internal" href="../normalizers.html"><span class="doc">ノーマライザー</span></a></li>
+<li><a class="reference internal" href="../tokenizers.html"><span class="doc">トークナイザー</span></a></li>
+<li><a class="reference internal" href="../token_filters.html"><span class="doc">トークンフィルター</span></a></li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> というオブジェクトの種類に固有の <code class="docutils literal"><span class="pre">OBJECT</span></code> 中のプロパティは次の通りです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;plugin_id&quot;: PLUGIN_ID
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">plugin_id</span></code></td>
+<td><code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> オブジェクトのプラグインID。この <code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> オブジェクトがプラグインで定義されている場合は値は <code class="docutils literal"><span class="pre">1</span></code> 以上の数値になります。組み込みの <code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> オブジェクトのプラグインIDは <code class="docutils literal"><span class="pre">0</span></code> になります。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-table-object-types-specific-properties">
+<h3>7.3.41.5.8. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;table:*&quot;</span></code> というオブジェクトの種類に固有のプロパティ）<a class="headerlink" href="#object-table-object-types-specific-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">&quot;table:*&quot;</span></code> というオブジェクトの種類に固有の <code class="docutils literal"><span class="pre">OBJECT</span></code> 中のプロパティは次の通りです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;range&quot;:         RANGE,
+  &quot;token_filters&quot;: TOKEN_FILTERS
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">range</span></code></td>
+<td>このテーブルの値の型。詳細は <a class="reference internal" href="#object-list-return-value-range"><span class="std std-ref">RANGE</span></a> を参照してください。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">token_filters</span></code></td>
+<td>このテーブルのトークンフィルター一覧。詳細は <a class="reference internal" href="#object-list-return-value-token-filters"><span class="std std-ref">TOKEN_FILTERS</span></a> を参照してください。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="range">
+<span id="object-list-return-value-range"></span><h3>7.3.41.5.9. <code class="docutils literal"><span class="pre">RANGE</span></code><a class="headerlink" href="#range" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">RANGE</span></code> はこの値域の型を表します。</p>
+<p><code class="docutils literal"><span class="pre">RANGE</span></code> は次のプロパティを持ちます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;:   ID,
+  &quot;name&quot;: NAME
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">id</span></code></td>
+<td>この値域の型のID。数値。オブジェクトが値域を持たない場合、IDは <code class="docutils literal"><span class="pre">0</span></code> になります。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>この値域の型の名前。文字列または <code class="docutils literal"><span class="pre">null</span></code> 。このオブジェクトが値域を持たない場合は、名前は <code class="docutils literal"><span class="pre">null</span></code> になります。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="token-filters">
+<span id="object-list-return-value-token-filters"></span><h3>7.3.41.5.10. <code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code><a class="headerlink" href="#token-filters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code> はこのテーブルのトークンフィルターの一覧を表します。</p>
+<p><code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code> は <code class="docutils literal"><span class="pre">TOKEN_FILTER</span></code> の配列になります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  TOKEN_FILTER_1,
+  TOKEN_FILTER_2,
+  ...,
+  TOKEN_FILTER_n
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">TOKEN_FILTER</span></code> は次のプロパティを持ちます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;:   ID,
+  &quot;NAME&quot;: NAME
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">id</span></code></td>
+<td>このトークンフィルターのID。数値。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>このトークンフィルターの名前。文字列。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-column-object-types-specific-properties">
+<h3>7.3.41.5.11. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;column:*&quot;</span></code> というオブジェクトの種類に固有のプロパティ）<a class="headerlink" href="#object-column-object-types-specific-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">&quot;column:*&quot;</span></code> というオブジェクトの種類に固有の <code class="docutils literal"><span class="pre">OBJECT</span></code> 中のプロパティは次の通りです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;range&quot;: RANGE
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">range</span></code></td>
+<td>このカラムの値の型。詳細は <a class="reference internal" href="#object-list-return-value-range"><span class="std std-ref">RANGE</span></a> を参照してください。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="object-column-index-object-type-specific-properties">
+<h3>7.3.41.5.12. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;column:index&quot;</span></code> というオブジェクトの種類に固有のプロパティ）<a class="headerlink" href="#object-column-index-object-type-specific-properties" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">&quot;column:index&quot;</span></code> というオブジェクトの種類に固有の <code class="docutils literal"><span class="pre">OBJECT</span></code> 中のプロパティは次の通りです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;sources&quot;: SOURCES
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">sources</span></code></td>
+<td>このインデックスカラムのソース一覧。詳細は <a class="reference internal" href="#object-list-return-value-sources"><span class="std std-ref">SOURCES</span></a> を参照してください。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sources">
+<span id="object-list-return-value-sources"></span><h3>7.3.41.5.13. <code class="docutils literal"><span class="pre">SOURCES</span></code><a class="headerlink" href="#sources" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">SOURCES</span></code> はこのインデックスカラムのソースの一覧を表します。</p>
+<p><code class="docutils literal"><span class="pre">SOURCES</span></code> は <code class="docutils literal"><span class="pre">SOURCE</span></code> の配列です。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  SOURCE_1,
+  SOURCE_2,
+  ...,
+  SOURCE_n
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">SOURCE</span></code> は次のプロパティを持ちます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{
+  &quot;id&quot;:   ID,
+  &quot;NAME&quot;: NAME
+}
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">id</span></code></td>
+<td>このソーステーブルまたはソースカラムのID。数値。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>このソーステーブルまたはソースカラムの名前。文字列。</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.41.6. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="schema.html"><span class="doc">schema</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.41. <code class="docutils literal"><span class="pre">object_list</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.41.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.3.41.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">7.3.41.3. 使い方</a></li>
+<li><a class="reference internal" href="#parameters">7.3.41.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">7.3.41.4.1. 必須引数</a></li>
+<li><a class="reference internal" href="#optional-parameters">7.3.41.4.2. 省略可能引数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">7.3.41.5. 戻り値</a><ul>
+<li><a class="reference internal" href="#header">7.3.41.5.1. <code class="docutils literal"><span class="pre">HEADER</span></code></a></li>
+<li><a class="reference internal" href="#objects">7.3.41.5.2. <code class="docutils literal"><span class="pre">OBJECTS</span></code></a></li>
+<li><a class="reference internal" href="#object-common-properties">7.3.41.5.3. <code class="docutils literal"><span class="pre">OBJECT</span></code> （共通のプロパティ）</a></li>
+<li><a class="reference internal" href="#object-type">7.3.41.5.4. <code class="docutils literal"><span class="pre">OBJECT_TYPE</span></code></a></li>
+<li><a class="reference internal" href="#flags">7.3.41.5.5. <code class="docutils literal"><span class="pre">FLAGS</span></code></a></li>
+<li><a class="reference internal" href="#object-type-object-type-specific-properties">7.3.41.5.6. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;type&quot;</span></code> というオブジェクトの種類に固有のプロパティ）</a></li>
+<li><a class="reference internal" href="#object-proc-object-type-specific-properties">7.3.41.5.7. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;proc&quot;</span></code> というオブジェクトの種類に固有のプロパティ）</a></li>
+<li><a class="reference internal" href="#object-table-object-types-specific-properties">7.3.41.5.8. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;table:*&quot;</span></code> というオブジェクトの種類に固有のプロパティ）</a></li>
+<li><a class="reference internal" href="#range">7.3.41.5.9. <code class="docutils literal"><span class="pre">RANGE</span></code></a></li>
+<li><a class="reference internal" href="#token-filters">7.3.41.5.10. <code class="docutils literal"><span class="pre">TOKEN_FILTERS</span></code></a></li>
+<li><a class="reference internal" href="#object-column-object-types-specific-properties">7.3.41.5.11. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;column:*&quot;</span></code> というオブジェクトの種類に固有のプロパティ）</a></li>
+<li><a class="reference internal" href="#object-column-index-object-type-specific-properties">7.3.41.5.12. <code class="docutils literal"><span class="pre">OBJECT</span></code> （ <code class="docutils literal"><span class="pre">&quot;column:index&quot;</span></code> というオブジェクトの種類に固有のプロパティ）</a></li>
+<li><a class="reference internal" href="#sources">7.3.41.5.13. <code class="docutils literal"><span class="pre">SOURCES</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">7.3.41.6. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="object_inspect.html"
+                        title="前の章へ">7.3.40. <code class="docutils literal"><span class="pre">object_inspect</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="object_remove.html"
+                        title="次の章へ">7.3.42. <code class="docutils literal"><span class="pre">object_remove</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="object_remove.html" title="7.3.42. object_remove"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="object_inspect.html" title="7.3.40. object_inspect"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

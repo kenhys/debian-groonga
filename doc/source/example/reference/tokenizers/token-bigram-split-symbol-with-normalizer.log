@@ -1,0 +1,37 @@
+Execution example::
+
+  tokenize TokenBigramSplitSymbol "100cents!!!" NormalizerAuto
+  # [
+  #   [
+  #     0, 
+  #     1337566253.89858, 
+  #     0.000355720520019531
+  #   ], 
+  #   [
+  #     {
+  #       "position": 0, 
+  #       "force_prefix": false, 
+  #       "value": "100"
+  #     }, 
+  #     {
+  #       "position": 1, 
+  #       "force_prefix": false, 
+  #       "value": "cents"
+  #     }, 
+  #     {
+  #       "position": 2, 
+  #       "force_prefix": false, 
+  #       "value": "!!"
+  #     }, 
+  #     {
+  #       "position": 3, 
+  #       "force_prefix": false, 
+  #       "value": "!!"
+  #     }, 
+  #     {
+  #       "position": 4, 
+  #       "force_prefix": false, 
+  #       "value": "!"
+  #     }
+  #   ]
+  # ]

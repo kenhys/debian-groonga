@@ -1,0 +1,80 @@
+Execution example::
+
+  select Entries \
+    --limit -1 \
+    --output_columns _id,n_likes \
+    --drilldown tag \
+    --drilldown_calc_types MAX \
+    --drilldown_calc_target n_likes \
+    --drilldown_output_columns _key,_max
+  # [
+  #   [
+  #     0, 
+  #     1337566253.89858, 
+  #     0.000355720520019531
+  #   ], 
+  #   [
+  #     [
+  #       [
+  #         5
+  #       ], 
+  #       [
+  #         [
+  #           "_id", 
+  #           "UInt32"
+  #         ], 
+  #         [
+  #           "n_likes", 
+  #           "UInt32"
+  #         ]
+  #       ], 
+  #       [
+  #         1, 
+  #         5
+  #       ], 
+  #       [
+  #         2, 
+  #         10
+  #       ], 
+  #       [
+  #         3, 
+  #         15
+  #       ], 
+  #       [
+  #         4, 
+  #         3
+  #       ], 
+  #       [
+  #         5, 
+  #         3
+  #       ]
+  #     ], 
+  #     [
+  #       [
+  #         3
+  #       ], 
+  #       [
+  #         [
+  #           "_key", 
+  #           "ShortText"
+  #         ], 
+  #         [
+  #           "_max", 
+  #           "Int64"
+  #         ]
+  #       ], 
+  #       [
+  #         "Hello", 
+  #         5
+  #       ], 
+  #       [
+  #         "Groonga", 
+  #         15
+  #       ], 
+  #       [
+  #         "Senna", 
+  #         3
+  #       ]
+  #     ]
+  #   ]
+  # ]

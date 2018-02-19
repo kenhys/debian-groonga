@@ -1,0 +1,870 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.13. 正規表現 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="7.14. 関数" href="function.html" />
+    <link rel="prev" title="7.12.2. スクリプト構文" href="grn_expr/script_syntax.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/reference/regular_expression.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="function.html" title="7.14. 関数"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="grn_expr/script_syntax.html" title="7.12.2. スクリプト構文"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="regular-expression">
+<h1>7.13. 正規表現<a class="headerlink" href="#regular-expression" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.13.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">正規表現は実験的な機能です。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.1 で追加.</span></p>
+</div>
+<p>Groongaは正規表現を用いたパターンマッチをサポートしています。正規表現はパターンを表現するために広く使われています。正規表現は複雑なパターンを表現するときに便利です。</p>
+<p>多くの場合は、正規表現検索は逐次検索で実行します。これはたくさんのレコードがあったり、たくさんのテキストがある場合は遅くなります。</p>
+<p>いくつかの場合では、正規表現を使ったパターンマッチをインデックスを使って実現します。これは逐次検索よりも非常に高速です。インデックスを使って評価できるパターンについては後述します。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.7 で追加: </span>Groongaは正規表現検索にインデックスを使わないときは、 <a class="reference internal" href="normalizers.html#normalizer-auto"><span class="std std-ref">NormalizerAuto</span></a> ノーマライザーでマッチ対象のテキストを正規化します。これは、 <code class="docutils literal"><span class="pre">Groonga</span></code> というような大文字を使った正規表現は必ずマッチに失敗するということです。なぜなら、 <a class="reference internal" href="normalizers.html#normalizer-auto"><span class="std std-ref">NormalizerAuto</span></a> ノーマライザーはすべてのアルファベットを小文字に正規化するからです。 <code class="docutils literal"><span class="pre">groonga</span></code> は <code class="docutils literal"><span class="pre">Groonga</span></code> にも <code class="docutils literal"><span class="pre">groonga</span></code> にも両方にマッチします。</p>
+<p>なぜマッチ対象のテキストを正規化するのでしょうか？それは、インデックスを使って検索できるパターンを増やすためです。もし、Groongaがマッチ対象のテキストを正規化しなかった場合、大文字小文字を区別しないマッチをするために、 <code class="docutils literal"><span class="pre">[Dd][Ii][Ss][Kk]</span></code> や <code class="docutils literal"><span class="pre">(?i)disk</span></code> のような複雑な正規表現を書く必要があります。Groongaは複雑な正規表現に対してインデックスを使うことができません。</p>
+<p>もし、大文字小文字を区別しないマッチに <code class="docutils literal"><span class="pre">disk</span></code> という正規表現を使うなら、Groongaはインデックスを使ってこのパターンを検索できます。これは高速です。</p>
+<p>この挙動を奇妙に思うかもしれません。しかし、この挙動のおかげで高速に検索できることはきっとあなたの役に立つはずです。</p>
+</div>
+<p>正規表現の構文はたくさんあります。GroongaはRubyと同じ構文を使います。なぜなら、Groongaが使っている正規表現エンジンはRubyが使っている正規表現エンジンと同じだからです。この正規表現エンジンは <a class="reference external" href="https://github.com/k-takata/Onigmo/">Onigmo</a> といいます。他の正規表現の構文との特徴的な違いは <code class="docutils literal"><span class="pre">^</span></code> と <code class="docutils literal"><span class="pre">$</span></code> です。Rubyの正規表現の構文では <code class="docutils literal"><span class="pre">^</span></code> は行頭を表し、 <code class="docutils literal"><span class="pre">$</span></code> は行末を表します。他の多くの正規表現の構文では、 <code class="docutils literal"><span class="pre">^</span></code> はテキストの先頭を表し、 <code class="docutils literal"><span class="pre">$</span></code> はテキストの最後を表します。Rubyの正規表現の構文ではテキストの先頭を表す場合は <code class="docutils literal"><span class="pre">\A</span></code> を使い、テキストの最後を表す場合は <code class="docutils literal"><span class="pre">\z</span></code> を使います。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.6 で追加: </span>Groongaは5.0.6からマルチラインモードを有効にしています。これは、 <code class="docutils literal"><span class="pre">.</span></code> が <code class="docutils literal"><span class="pre">\n</span></code> にマッチするということです。</p>
+<p>しかし、この挙動は意味がありません。なぜなら、 <code class="docutils literal"><span class="pre">\n</span></code> は <a class="reference internal" href="normalizers.html#normalizer-auto"><span class="std std-ref">NormalizerAuto</span></a> ノーマライザーが削除するからです。</p>
+</div>
+<p><a class="reference internal" href="commands/select.html"><span class="doc">select</span></a> コマンドの <a class="reference internal" href="commands/select.html#select-query"><span class="std std-ref">query</span></a> オプションと <a class="reference internal" href="commands/select.html#select-filter"><span class="std std-ref">filter</span></a> オプションで正規表現を使えます。</p>
+</div>
+<div class="section" id="usage">
+<h2>7.13.2. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下は使い方を説明するためのスキーマ定義とサンプルデータです。このスキーマにはテーブルは1つだけです。 <code class="docutils literal"><span class="pre">Logs</span></code> というテーブルです。 <code class="docutils literal"><span class="pre">Logs</span></code> テーブルは1つだけカラムを持ちます。 <code class="docutils literal"><span class="pre">message</span></code> というカラムです。ログメッセージは <code class="docutils literal"><span class="pre">message</span></code> カラムに保存されています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Logs TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Logs message COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Logs
+[
+{&quot;message&quot;: &quot;host1:[error]: No memory&quot;},
+{&quot;message&quot;: &quot;host1:[warning]: Remained disk space is less than 30%&quot;},
+{&quot;message&quot;: &quot;host1:[error]: Disk full&quot;},
+{&quot;message&quot;: &quot;host2:[error]: No memory&quot;},
+{&quot;message&quot;: &quot;host2:[info]: Shutdown&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 5]
+</pre></div>
+</div>
+<p><a class="reference internal" href="commands/select.html#select-query"><span class="std std-ref">query</span></a> で正規表現を使う例です。 <code class="docutils literal"><span class="pre">${COLUMN}:~${REGULAR_EXPRESSION}</span></code> という構文を使います。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --query &#39;message:~&quot;disk (space|full)&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><a class="reference internal" href="commands/select.html#select-filter"><span class="std std-ref">filter</span></a> で正規表現を使う例です。 <code class="docutils literal"><span class="pre">${COLUMN}</span> <span class="pre">&#64;~</span> <span class="pre">${REGULAR_EXPRESSION}</span></code> という構文を使います。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;disk (space|full)&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="index">
+<span id="regular-expression-index"></span><h2>7.13.3. インデックス<a class="headerlink" href="#index" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaは正規表現を使った検索をインデックスを使って実現することができます。これは逐次検索より非常に高速です。</p>
+<p>しかし、すべての正規表現には対応していません。以下の正規表現にのみ対応しています。対応している正規表現は今後増えていく予定です。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">disk</span></code> のようにリテラルしかないパターン</li>
+<li><code class="docutils literal"><span class="pre">\A/disk</span></code> のようにテキストの最初でのマッチとリテラルのみのケース</li>
+<li><code class="docutils literal"><span class="pre">disk\z</span></code> のようにテキストの最後でのマッチとリテラルのみのケース</li>
+</ul>
+</div></blockquote>
+<p>高速に正規表現検索を実現するためにはインデックスを作る必要があります。以下は正規表現用のインデックスが満たさなければいけないことのリストです。</p>
+<blockquote>
+<div><ul class="simple">
+<li>語彙表は <a class="reference internal" href="tables.html#table-pat-key"><span class="std std-ref">TABLE_PAT_KEY</span></a> テーブルであること。</li>
+<li>語彙表は <a class="reference internal" href="tokenizers.html#token-regexp"><span class="std std-ref">TokenRegexp</span></a> トークナイザーを使っていること。</li>
+<li>インデックスカラムは <code class="docutils literal"><span class="pre">WITH_POSITION</span></code> フラグ付きであること。</li>
+</ul>
+</div></blockquote>
+<p>語彙表のノーマライザーといった他の設定は用途に応じて適切なものを設定してください。もし、大文字小文字を区別せずに検索したい場合は <a class="reference internal" href="normalizers.html#normalizer-auto"><span class="std std-ref">NormalizerAuto</span></a> ノーマライザーを使ってください。</p>
+<p>以下はオススメのインデックス定義です。多くの場合はこのインデックス定義が適切です。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create RegexpLexicon TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenRegexp \
+  --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create RegexpLexicon logs_message_index \
+  COLUMN_INDEX|WITH_POSITION Logs message
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>これでインデックスを使って正規表現検索をできるようになりました。以下の正規表現は「テキストの先頭」と「リテラル」しか使っていないのでインデックスを使って検索できます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --query message:~\\\\Ahost1
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;host1:[error]: No memory&quot;
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>以下は <a class="reference internal" href="commands/select.html#select-query"><span class="std std-ref">query</span></a> の代わりに <a class="reference internal" href="commands/select.html#select-filter"><span class="std std-ref">filter</span></a> を使った例です。前の例と同じ正規表現を使っています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;\\\\Ahost1:&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;host1:[error]: No memory&quot;
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">\</span></code> エスケープは紛らわしいかもしれません。あなたが書いたクエリーをGroongaが実行するまでにエスケープが必要なステップがいくつもあるからです。以下は <code class="docutils literal"><span class="pre">\</span></code> エスケープが必要なステップです。</p>
+<blockquote>
+<div><ul>
+<li><p class="first">シェル。ただし、次のようにGroongaのコマンドをコマンドラインで指定した場合のみ:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga /tmp/db select Logs --filter &#39;&quot;message @~ \&quot;\\\\Ahost1:&quot;\&quot;&#39;
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">--filter</span> <span class="pre">'&quot;message</span> <span class="pre">&#64;~</span> <span class="pre">\&quot;\\\\Ahost1:\&quot;&quot;'</span></code> はシェルが評価して次の2つの引数になります。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">--filter</span></code></li>
+<li><code class="docutils literal"><span class="pre">&quot;message</span> <span class="pre">&#64;~</span> <span class="pre">\&quot;\\\\Ahost1:\&quot;&quot;</span></code></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Groongaコマンドパーサー。ただし、GroongaのコマンドをHTTPパススタイル （ <code class="docutils literal"><span class="pre">/d/COMMAND?ARG1_NAME=ARG1_VALUE&amp;ARG2_NAME=ARG3_VALUE</span></code> ） ではなく、コマンドラインスタイル （ <code class="docutils literal"><span class="pre">COMMAND</span> <span class="pre">ARG1_VALUE</span> <span class="pre">ARG2_VALUE</span> <span class="pre">...</span></code> ）で指定した場合のみ。</p>
+<p><code class="docutils literal"><span class="pre">&quot;message</span> <span class="pre">&#64;~</span> <span class="pre">\&quot;\\\\Ahost1:\&quot;&quot;</span></code> はGroongaコマンドパーサーが評価して次の値になります。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">message</span> <span class="pre">&#64;~</span> <span class="pre">&quot;\\Ahost1:&quot;</span></code></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><a class="reference internal" href="grn_expr.html"><span class="doc">grn_expr</span></a> パーサー。 <a class="reference internal" href="grn_expr/query_syntax.html"><span class="doc">クエリー構文</span></a> でも <a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> でも <code class="docutils literal"><span class="pre">\</span></code> エスケープが必要です。</p>
+<p>スクリプト構文で <code class="docutils literal"><span class="pre">&quot;\\Ahost1:&quot;</span></code> という文字列リテラルを評価すると次の値になります。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">\Ahost1</span></code></li>
+</ul>
+</div></blockquote>
+<p>この値が正規表現として評価されます。</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="syntax">
+<span id="regular-expression-syntax"></span><h2>7.13.4. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションでは広く使われている構文だけ説明します。他の構文と詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja">Onigmoの構文ドキュメント</a> を参照してください。</p>
+<div class="section" id="escape">
+<span id="regular-expression-escape"></span><h3>7.13.4.1. エスケープ<a class="headerlink" href="#escape" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>正規表現で特別な文字は次の通りです。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">\</span></code></li>
+<li><code class="docutils literal"><span class="pre">|</span></code></li>
+<li><code class="docutils literal"><span class="pre">(</span></code></li>
+<li><code class="docutils literal"><span class="pre">)</span></code></li>
+<li><code class="docutils literal"><span class="pre">[</span></code></li>
+<li><code class="docutils literal"><span class="pre">]</span></code></li>
+<li><code class="docutils literal"><span class="pre">.</span></code></li>
+<li><code class="docutils literal"><span class="pre">*</span></code></li>
+<li><code class="docutils literal"><span class="pre">+</span></code></li>
+<li><code class="docutils literal"><span class="pre">?</span></code></li>
+<li><code class="docutils literal"><span class="pre">{</span></code></li>
+<li><code class="docutils literal"><span class="pre">}</span></code></li>
+<li><code class="docutils literal"><span class="pre">^</span></code></li>
+<li><code class="docutils literal"><span class="pre">$</span></code></li>
+</ul>
+</div></blockquote>
+<p>これらの特別な文字そのものにマッチするパターンを書きたいときはこれらの文字をエスケープする必要があります。</p>
+<p>特別な文字の前に <code class="docutils literal"><span class="pre">\</span></code> を入れることでエスケープできます。以下は特別な文字そのものにマッチする正規表現です。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">\\</span></code></li>
+<li><code class="docutils literal"><span class="pre">\|</span></code></li>
+<li><code class="docutils literal"><span class="pre">\(</span></code></li>
+<li><code class="docutils literal"><span class="pre">\)</span></code></li>
+<li><code class="docutils literal"><span class="pre">\[</span></code></li>
+<li><code class="docutils literal"><span class="pre">\]</span></code></li>
+<li><code class="docutils literal"><span class="pre">\.</span></code></li>
+<li><code class="docutils literal"><span class="pre">\*</span></code></li>
+<li><code class="docutils literal"><span class="pre">\+</span></code></li>
+<li><code class="docutils literal"><span class="pre">\?</span></code></li>
+<li><code class="docutils literal"><span class="pre">\{</span></code></li>
+<li><code class="docutils literal"><span class="pre">\}</span></code></li>
+<li><code class="docutils literal"><span class="pre">\^</span></code></li>
+<li><code class="docutils literal"><span class="pre">\$</span></code></li>
+</ul>
+</div></blockquote>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;warning|info&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         5,
+#         &quot;host2:[info]: Shutdown&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>正規表現が期待した通りに動かないときはエスケープ無しで特別な文字が使われていないか確認してください。</p>
+</div>
+<div class="section" id="choice">
+<span id="regular-expression-choice"></span><h3>7.13.4.2. 選択<a class="headerlink" href="#choice" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>選択の構文は <code class="docutils literal"><span class="pre">A|B</span></code> です。 <code class="docutils literal"><span class="pre">A</span></code> パターンまたは <code class="docutils literal"><span class="pre">B</span></code> パターンにマッチするとこの正規表現にマッチしたことになります。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;warning|info&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         5,
+#         &quot;host2:[info]: Shutdown&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last">この構文を使った正規表現はインデックスを使って評価できません。</p>
+</div>
+</div>
+<div class="section" id="group">
+<span id="regular-expression-group"></span><h3>7.13.4.3. グループ<a class="headerlink" href="#group" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>グループの構文は <code class="docutils literal"><span class="pre">(...)</span></code> です。グループは次の機能を提供します。</p>
+<blockquote>
+<div><ul class="simple">
+<li>後方参照</li>
+<li>スケープの限定</li>
+</ul>
+</div></blockquote>
+<p>マッチしたグループを <code class="docutils literal"><span class="pre">\n</span></code> （ <code class="docutils literal"><span class="pre">n</span></code> はグループの番号とする） という構文で参照できます。例えば、 <code class="docutils literal"><span class="pre">e(r)\1o\1</span></code> は <code class="docutils literal"><span class="pre">error</span></code> にマッチします。なぜなら、 <code class="docutils literal"><span class="pre">\1</span></code> は1番目ののグループ <code class="docutils literal"><span class="pre">(r)</span></code> のマッチ結果（ <code class="docutils literal"><span class="pre">r</span></code> ）に置き換えられるからです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;e(r)\\\\1o\\\\1&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;host1:[error]: No memory&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ],
+#       [
+#         4,
+#         &quot;host2:[error]: No memory&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>より強力な後方参照機能を使うこともできます。詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja#L299">Onigmoのドキュメントの「8. 後方参照」セクション</a> を参照してください。</p>
+<p>グループ構文はスコープを小さくします。例えば、 <code class="docutils literal"><span class="pre">\[(warning|info)\]</span></code> は選択構文のスコープを小さくしています。この正規表現は <code class="docutils literal"><span class="pre">[warning]</span></code> と <code class="docutils literal"><span class="pre">[info]</span></code> にマッチします。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;\\\\[(warning|info)\\\\]&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         5,
+#         &quot;host2:[info]: Shutdown&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>より強力なグループ関連の機能を使うこともできます。詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja#L224">Onigmoのドキュメントの「7. 拡張式集合」セクション</a> を参照してください。</p>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last">この構文を使った正規表現はインデックスを使って評価できません。</p>
+</div>
+</div>
+<div class="section" id="character-class">
+<span id="regular-expression-character-class"></span><h3>7.13.4.4. 文字クラス<a class="headerlink" href="#character-class" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>文字クラスの構文は <code class="docutils literal"><span class="pre">[...]</span></code> です。文字クラスはマッチする文字を複数指定するときに便利です。</p>
+<p>たとえば、 <code class="docutils literal"><span class="pre">[12]</span></code> は <code class="docutils literal"><span class="pre">1</span></code> または <code class="docutils literal"><span class="pre">2</span></code> にマッチします。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;host[12]&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         5
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;host1:[error]: No memory&quot;
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ],
+#       [
+#         4,
+#         &quot;host2:[error]: No memory&quot;
+#       ],
+#       [
+#         5,
+#         &quot;host2:[info]: Shutdown&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>範囲で文字を指定することもできます。たとえば、 <code class="docutils literal"><span class="pre">[0-9]</span></code> は1文字の数字にマッチします。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;[0-9][0-9]%&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>より強力な文字クラス関連の機能も使うことができます。詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja#L164">Onigmoのドキュメントの「6. 文字集合」セクション</a> を参照してください。</p>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last">この構文を使った正規表現はインデックスを使って評価できません。</p>
+</div>
+</div>
+<div class="section" id="anchor">
+<span id="regular-expression-anchor"></span><h3>7.13.4.5. アンカー<a class="headerlink" href="#anchor" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下はよく使われるアンカーの構文です。いくつかのアンカーはインデックスを使って評価できます。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">アンカー</th>
+<th class="head">説明</th>
+<th class="head">インデックスを使えるか</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">^</span></code></td>
+<td>行頭</td>
+<td>o</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">$</span></code></td>
+<td>行末</td>
+<td>x</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">\A</span></code></td>
+<td>テキストの先頭</td>
+<td>o</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">\z</span></code></td>
+<td>テキストの末尾</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+<p>以下は <code class="docutils literal"><span class="pre">\z</span></code> を使った例です。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;%\\\\z&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;host1:[warning]: Remained disk space is less than 30%&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>他にも使えるアンカーがあります。詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja#L152">Onigmoのドキュメントの「5. 錨」セクション</a> を参照してください。</p>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last"><code class="docutils literal"><span class="pre">\A</span></code> と <code class="docutils literal"><span class="pre">\z</span></code> 以外のアンカーを使った正規表現はインデックスを使って評価できません。</p>
+</div>
+</div>
+<div class="section" id="quantifier">
+<span id="regular-expression-quantifier"></span><h3>7.13.4.6. 量指定子<a class="headerlink" href="#quantifier" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>以下はよく使われる量指定子の構文です。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">量指定子</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">?</span></code></td>
+<td>0回か1回</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">*</span></code></td>
+<td>0回以上</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">+</span></code></td>
+<td>1回以上</td>
+</tr>
+</tbody>
+</table>
+<p>例えば、 <code class="docutils literal"><span class="pre">er+or</span></code> は <code class="docutils literal"><span class="pre">error</span></code> 、 <code class="docutils literal"><span class="pre">errror</span></code> などにマッチします。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs --filter &#39;message @~ &quot;er+or&quot;&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;host1:[error]: No memory&quot;
+#       ],
+#       [
+#         3,
+#         &quot;host1:[error]: Disk full&quot;
+#       ],
+#       [
+#         4,
+#         &quot;host2:[error]: No memory&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>他の量指定子を使うこともできます。詳細は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja#L119">Onigmoのドキュメントの「4. 量指定子」セクション</a> を参照してください。</p>
+<div class="admonition caution">
+<p class="first admonition-title">ご用心</p>
+<p class="last">この構文を使った正規表現はインデックスを使って評価できません。</p>
+</div>
+</div>
+<div class="section" id="others">
+<h3>7.13.4.7. その他<a class="headerlink" href="#others" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>他にも構文があります。それらに興味がある場合は <a class="reference external" href="https://github.com/k-takata/Onigmo/blob/master/doc/RE.ja">Onigmoのドキュメント</a> を参照してください。「文字種」や「文字」の構文に興味があるかもしれません。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.13. 正規表現</a><ul>
+<li><a class="reference internal" href="#summary">7.13.1. 概要</a></li>
+<li><a class="reference internal" href="#usage">7.13.2. 使い方</a></li>
+<li><a class="reference internal" href="#index">7.13.3. インデックス</a></li>
+<li><a class="reference internal" href="#syntax">7.13.4. 構文</a><ul>
+<li><a class="reference internal" href="#escape">7.13.4.1. エスケープ</a></li>
+<li><a class="reference internal" href="#choice">7.13.4.2. 選択</a></li>
+<li><a class="reference internal" href="#group">7.13.4.3. グループ</a></li>
+<li><a class="reference internal" href="#character-class">7.13.4.4. 文字クラス</a></li>
+<li><a class="reference internal" href="#anchor">7.13.4.5. アンカー</a></li>
+<li><a class="reference internal" href="#quantifier">7.13.4.6. 量指定子</a></li>
+<li><a class="reference internal" href="#others">7.13.4.7. その他</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="grn_expr/script_syntax.html"
+                        title="前の章へ">7.12.2. スクリプト構文</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="function.html"
+                        title="次の章へ">7.14. 関数</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="function.html" title="7.14. 関数"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="grn_expr/script_syntax.html" title="7.12.2. スクリプト構文"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.6. Return code &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.7. cache_limit" href="../commands/cache_limit.html" />
+    <link rel="prev" title="7.3.5. Request timeout" href="request_timeout.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/command/return_code.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../commands/cache_limit.html" title="7.3.7. cache_limit"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="request_timeout.html" title="7.3.5. Request timeout"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="return-code">
+<h1>7.3.6. Return code<a class="headerlink" href="#return-code" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.6.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Return code is used to show whether a processing is succeeded or
+not. If the processing is not succeeded, return code shows error type.</p>
+<p>Return code is used in C API and query API. You can check return code
+via <code class="docutils literal"><span class="pre">grn_ctx_t::rc</span></code> in C API. You can check return code by looking
+the header element in query API. See <a class="reference internal" href="output_format.html"><span class="doc">Output format</span></a> about the
+header element in query API.</p>
+</div>
+<div class="section" id="list">
+<h2>7.3.6.2. List<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h2>
+<p>Here is a list of return codes. <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> (= 0) means that the
+processing is succeeded. Return codes that have negative value show
+error type. <code class="docutils literal"><span class="pre">GRN_END_OF_DATA</span></code> is a special return code. It is used
+only C API. It is not showen in query API.</p>
+<ul class="simple">
+<li>0: <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code></li>
+<li>1: <code class="docutils literal"><span class="pre">GRN_END_OF_DATA</span></code></li>
+<li>-1: <code class="docutils literal"><span class="pre">GRN_UNKNOWN_ERROR</span></code></li>
+<li>-2: <code class="docutils literal"><span class="pre">GRN_OPERATION_NOT_PERMITTED</span></code></li>
+<li>-3: <code class="docutils literal"><span class="pre">GRN_NO_SUCH_FILE_OR_DIRECTORY</span></code></li>
+<li>-4: <code class="docutils literal"><span class="pre">GRN_NO_SUCH_PROCESS</span></code></li>
+<li>-5: <code class="docutils literal"><span class="pre">GRN_INTERRUPTED_FUNCTION_CALL</span></code></li>
+<li>-6: <code class="docutils literal"><span class="pre">GRN_INPUT_OUTPUT_ERROR</span></code></li>
+<li>-7: <code class="docutils literal"><span class="pre">GRN_NO_SUCH_DEVICE_OR_ADDRESS</span></code></li>
+<li>-8: <code class="docutils literal"><span class="pre">GRN_ARG_LIST_TOO_LONG</span></code></li>
+<li>-9: <code class="docutils literal"><span class="pre">GRN_EXEC_FORMAT_ERROR</span></code></li>
+<li>-10: <code class="docutils literal"><span class="pre">GRN_BAD_FILE_DESCRIPTOR</span></code></li>
+<li>-11: <code class="docutils literal"><span class="pre">GRN_NO_CHILD_PROCESSES</span></code></li>
+<li>-12: <code class="docutils literal"><span class="pre">GRN_RESOURCE_TEMPORARILY_UNAVAILABLE</span></code></li>
+<li>-13: <code class="docutils literal"><span class="pre">GRN_NOT_ENOUGH_SPACE</span></code></li>
+<li>-14: <code class="docutils literal"><span class="pre">GRN_PERMISSION_DENIED</span></code></li>
+<li>-15: <code class="docutils literal"><span class="pre">GRN_BAD_ADDRESS</span></code></li>
+<li>-16: <code class="docutils literal"><span class="pre">GRN_RESOURCE_BUSY</span></code></li>
+<li>-17: <code class="docutils literal"><span class="pre">GRN_FILE_EXISTS</span></code></li>
+<li>-18: <code class="docutils literal"><span class="pre">GRN_IMPROPER_LINK</span></code></li>
+<li>-19: <code class="docutils literal"><span class="pre">GRN_NO_SUCH_DEVICE</span></code></li>
+<li>-20: <code class="docutils literal"><span class="pre">GRN_NOT_A_DIRECTORY</span></code></li>
+<li>-21: <code class="docutils literal"><span class="pre">GRN_IS_A_DIRECTORY</span></code></li>
+<li>-22: <code class="docutils literal"><span class="pre">GRN_INVALID_ARGUMENT</span></code></li>
+<li>-23: <code class="docutils literal"><span class="pre">GRN_TOO_MANY_OPEN_FILES_IN_SYSTEM</span></code></li>
+<li>-24: <code class="docutils literal"><span class="pre">GRN_TOO_MANY_OPEN_FILES</span></code></li>
+<li>-25: <code class="docutils literal"><span class="pre">GRN_INAPPROPRIATE_I_O_CONTROL_OPERATION</span></code></li>
+<li>-26: <code class="docutils literal"><span class="pre">GRN_FILE_TOO_LARGE</span></code></li>
+<li>-27: <code class="docutils literal"><span class="pre">GRN_NO_SPACE_LEFT_ON_DEVICE</span></code></li>
+<li>-28: <code class="docutils literal"><span class="pre">GRN_INVALID_SEEK</span></code></li>
+<li>-29: <code class="docutils literal"><span class="pre">GRN_READ_ONLY_FILE_SYSTEM</span></code></li>
+<li>-30: <code class="docutils literal"><span class="pre">GRN_TOO_MANY_LINKS</span></code></li>
+<li>-31: <code class="docutils literal"><span class="pre">GRN_BROKEN_PIPE</span></code></li>
+<li>-32: <code class="docutils literal"><span class="pre">GRN_DOMAIN_ERROR</span></code></li>
+<li>-33: <code class="docutils literal"><span class="pre">GRN_RESULT_TOO_LARGE</span></code></li>
+<li>-34: <code class="docutils literal"><span class="pre">GRN_RESOURCE_DEADLOCK_AVOIDED</span></code></li>
+<li>-35: <code class="docutils literal"><span class="pre">GRN_NO_MEMORY_AVAILABLE</span></code></li>
+<li>-36: <code class="docutils literal"><span class="pre">GRN_FILENAME_TOO_LONG</span></code></li>
+<li>-37: <code class="docutils literal"><span class="pre">GRN_NO_LOCKS_AVAILABLE</span></code></li>
+<li>-38: <code class="docutils literal"><span class="pre">GRN_FUNCTION_NOT_IMPLEMENTED</span></code></li>
+<li>-39: <code class="docutils literal"><span class="pre">GRN_DIRECTORY_NOT_EMPTY</span></code></li>
+<li>-40: <code class="docutils literal"><span class="pre">GRN_ILLEGAL_BYTE_SEQUENCE</span></code></li>
+<li>-41: <code class="docutils literal"><span class="pre">GRN_SOCKET_NOT_INITIALIZED</span></code></li>
+<li>-42: <code class="docutils literal"><span class="pre">GRN_OPERATION_WOULD_BLOCK</span></code></li>
+<li>-43: <code class="docutils literal"><span class="pre">GRN_ADDRESS_IS_NOT_AVAILABLE</span></code></li>
+<li>-44: <code class="docutils literal"><span class="pre">GRN_NETWORK_IS_DOWN</span></code></li>
+<li>-45: <code class="docutils literal"><span class="pre">GRN_NO_BUFFER</span></code></li>
+<li>-46: <code class="docutils literal"><span class="pre">GRN_SOCKET_IS_ALREADY_CONNECTED</span></code></li>
+<li>-47: <code class="docutils literal"><span class="pre">GRN_SOCKET_IS_NOT_CONNECTED</span></code></li>
+<li>-48: <code class="docutils literal"><span class="pre">GRN_SOCKET_IS_ALREADY_SHUTDOWNED</span></code></li>
+<li>-49: <code class="docutils literal"><span class="pre">GRN_OPERATION_TIMEOUT</span></code></li>
+<li>-50: <code class="docutils literal"><span class="pre">GRN_CONNECTION_REFUSED</span></code></li>
+<li>-51: <code class="docutils literal"><span class="pre">GRN_RANGE_ERROR</span></code></li>
+<li>-52: <code class="docutils literal"><span class="pre">GRN_TOKENIZER_ERROR</span></code></li>
+<li>-53: <code class="docutils literal"><span class="pre">GRN_FILE_CORRUPT</span></code></li>
+<li>-54: <code class="docutils literal"><span class="pre">GRN_INVALID_FORMAT</span></code></li>
+<li>-55: <code class="docutils literal"><span class="pre">GRN_OBJECT_CORRUPT</span></code></li>
+<li>-56: <code class="docutils literal"><span class="pre">GRN_TOO_MANY_SYMBOLIC_LINKS</span></code></li>
+<li>-57: <code class="docutils literal"><span class="pre">GRN_NOT_SOCKET</span></code></li>
+<li>-58: <code class="docutils literal"><span class="pre">GRN_OPERATION_NOT_SUPPORTED</span></code></li>
+<li>-59: <code class="docutils literal"><span class="pre">GRN_ADDRESS_IS_IN_USE</span></code></li>
+<li>-60: <code class="docutils literal"><span class="pre">GRN_ZLIB_ERROR</span></code></li>
+<li>-61: <code class="docutils literal"><span class="pre">GRN_LZO_ERROR</span></code></li>
+<li>-62: <code class="docutils literal"><span class="pre">GRN_STACK_OVER_FLOW</span></code></li>
+<li>-63: <code class="docutils literal"><span class="pre">GRN_SYNTAX_ERROR</span></code></li>
+<li>-64: <code class="docutils literal"><span class="pre">GRN_RETRY_MAX</span></code></li>
+<li>-65: <code class="docutils literal"><span class="pre">GRN_INCOMPATIBLE_FILE_FORMAT</span></code></li>
+<li>-66: <code class="docutils literal"><span class="pre">GRN_UPDATE_NOT_ALLOWED</span></code></li>
+<li>-67: <code class="docutils literal"><span class="pre">GRN_TOO_SMALL_OFFSET</span></code></li>
+<li>-68: <code class="docutils literal"><span class="pre">GRN_TOO_LARGE_OFFSET</span></code></li>
+<li>-69: <code class="docutils literal"><span class="pre">GRN_TOO_SMALL_LIMIT</span></code></li>
+<li>-70: <code class="docutils literal"><span class="pre">GRN_CAS_ERROR</span></code></li>
+<li>-71: <code class="docutils literal"><span class="pre">GRN_UNSUPPORTED_COMMAND_VERSION</span></code></li>
+<li>-72: <code class="docutils literal"><span class="pre">GRN_NORMALIZER_ERROR</span></code></li>
+<li>-73: <code class="docutils literal"><span class="pre">GRN_TOKEN_FILTER_ERROR</span></code></li>
+<li>-74: <code class="docutils literal"><span class="pre">GRN_COMMAND_ERROR</span></code></li>
+<li>-75: <code class="docutils literal"><span class="pre">GRN_PLUGIN_ERROR</span></code></li>
+<li>-76: <code class="docutils literal"><span class="pre">GRN_SCORER_ERROR</span></code></li>
+<li>-77: <code class="docutils literal"><span class="pre">GRN_CANCEL</span></code></li>
+<li>-78: <code class="docutils literal"><span class="pre">GRN_WINDOW_FUNCTION_ERROR</span></code></li>
+<li>-79: <code class="docutils literal"><span class="pre">GRN_ZSTD_ERROR</span></code></li>
+</ul>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.6.3. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="output_format.html"><span class="doc">Output format</span></a> shows where return code is appeared in query
+API response.</li>
+<li><a class="reference internal" href="../../spec/gqtp.html"><span class="doc">GQTP</span></a>: GQTP protocol also uses return code as status but
+it uses 2byte unsigned integer. So return codes that have negative
+value are statuses that have positive value in GQTP protocol. You
+can convert status value in GQTP protocol to return code by
+handling it as 2byte signed integer.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.6. Return code</a><ul>
+<li><a class="reference internal" href="#summary">7.3.6.1. Summary</a></li>
+<li><a class="reference internal" href="#list">7.3.6.2. List</a></li>
+<li><a class="reference internal" href="#see-also">7.3.6.3. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="request_timeout.html"
+                        title="previous chapter">7.3.5. Request timeout</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../commands/cache_limit.html"
+                        title="next chapter">7.3.7. <code class="docutils literal"><span class="pre">cache_limit</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../commands/cache_limit.html" title="7.3.7. cache_limit"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="request_timeout.html" title="7.3.5. Request timeout"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

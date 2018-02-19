@@ -1,0 +1,232 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.1.9. groonga-suggest-learner &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.2. 出力" href="../output.html" />
+    <link rel="prev" title="7.1.8. groonga-suggest-httpd" href="groonga-suggest-httpd.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/executables/groonga-suggest-learner.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../output.html" title="7.2. 出力"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="groonga-suggest-httpd.html" title="7.1.8. groonga-suggest-httpd"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" accesskey="U">7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="groonga-suggest-learner">
+<h1>7.1.9. groonga-suggest-learner<a class="headerlink" href="#groonga-suggest-learner" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.1.9.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groonga-suggest-learner is a program to learn suggest result from data which derived from groonga-suggest-httpd.
+Usually, it is used with groonga-suggest-httpd, but It is allowed to launch standalone.
+In such a case, groonga-suggest-learner loads data from log directory.</p>
+</div>
+<div class="section" id="synopsis">
+<h2>7.1.9.2. 書式<a class="headerlink" href="#synopsis" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-suggest-learner [options] database_path
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.1.9.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>groonga-suggest-leaner supports the two way of learning data.
+One is learning data from groonga-suggest-httpd, the other is
+learning data from already existing log files.</p>
+<div class="section" id="learning-data-from-groonga-suggest-httpd">
+<h3>7.1.9.3.1. Learning data from groonga-suggest-httpd<a class="headerlink" href="#learning-data-from-groonga-suggest-httpd" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Execute groonga-suggest-learner.:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-suggest-learner testdb/db
+</pre></div>
+</div>
+</div>
+<div class="section" id="learning-data-from-log-files">
+<h3>7.1.9.3.2. Learning data from log files<a class="headerlink" href="#learning-data-from-log-files" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Execute groonga-suggest-learner with <code class="docutils literal"><span class="pre">-l</span></code> option.</p>
+<p>Here is the sample to load log data under <code class="docutils literal"><span class="pre">logs</span></code> directory:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga-suggest-learner -l logs testdb/db
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="options">
+<h2>7.1.9.4. オプション<a class="headerlink" href="#options" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-r">
+<code class="descname">-r</code><code class="descclassname"> &lt;endpoint&gt;</code><code class="descclassname">, </code><code class="descname">--receive-endpoint</code><code class="descclassname"> &lt;endpoint&gt;</code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-r" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Uses <code class="docutils literal"><span class="pre">&lt;endpoint&gt;</span></code> as the receiver endpoint.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-s">
+<code class="descname">-s</code><code class="descclassname"> &lt;endpoint&gt;</code><code class="descclassname">, </code><code class="descname">--send-endpoint</code><code class="descclassname"> &lt;endpoint&gt;</code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-s" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Uses <code class="docutils literal"><span class="pre">&lt;endpoint&gt;</span></code> as the sender endpoint.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-d">
+<code class="descname">-d</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--daemon</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-d" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Runs as a daemon.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-l">
+<code class="descname">-l</code><code class="descclassname"> &lt;directory&gt;</code><code class="descclassname">, </code><code class="descname">--log-base-path</code><code class="descclassname"> &lt;directory&gt;</code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-l" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Reads logs from <code class="docutils literal"><span class="pre">&lt;directory&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-log-path">
+<code class="descname">--log-path</code><code class="descclassname"> &lt;path&gt;</code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-log-path" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Outputs log to <code class="docutils literal"><span class="pre">&lt;path&gt;</span></code>.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-groonga-suggest-learner-log-level">
+<code class="descname">--log-level</code><code class="descclassname"> &lt;level&gt;</code><a class="headerlink" href="#cmdoption-groonga-suggest-learner-log-level" title="この定義へのパーマリンク">¶</a></dt>
+<dd><p>Uses <code class="docutils literal"><span class="pre">&lt;level&gt;</span></code> for log level. <code class="docutils literal"><span class="pre">&lt;level&gt;</span></code> must be between 1 and 9.
+Larger level outputs more logs.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="parameters">
+<h2>7.1.9.5. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">database_path</span></code> だけが必須の引数です。</p>
+<div class="section" id="database-path">
+<h3>7.1.9.5.1. <code class="docutils literal"><span class="pre">database_path</span></code><a class="headerlink" href="#database-path" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>groongaデータベースのパスを指定します。</p>
+</div>
+</div>
+<div class="section" id="related-tables">
+<h2>7.1.9.6. 関連するテーブル<a class="headerlink" href="#related-tables" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Here is the list of table which learned data is stored. If you specify <code class="docutils literal"><span class="pre">query</span></code> as dataset name, following <code class="docutils literal"><span class="pre">_DATASET</span></code> suffix are replaced. Thus, <code class="docutils literal"><span class="pre">event_query</span></code> table is used.</p>
+<ul class="simple">
+<li>event_DATASET</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.1.9. groonga-suggest-learner</a><ul>
+<li><a class="reference internal" href="#summary">7.1.9.1. 概要</a></li>
+<li><a class="reference internal" href="#synopsis">7.1.9.2. 書式</a></li>
+<li><a class="reference internal" href="#usage">7.1.9.3. 使い方</a><ul>
+<li><a class="reference internal" href="#learning-data-from-groonga-suggest-httpd">7.1.9.3.1. Learning data from groonga-suggest-httpd</a></li>
+<li><a class="reference internal" href="#learning-data-from-log-files">7.1.9.3.2. Learning data from log files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#options">7.1.9.4. オプション</a></li>
+<li><a class="reference internal" href="#parameters">7.1.9.5. 引数</a><ul>
+<li><a class="reference internal" href="#database-path">7.1.9.5.1. <code class="docutils literal"><span class="pre">database_path</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#related-tables">7.1.9.6. 関連するテーブル</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="groonga-suggest-httpd.html"
+                        title="前の章へ">7.1.8. <code class="docutils literal"><span class="pre">groonga-suggest-httpd</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../output.html"
+                        title="次の章へ">7.2. 出力</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../output.html" title="7.2. 出力"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="groonga-suggest-httpd.html" title="7.1.8. groonga-suggest-httpd"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../executables.html" >7.1. 実行ファイル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

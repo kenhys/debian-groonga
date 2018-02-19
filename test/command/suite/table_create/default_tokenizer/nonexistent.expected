@@ -1,0 +1,14 @@
+table_create Tags TABLE_PAT_KEY ShortText   --default_tokenizer TokenNonexistent
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[table][create][Tags] unknown tokenizer: <TokenNonexistent>"
+  ],
+  false
+]
+#|e| [table][create][Tags] unknown tokenizer: <TokenNonexistent>
+dump

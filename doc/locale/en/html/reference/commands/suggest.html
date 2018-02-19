@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.57. suggest &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.58. table_copy" href="table_copy.html" />
+    <link rel="prev" title="7.3.56. status" href="status.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/suggest.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="table_copy.html" title="7.3.58. table_copy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="status.html" title="7.3.56. status"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="suggest">
+<h1>7.3.57. <code class="docutils literal"><span class="pre">suggest</span></code><a class="headerlink" href="#suggest" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The suggest feature specification isn't stable. The
+specification may be changed.</p>
+</div>
+<div class="section" id="summary">
+<h2>7.3.57.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>suggest - returns completion, correction and/or suggestion for a query.</p>
+<p>The suggest command returns completion, correction and/or
+suggestion for a specified query.</p>
+<p>See <a class="reference internal" href="../suggest/introduction.html"><span class="doc">Introduction</span></a> about completion,
+correction and suggestion.</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.57.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest types
+        table
+        column
+        query
+        [sortby=-_score]
+        [output_columns=_key,_score]
+        [offset=0]
+        [limit=10]
+        [frequency_threshold=100]
+        [conditional_probability_threshold=0.2]
+        [prefix_search=auto]
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.57.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here are learned data for completion.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table event_query --each &#39;suggest_preparer(_id, type, item, sequence, time, pair_query)&#39;
+[
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950803.86057, &quot;item&quot;: &quot;e&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950803.96857, &quot;item&quot;: &quot;en&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950804.26057, &quot;item&quot;: &quot;eng&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950804.56057, &quot;item&quot;: &quot;engi&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950804.76057, &quot;item&quot;: &quot;engin&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950805.86057, &quot;item&quot;: &quot;engine&quot;, &quot;type&quot;: &quot;submit&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 6]
+</pre></div>
+</div>
+<p>Here are learned data for correction.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table event_query --each &#39;suggest_preparer(_id, type, item, sequence, time, pair_query)&#39;
+[
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950803.86057, &quot;item&quot;: &quot;s&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950803.96857, &quot;item&quot;: &quot;sa&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950804.26057, &quot;item&quot;: &quot;sae&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950804.56057, &quot;item&quot;: &quot;saer&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950804.76057, &quot;item&quot;: &quot;saerc&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950805.76057, &quot;item&quot;: &quot;saerch&quot;, &quot;type&quot;: &quot;submit&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950809.76057, &quot;item&quot;: &quot;serch&quot;},
+{&quot;sequence&quot;: &quot;2&quot;, &quot;time&quot;: 1312950810.86057, &quot;item&quot;: &quot;search&quot;, &quot;type&quot;: &quot;submit&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 8]
+</pre></div>
+</div>
+<p>Here are learned data for suggestion.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table event_query --each &#39;suggest_preparer(_id, type, item, sequence, time, pair_query)&#39;
+[
+{&quot;sequence&quot;: &quot;3&quot;, &quot;time&quot;: 1312950803.86057, &quot;item&quot;: &quot;search engine&quot;, &quot;type&quot;: &quot;submit&quot;},
+{&quot;sequence&quot;: &quot;3&quot;, &quot;time&quot;: 1312950808.86057, &quot;item&quot;: &quot;web search realtime&quot;, &quot;type&quot;: &quot;submit&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+</pre></div>
+</div>
+<p>Here is a completion example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest --table item_query --column kana --types complete --frequency_threshold 1 --query en
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;complete&quot;: [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;engine&quot;,
+#         1
+#       ]
+#     ]
+#   }
+# ]
+</pre></div>
+</div>
+<p>Here is a correction example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest --table item_query --column kana --types correct --frequency_threshold 1 --query saerch
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;correct&quot;: [
+#       [
+#         0
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ]
+#     ]
+#   }
+# ]
+</pre></div>
+</div>
+<p>Here is a suggestion example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest --table item_query --column kana --types suggest --frequency_threshold 1 --query search
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;suggest&quot;: [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;search engine&quot;,
+#         1
+#       ],
+#       [
+#         &quot;web search realtime&quot;,
+#         1
+#       ]
+#     ]
+#   }
+# ]
+</pre></div>
+</div>
+<p>Here is a mixed example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest --table item_query --column kana --types complete|correct|suggest --frequency_threshold 1 --query search
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;suggest&quot;: [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;search engine&quot;,
+#         1
+#       ],
+#       [
+#         &quot;web search realtime&quot;,
+#         1
+#       ]
+#     ],
+#     &quot;complete&quot;: [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;search engine&quot;,
+#         2
+#       ],
+#       [
+#         &quot;search&quot;,
+#         1
+#       ]
+#     ],
+#     &quot;correct&quot;: [
+#       [
+#         0
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ]
+#     ]
+#   }
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.57.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">types</span></code></dt>
+<dd><p class="first">Specifies what types are returned by the suggest
+command.</p>
+<p>Here are available types:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">complete</span></code></dt>
+<dd>The suggest command does completion.</dd>
+<dt><code class="docutils literal"><span class="pre">correct</span></code></dt>
+<dd>The suggest command does correction.</dd>
+<dt><code class="docutils literal"><span class="pre">suggest</span></code></dt>
+<dd>The suggest command does suggestion.</dd>
+</dl>
+</div></blockquote>
+<p>You can specify one or more types separated by <code class="docutils literal"><span class="pre">|</span></code>.
+Here are examples:</p>
+<blockquote class="last">
+<div><p>It returns correction:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>correct
+</pre></div>
+</div>
+<p>It returns correction and suggestion:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>correct|suggest
+</pre></div>
+</div>
+<p>It returns complete, correction and suggestion:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>complete|correct|suggest
+</pre></div>
+</div>
+</div></blockquote>
+</dd>
+<dt><code class="docutils literal"><span class="pre">table</span></code></dt>
+<dd><p class="first">Specifies table name that has <code class="docutils literal"><span class="pre">item_${DATA_SET_NAME}</span></code> format.
+For example, <code class="docutils literal"><span class="pre">item_query</span></code> is a table name if you created
+dataset by the following command:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>groonga-suggest-create-dataset /tmp/db-path query
+</pre></div>
+</div>
+</dd>
+<dt><code class="docutils literal"><span class="pre">column</span></code></dt>
+<dd>Specifies a column name that has furigana in
+Katakana in <code class="docutils literal"><span class="pre">table</span></code> table.</dd>
+<dt><code class="docutils literal"><span class="pre">query</span></code></dt>
+<dd>Specifies query for completion, correction and/or
+suggestion.</dd>
+<dt><code class="docutils literal"><span class="pre">sortby</span></code></dt>
+<dd><p class="first">Specifies sort key.</p>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">-_score</span></code></dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">output_columns</span></code></dt>
+<dd><p class="first">Specifies output columns.</p>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">_key,_score</span></code></dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">offset</span></code></dt>
+<dd><p class="first">Specifies returned records offset.</p>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">0</span></code></dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">limit</span></code></dt>
+<dd><p class="first">Specifies number of returned records.</p>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">10</span></code></dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">frequency_threshold</span></code></dt>
+<dd><p class="first">Specifies threshold for item frequency. Returned records must have
+<code class="docutils literal"><span class="pre">_score</span></code> that is greater than or equal to <code class="docutils literal"><span class="pre">frequency_threshold</span></code>.</p>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">100</span></code></dd>
+</dl>
+</dd>
+</dl>
+<p><code class="docutils literal"><span class="pre">conditional_probability_threshold</span></code></p>
+<blockquote>
+<div><p>Specifies threshold for conditional
+probability. Conditional probability is used for learned
+data. It is probability of query submission when <code class="docutils literal"><span class="pre">query</span></code>
+is occurred. Returned records must have conditional
+probability that is greater than or equal to
+<code class="docutils literal"><span class="pre">conditional_probability_threshold</span></code>.</p>
+<dl class="docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">0.2</span></code></dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">prefix_search</span></code></dt>
+<dd><p class="first">Specifies whether optional prefix search is used or not
+in completion.</p>
+<p>Here are available values:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">yes</span></code></dt>
+<dd>Prefix search is always used.</dd>
+<dt><code class="docutils literal"><span class="pre">no</span></code></dt>
+<dd>Prefix search is never used.</dd>
+<dt><code class="docutils literal"><span class="pre">auto</span></code></dt>
+<dd>Prefix search is used only when other search can't
+find any records.</dd>
+</dl>
+</div></blockquote>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">auto</span></code></dd>
+</dl>
+</dd>
+<dt><code class="docutils literal"><span class="pre">similar_search</span></code></dt>
+<dd><p class="first">Specifies whether optional similar search is used or not
+in correction.</p>
+<p>Here are available values:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">yes</span></code></dt>
+<dd>Similar search is always used.</dd>
+<dt><code class="docutils literal"><span class="pre">no</span></code></dt>
+<dd>Similar search is never used.</dd>
+<dt><code class="docutils literal"><span class="pre">auto</span></code></dt>
+<dd>Similar search is used only when other search can't
+find any records.</dd>
+</dl>
+</div></blockquote>
+<dl class="last docutils">
+<dt>Default:</dt>
+<dd><code class="docutils literal"><span class="pre">auto</span></code></dd>
+</dl>
+</dd>
+</dl>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.57.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p>Here is a returned JSON format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>{&quot;type1&quot;: [[&quot;candidate1&quot;, score of candidate1],
+           [&quot;candidate2&quot;, score of candidate2],
+           ...],
+ &quot;type2&quot;: [[&quot;candidate1&quot;, score of candidate1],
+           [&quot;candidate2&quot;, score of candidate2],
+           ...],
+ ...}
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">type</span></code></p>
+<blockquote>
+<div>A type specified by <code class="docutils literal"><span class="pre">types</span></code>.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">candidate</span></code></p>
+<blockquote>
+<div>A candidate for completion, correction or suggestion.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">score</span> <span class="pre">of</span> <span class="pre">candidate</span></code></p>
+<blockquote>
+<div>A score of corresponding <code class="docutils literal"><span class="pre">candidate</span></code>. It means that
+higher score candidate is more likely candidate for
+completion, correction or suggestion. Returned candidates
+are sorted by <code class="docutils literal"><span class="pre">score</span> <span class="pre">of</span> <span class="pre">candidate</span></code> descending by
+default.</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.57.6. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../suggest.html"><span class="doc">Suggest</span></a></li>
+<li><a class="reference internal" href="../executables/groonga-suggest-create-dataset.html"><span class="doc">groonga-suggest-create-dataset</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.57. <code class="docutils literal"><span class="pre">suggest</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.57.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.57.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.57.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">7.3.57.4. Parameters</a></li>
+<li><a class="reference internal" href="#return-value">7.3.57.5. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.57.6. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="status.html"
+                        title="previous chapter">7.3.56. <code class="docutils literal"><span class="pre">status</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="table_copy.html"
+                        title="next chapter">7.3.58. <code class="docutils literal"><span class="pre">table_copy</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="table_copy.html" title="7.3.58. table_copy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="status.html" title="7.3.56. status"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

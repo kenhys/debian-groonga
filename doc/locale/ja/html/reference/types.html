@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.4. データ型 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="7.5. テーブル" href="tables.html" />
+    <link rel="prev" title="7.3.67. truncate" href="commands/truncate.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/reference/types.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="tables.html" title="7.5. テーブル"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="commands/truncate.html" title="7.3.67. truncate"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-types">
+<h1>7.4. データ型<a class="headerlink" href="#data-types" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="name">
+<h2>7.4.1. 名前<a class="headerlink" href="#name" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groonga データ型</p>
+</div>
+<div class="section" id="description">
+<h2>7.4.2. 説明<a class="headerlink" href="#description" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groonga は、格納するデータの型を区別します。</p>
+<p>Groongaのデータベースでは、テーブルの主キーや、カラムの値はいずれも何らかの型に属します。また通常は、一つのテーブルの中の全てのレコードについて、カラムの値は共通となります。</p>
+<p>主キーの型とカラムの型には、Groongaで予め定義済みの型か、ユーザが定義する型、またはユーザが定義したテーブルを指定することができます。</p>
+<p>主キーの型に他のテーブルを指定する場合は、そのテーブルは、主キーの型となるテーブルのサブセットとなります。</p>
+<p>カラムの型に他のテーブルを指定する場合は、そのカラムは、カラムの型となるテーブルの参照キーとなります。</p>
+</div>
+<div class="section" id="builtin-types">
+<h2>7.4.3. 組込型<a class="headerlink" href="#builtin-types" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下の型が組込型としてあらかじめ定義されています。</p>
+<div class="section" id="bool">
+<span id="builtin-type-bool"></span><h3>7.4.3.1. <code class="docutils literal"><span class="pre">Bool</span></code><a class="headerlink" href="#bool" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>ブーリアン型やブール型などと呼ばれる型であり、真偽値を表します。取り得る値はtrueとfalseです。（デフォルト値: false）</p>
+<p><a class="reference internal" href="commands/load.html"><span class="doc">load</span></a> コマンドで値を格納するときは、false、0、空文字列のいずれかを指定するとfalseになり、それ以外を指定するとtrueになります。</p>
+</div>
+<div class="section" id="int8">
+<span id="builtin-type-int8"></span><h3>7.4.3.2. <code class="docutils literal"><span class="pre">Int8</span></code><a class="headerlink" href="#int8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>8bit符号付き整数であり、-128以上127以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="uint8">
+<span id="builtin-type-uint8"></span><h3>7.4.3.3. <code class="docutils literal"><span class="pre">UInt8</span></code><a class="headerlink" href="#uint8" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>8bit符号なし整数であり、0以上255以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="int16">
+<span id="builtin-type-int16"></span><h3>7.4.3.4. <code class="docutils literal"><span class="pre">Int16</span></code><a class="headerlink" href="#int16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>16bit符号付き整数であり、-32,768以上32,767以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="uint16">
+<span id="builtin-type-uint16"></span><h3>7.4.3.5. <code class="docutils literal"><span class="pre">UInt16</span></code><a class="headerlink" href="#uint16" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>16bit符号なし整数であり、0以上65,535以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="int32">
+<span id="builtin-type-int32"></span><h3>7.4.3.6. <code class="docutils literal"><span class="pre">Int32</span></code><a class="headerlink" href="#int32" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>32bit符号付き整数であり、-2,147,483,648以上2,147,483,647以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="uint32">
+<span id="builtin-type-uint32"></span><h3>7.4.3.7. <code class="docutils literal"><span class="pre">UInt32</span></code><a class="headerlink" href="#uint32" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>32bit符号なし整数であり、0以上4,294,967,295以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="int64">
+<span id="builtin-type-int64"></span><h3>7.4.3.8. <code class="docutils literal"><span class="pre">Int64</span></code><a class="headerlink" href="#int64" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>64bit符号付き整数であり、-9,223,372,036,854,775,808以上9,223,372,036,854,775,807以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="uint64">
+<span id="builtin-type-uint64"></span><h3>7.4.3.9. <code class="docutils literal"><span class="pre">UInt64</span></code><a class="headerlink" href="#uint64" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>64bit符号なし整数であり、0以上18,446,744,073,709,551,615以下の整数を表します。（デフォルト値: 0）</p>
+</div>
+<div class="section" id="float">
+<span id="builtin-type-float"></span><h3>7.4.3.10. <code class="docutils literal"><span class="pre">Float</span></code><a class="headerlink" href="#float" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>IEEE 754形式の倍精度浮動小数点数であり、実数を表します。（デフォルト値: 0.0）</p>
+<p>IEEE 754形式の詳細については、 <a class="reference external" href="http://ja.wikipedia.org/wiki/IEEE_754">IEEE 754 - Wikipedia</a> や <a class="reference external" href="http://grouper.ieee.org/groups/754/">IEEE 754: Standard for Binary Floating-Point</a> を参照してください。</p>
+</div>
+<div class="section" id="time">
+<span id="builtin-type-time"></span><h3>7.4.3.11. <code class="docutils literal"><span class="pre">Time</span></code><a class="headerlink" href="#time" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>日時を表す型であり、1970年1月1日0時0分0秒からの経過時間を、マイクロ秒単位で64bit符号付き整数により表現します。（デフォルト値: 0）</p>
+<p><a class="reference internal" href="commands/load.html"><span class="doc">load</span></a> コマンドで値を格納するときは、1970年1月1日0時0分0秒からの経過秒数を指定します。秒単位より詳細な日時を指定するには、小数を使います。</p>
+</div>
+<div class="section" id="shorttext">
+<span id="builtin-type-short-text"></span><h3>7.4.3.12. <code class="docutils literal"><span class="pre">ShortText</span></code><a class="headerlink" href="#shorttext" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>4,095バイト以下の文字列を表します。（デフォルト値: &quot;&quot;）</p>
+</div>
+<div class="section" id="text">
+<span id="builtin-type-text"></span><h3>7.4.3.13. <code class="docutils literal"><span class="pre">Text</span></code><a class="headerlink" href="#text" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>65,535バイト以下の文字列を表します。（デフォルト値: &quot;&quot;）</p>
+</div>
+<div class="section" id="longtext">
+<span id="builtin-type-long-text"></span><h3>7.4.3.14. <code class="docutils literal"><span class="pre">LongText</span></code><a class="headerlink" href="#longtext" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>2,147,483,647バイト以下の文字列を表します。（デフォルト値: &quot;&quot;）</p>
+</div>
+<div class="section" id="tokyogeopoint">
+<span id="builtin-type-tokyo-geo-point"></span><h3>7.4.3.15. <code class="docutils literal"><span class="pre">TokyoGeoPoint</span></code><a class="headerlink" href="#tokyogeopoint" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>旧日本測地系による経緯度であり、経度と緯度をミリ秒単位で表現した整数の組により表現します。（デフォルト値: 0x0）</p>
+<p>度分秒形式でx度y分z秒となる経度・緯度は、(((x * 60) + y) * 60 + z) * 1000という計算式でミリ秒単位へと変換されます。</p>
+<p><a class="reference internal" href="commands/load.html"><span class="doc">load</span></a> コマンドで値を格納するときは、&quot;ミリ秒単位の経度xミリ秒単位の緯度&quot; もしくは &quot;経度の小数表記x緯度の小数表記&quot; という文字列表現を使って指定します。経度と緯度の区切りとしては、'x' のほかに ',' を使うことができます。</p>
+<p>測地系の詳細については、 <a class="reference external" href="http://ja.wikipedia.org/wiki/%E6%B8%AC%E5%9C%B0%E7%B3%BB">測地系 - Wikipedia</a> を参照してください。</p>
+</div>
+<div class="section" id="wgs84geopoint">
+<span id="builtin-type-wgs84-geo-point"></span><h3>7.4.3.16. <code class="docutils literal"><span class="pre">WGS84GeoPoint</span></code><a class="headerlink" href="#wgs84geopoint" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>世界測地系（World Geodetic System, WGS 84）による経緯度であり、経度と緯度をミリ秒単位で表現した整数の組により表現します。（デフォルト値: 0x0）</p>
+<p>度分秒形式からミリ秒形式への変換方法や <a class="reference internal" href="commands/load.html"><span class="doc">load</span></a> コマンドにおける指定方法はTokyoGeoPointと同じです。</p>
+</div>
+</div>
+<div class="section" id="limitations-about-types">
+<h2>7.4.4. 型に関する制限事項<a class="headerlink" href="#limitations-about-types" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="types-that-can-t-be-specified-in-primary-key-of-table">
+<h3>7.4.4.1. テーブルの主キーに指定できない型<a class="headerlink" href="#types-that-can-t-be-specified-in-primary-key-of-table" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Text型とLongText型については、テーブルの主キーに指定することはできません。</p>
+</div>
+<div class="section" id="id1">
+<h3>7.4.4.2. ベクターとして格納できない型<a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Groongaのカラムは、ある型のベクターを保存することができます。しかし、ShortText, Text, LongTextの３つの型についてはベクターとして保存したり出力したりすることはできますが、検索条件やドリルダウン条件に指定することができません。</p>
+<p>テーブル型は、ベクターとして格納することができます。よって、ShortTextのベクターを検索条件やドリルダウン条件に使用したい場合には、主キーがShortText型のテーブルを別途作成し、そのテーブルを型として利用します。</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.4. データ型</a><ul>
+<li><a class="reference internal" href="#name">7.4.1. 名前</a></li>
+<li><a class="reference internal" href="#description">7.4.2. 説明</a></li>
+<li><a class="reference internal" href="#builtin-types">7.4.3. 組込型</a><ul>
+<li><a class="reference internal" href="#bool">7.4.3.1. <code class="docutils literal"><span class="pre">Bool</span></code></a></li>
+<li><a class="reference internal" href="#int8">7.4.3.2. <code class="docutils literal"><span class="pre">Int8</span></code></a></li>
+<li><a class="reference internal" href="#uint8">7.4.3.3. <code class="docutils literal"><span class="pre">UInt8</span></code></a></li>
+<li><a class="reference internal" href="#int16">7.4.3.4. <code class="docutils literal"><span class="pre">Int16</span></code></a></li>
+<li><a class="reference internal" href="#uint16">7.4.3.5. <code class="docutils literal"><span class="pre">UInt16</span></code></a></li>
+<li><a class="reference internal" href="#int32">7.4.3.6. <code class="docutils literal"><span class="pre">Int32</span></code></a></li>
+<li><a class="reference internal" href="#uint32">7.4.3.7. <code class="docutils literal"><span class="pre">UInt32</span></code></a></li>
+<li><a class="reference internal" href="#int64">7.4.3.8. <code class="docutils literal"><span class="pre">Int64</span></code></a></li>
+<li><a class="reference internal" href="#uint64">7.4.3.9. <code class="docutils literal"><span class="pre">UInt64</span></code></a></li>
+<li><a class="reference internal" href="#float">7.4.3.10. <code class="docutils literal"><span class="pre">Float</span></code></a></li>
+<li><a class="reference internal" href="#time">7.4.3.11. <code class="docutils literal"><span class="pre">Time</span></code></a></li>
+<li><a class="reference internal" href="#shorttext">7.4.3.12. <code class="docutils literal"><span class="pre">ShortText</span></code></a></li>
+<li><a class="reference internal" href="#text">7.4.3.13. <code class="docutils literal"><span class="pre">Text</span></code></a></li>
+<li><a class="reference internal" href="#longtext">7.4.3.14. <code class="docutils literal"><span class="pre">LongText</span></code></a></li>
+<li><a class="reference internal" href="#tokyogeopoint">7.4.3.15. <code class="docutils literal"><span class="pre">TokyoGeoPoint</span></code></a></li>
+<li><a class="reference internal" href="#wgs84geopoint">7.4.3.16. <code class="docutils literal"><span class="pre">WGS84GeoPoint</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#limitations-about-types">7.4.4. 型に関する制限事項</a><ul>
+<li><a class="reference internal" href="#types-that-can-t-be-specified-in-primary-key-of-table">7.4.4.1. テーブルの主キーに指定できない型</a></li>
+<li><a class="reference internal" href="#id1">7.4.4.2. ベクターとして格納できない型</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="commands/truncate.html"
+                        title="前の章へ">7.3.67. <code class="docutils literal"><span class="pre">truncate</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="tables.html"
+                        title="次の章へ">7.5. テーブル</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="tables.html" title="7.5. テーブル"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="commands/truncate.html" title="7.3.67. truncate"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

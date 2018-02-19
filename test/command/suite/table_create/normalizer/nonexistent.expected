@@ -1,0 +1,14 @@
+table_create Terms TABLE_PAT_KEY ShortText   --normalizer NormalizerNonexistent
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[table][create][Terms] unknown normalizer: <NormalizerNonexistent>"
+  ],
+  false
+]
+#|e| [table][create][Terms] unknown normalizer: <NormalizerNonexistent>
+dump

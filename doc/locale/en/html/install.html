@@ -1,0 +1,197 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2. Install &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.1. Windows" href="install/windows.html" />
+    <link rel="prev" title="1. Characteristics of Groonga" href="characteristic.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../ja/html/install.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="install/windows.html" title="2.1. Windows"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="characteristic.html" title="1. Characteristics of Groonga"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="install">
+<h1>2. Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to install Groonga on each
+environment. There are packages for major platforms. It's recommended
+that you use package instead of building Groonga by yourself. But
+don't warry. There is a document about building Groonga from source.</p>
+<p>We distribute both 32-bit and 64-bit packages but we strongly
+recommend a 64-bit package for server. You should use a 32-bit package
+just only for tests or development. You will encounter an out of
+memory error with a 32-bit package even if you just process medium
+size data.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install/windows.html">2.1. Windows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#installer">2.1.1. Installer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#zip">2.1.2. zip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/windows.html#build-from-source">2.1.3. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/mac_os_x.html">2.2. Mac OS X</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/mac_os_x.html#macports">2.2.1. MacPorts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/mac_os_x.html#homebrew">2.2.2. Homebrew</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/mac_os_x.html#build-from-source">2.2.3. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/debian.html">2.3. Debian GNU/Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#jessie">2.3.1. jessie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#stretch">2.3.2. stretch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/debian.html#build-from-source">2.3.3. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/ubuntu.html">2.4. Ubuntu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/ubuntu.html#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/ubuntu.html#build-from-source">2.4.2. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/centos.html">2.5. CentOS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-6">2.5.1. CentOS 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#centos-7">2.5.2. CentOS 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/centos.html#build-from-source">2.5.3. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/fedora.html">2.6. Fedora</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/fedora.html#fedora-21">2.6.1. Fedora 21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install/fedora.html#build-from-source">2.6.2. Build from source</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/solaris.html">2.7. Oracle Solaris</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/solaris.html#oracle-solaris-11">2.7.1. Oracle Solaris 11</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install/others.html">2.8. Others</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install/others.html#dependencies">2.8.1. Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#tools">2.8.1.1. Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#libraries">2.8.1.2. Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="install/others.html#build-from-source">2.8.2. Build from source</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#configure">2.8.2.1. <code class="docutils literal"><span class="pre">configure</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#prefix-path">2.8.2.1.1. <code class="docutils literal"><span class="pre">--prefix=PATH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#localstatedir-path">2.8.2.1.2. <code class="docutils literal"><span class="pre">--localstatedir=PATH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-log-path-path">2.8.2.1.3. <code class="docutils literal"><span class="pre">--with-log-path=PATH</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-default-encoding-encoding">2.8.2.1.4. <code class="docutils literal"><span class="pre">--with-default-encoding=ENCODING</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-match-escalation-threshold-number">2.8.2.1.5. <code class="docutils literal"><span class="pre">--with-match-escalation-threshold=NUMBER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-zlib">2.8.2.1.6. <code class="docutils literal"><span class="pre">--with-zlib</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-lz4">2.8.2.1.7. <code class="docutils literal"><span class="pre">--with-lz4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-message-pack-message-pack-install-prefix">2.8.2.1.8. <code class="docutils literal"><span class="pre">--with-message-pack=MESSAGE_PACK_INSTALL_PREFIX</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-munin-plugins">2.8.2.1.9. <code class="docutils literal"><span class="pre">--with-munin-plugins</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#with-package-platform-platform">2.8.2.1.10. <code class="docutils literal"><span class="pre">--with-package-platform=PLATFORM</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="install/others.html#help">2.8.2.1.11. <code class="docutils literal"><span class="pre">--help</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#make">2.8.2.2. <code class="docutils literal"><span class="pre">make</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="install/others.html#make-install">2.8.2.3. <code class="docutils literal"><span class="pre">make</span> <span class="pre">install</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="characteristic.html"
+                        title="previous chapter">1. Characteristics of Groonga</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="install/windows.html"
+                        title="next chapter">2.1. Windows</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="install/windows.html" title="2.1. Windows"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="characteristic.html" title="1. Characteristics of Groonga"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

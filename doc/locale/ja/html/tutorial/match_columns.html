@@ -1,0 +1,904 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.7. match_columnsパラメータ &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4.8. パトリシア木による前方一致検索" href="patricia_trie.html" />
+    <link rel="prev" title="4.6. タグ検索・参照関係の逆引き" href="index.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/tutorial/match_columns.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="patricia_trie.html" title="4.8. パトリシア木による前方一致検索"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4.6. タグ検索・参照関係の逆引き"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="match-columns-parameter">
+<h1>4.7. match_columnsパラメータ<a class="headerlink" href="#match-columns-parameter" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="full-text-search-against-multiple-columns">
+<h2>4.7.1. 複数のカラムに対する全文検索<a class="headerlink" href="#full-text-search-against-multiple-columns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaでは、複数のカラムを対象とした全文検索を行うことができます。例えば、ブログのテーブルで、タイトルと内容とがそれぞれ別のカラムに入ったものがあるとしましょう。「タイトルもしくは内容に特定の単語を含む」検索を行いたいとします。</p>
+<p>この場合、2つのインデックス作成方式があります。1つは、それぞれのカラムに1つずつインデックスを付与する方式です。もう1つは、複数のカラムに対して1つのインデックスを付与する方式です。Groongaでは、どちらの形式のインデックスが存在している場合でも、同一の記法で全文検索を行うことができます。</p>
+<div class="section" id="creating-column-index-against-each-column">
+<h3>4.7.1.1. カラムごとにインデックスを付与する場合<a class="headerlink" href="#creating-column-index-against-each-column" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>カラムごとにインデックスを作成する方法はこの通りです。</p>
+<p>まず、 <code class="docutils literal"><span class="pre">Blog1</span></code> テーブルを作成し、 <code class="docutils literal"><span class="pre">title</span></code> カラムと <code class="docutils literal"><span class="pre">message</span></code> カラムを追加します。 <code class="docutils literal"><span class="pre">title</span></code> カラムにブログのタイトルを保存し、 <code class="docutils literal"><span class="pre">message</span></code> カラムにブログの本文を保存します。</p>
+<p>インデックス用の <code class="docutils literal"><span class="pre">IndexBlog1</span></code> テーブルも作り、 <code class="docutils literal"><span class="pre">title</span></code> カラムのインデックス用に <code class="docutils literal"><span class="pre">index_title</span></code> カラム、 <code class="docutils literal"><span class="pre">message</span></code> カラムのインデックス用に <code class="docutils literal"><span class="pre">index_message</span></code> カラムと、それぞれ1カラムごとに1つずつ追加しています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name Blog1 --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Blog1 --name title --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Blog1 --name message --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name IndexBlog1 --flags TABLE_PAT_KEY --key_type ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table IndexBlog1 --name index_title --flags COLUMN_INDEX|WITH_POSITION --type Blog1 --source title
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table IndexBlog1 --name index_message --flags COLUMN_INDEX|WITH_POSITION --type Blog1 --source message
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Blog1
+[
+{&quot;_key&quot;:&quot;grn1&quot;,&quot;title&quot;:&quot;Groonga test&quot;,&quot;message&quot;:&quot;Groonga message&quot;},
+{&quot;_key&quot;:&quot;grn2&quot;,&quot;title&quot;:&quot;baseball result&quot;,&quot;message&quot;:&quot;rakutan eggs 4 - 4 Groonga moritars&quot;},
+{&quot;_key&quot;:&quot;grn3&quot;,&quot;title&quot;:&quot;Groonga message&quot;,&quot;message&quot;:&quot;none&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">match_columns</span></code> オプションで、検索対象のカラムを複数指定することが出来ます。検索する文字列は <code class="docutils literal"><span class="pre">query</span></code> オプションで指定します。これを使うことで、タイトルと本文を全文検索することができます。</p>
+<p>実際にブログエントリを検索してみましょう。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Blog1 --match_columns title||message --query groonga
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;grn1&quot;,
+#         &quot;Groonga message&quot;,
+#         &quot;Groonga test&quot;
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ],
+#       [
+#         2,
+#         &quot;grn2&quot;,
+#         &quot;rakutan eggs 4 - 4 Groonga moritars&quot;,
+#         &quot;baseball result&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Blog1 --match_columns title||message --query message
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ],
+#       [
+#         1,
+#         &quot;grn1&quot;,
+#         &quot;Groonga message&quot;,
+#         &quot;Groonga test&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Blog1 --match_columns title --query message
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-one-column-index-against-multiple-columns">
+<h3>4.7.1.2. 複数のカラムにまたがったインデックスを付与する場合<a class="headerlink" href="#creating-one-column-index-against-multiple-columns" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Groongaでは複数のカラムにまたがったインデックスもサポートしています。</p>
+<p>インデックスカラムが1つしかないというのが違いです。 <code class="docutils literal"><span class="pre">title</span></code> と <code class="docutils literal"><span class="pre">message</span></code> の2つのカラムに対するインデックスが共通になっています。</p>
+<p>共通のインデックスを用いても、 <code class="docutils literal"><span class="pre">title</span></code> カラムのみでの検索、 <code class="docutils literal"><span class="pre">message</span></code> カラムのみでの検索、 <code class="docutils literal"><span class="pre">title</span></code> もしくは <code class="docutils literal"><span class="pre">message</span></code> カラムでの検索、全ての検索を行うことができます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name Blog2 --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Blog2 --name title --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Blog2 --name message --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name IndexBlog2 --flags TABLE_PAT_KEY --key_type ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table IndexBlog2 --name index_blog --flags COLUMN_INDEX|WITH_POSITION|WITH_SECTION --type Blog2 --source title,message
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Blog2
+[
+{&quot;_key&quot;:&quot;grn1&quot;,&quot;title&quot;:&quot;Groonga test&quot;,&quot;message&quot;:&quot;Groonga message&quot;},
+{&quot;_key&quot;:&quot;grn2&quot;,&quot;title&quot;:&quot;baseball result&quot;,&quot;message&quot;:&quot;rakutan eggs 4 - 4 Groonga moritars&quot;},
+{&quot;_key&quot;:&quot;grn3&quot;,&quot;title&quot;:&quot;Groonga message&quot;,&quot;message&quot;:&quot;none&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p>実際に前と同じ例で検索してみましょう。結果は上の例と同じになります。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Blog2 --match_columns title||message --query groonga
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;grn1&quot;,
+#         &quot;Groonga message&quot;,
+#         &quot;Groonga test&quot;
+#       ],
+#       [
+#         2,
+#         &quot;grn2&quot;,
+#         &quot;rakutan eggs 4 - 4 Groonga moritars&quot;,
+#         &quot;baseball result&quot;
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Blog2 --match_columns title||message --query message
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;grn1&quot;,
+#         &quot;Groonga message&quot;,
+#         &quot;Groonga test&quot;
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Blog2 --match_columns title --query message
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;message&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;grn3&quot;,
+#         &quot;none&quot;,
+#         &quot;Groonga message&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p>&quot;インデックスはどちらがよい方法なのか&quot;と疑問に思うかもしれません。それは場合によります。</p>
+<ul class="last simple">
+<li>カラムごとのインデックス - マルチカラムインデックスよりも更新性能が良い傾向があります。一方、ディスク使用効率はあまり良くありません。</li>
+<li>マルチカラムインデックス - バッファを共有するためディスク使用効率が良いです。一方、更新性能があまり良くありません。</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="full-text-search-with-specific-index-name">
+<span id="id1"></span><h2>4.7.2. インデックス名を指定した全文検索<a class="headerlink" href="#full-text-search-with-specific-index-name" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaは、インデックス名を指定した全文検索もサポートしています。</p>
+<p>このセクションでは、インデックス名を指定した全文検索の方法を学びます。</p>
+<p>インデックス名の指定について具体的な例を示します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Entries TABLE_HASH_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Entries title COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Entries body COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Entries
+[
+{&quot;_key&quot;: &quot;http://example.com/entry1&quot;, &quot;title&quot;:&quot;Hello Groonga.&quot;, &quot;body&quot;:&quot;This is my first entry.&quot;},
+{&quot;_key&quot;: &quot;http://example.com/entry2&quot;, &quot;title&quot;:&quot;Hello world.&quot;, &quot;body&quot;:&quot;I love Groonga!&quot;},
+{&quot;_key&quot;: &quot;http://example.com/entry3&quot;, &quot;title&quot;:&quot;Hello Mroonga, bye Groonga.&quot;, &quot;body&quot;:&quot;I use Mroonga.&quot;},
+{&quot;_key&quot;: &quot;http://example.com/entry4&quot;, &quot;title&quot;:&quot;Say, Hello Groonga!&quot;, &quot;body&quot;:&quot;I&#39;m back.&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 4]
+table_create Terms TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms entries_title COLUMN_INDEX|WITH_POSITION Entries title
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms entries_body COLUMN_INDEX|WITH_POSITION Entries body
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms entries_whole COLUMN_INDEX|WITH_POSITION|WITH_SECTION Entries title,body
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">title</span></code> と <code class="docutils literal"><span class="pre">body</span></code> カラムを持つテーブルがあります。また、語彙表は <code class="docutils literal"><span class="pre">title</span></code> と <code class="docutils literal"><span class="pre">body</span></code> のカラムのインデックスを持っています。</p>
+<p>語彙表には、3つのインデックスカラムがあります。</p>
+<ul class="simple">
+<li>entries_title: <code class="docutils literal"><span class="pre">title</span></code> のインデックスカラム</li>
+<li>entries_body: <code class="docutils literal"><span class="pre">body</span></code> のインデックスカラム</li>
+<li>entries_whole: <code class="docutils literal"><span class="pre">title</span></code> と <code class="docutils literal"><span class="pre">body</span></code> のインデックスカラム</li>
+</ul>
+<p>特定のデータカラムと結びついたインデックスカラムを指定した場合は、暗黙的にそのデータカラムだけを検索します。</p>
+<p>例えば、 <code class="docutils literal"><span class="pre">title</span></code> または <code class="docutils literal"><span class="pre">body</span></code> だけを検索したい場合は、 <code class="docutils literal"><span class="pre">Terms.entries_title</span></code> または <code class="docutils literal"><span class="pre">Terms.entries_body</span></code> をインデックスカラムに指定します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Entries --output_columns title --match_columns Terms.entries_title --query &quot;Groonga&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;Hello Groonga.&quot;
+#       ],
+#       [
+#         &quot;Hello Mroonga, bye Groonga.&quot;
+#       ],
+#       [
+#         &quot;Say, Hello Groonga!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>この例では、<code class="docutils literal"><span class="pre">Terms.entries_title</span></code> をインデックスとして <code class="docutils literal"><span class="pre">title</span></code> カラムを対象に&quot;Groonga&quot;を検索します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Entries --output_columns body --match_columns Terms.entries_body --query &quot;Groonga&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;I love Groonga!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>この例では、 <code class="docutils literal"><span class="pre">Terms.entries_whole</span></code> をインデックスとして、 <code class="docutils literal"><span class="pre">body</span></code> カラムを対象に&quot;Groonga&quot;を検索します。</p>
+<p>複数カラムにまたがるインデックスは、インデックスカラムの後にデータカラム名を指定することができます。これは、どのインデックスを使ってどのデータカラムを検索するかを明示しています。</p>
+<p>例えば、 <code class="docutils literal"><span class="pre">entries_whole</span></code> インデックスが付いた <code class="docutils literal"><span class="pre">title</span></code> または <code class="docutils literal"><span class="pre">body</span></code> を検索する場合、 <code class="docutils literal"><span class="pre">Terms.entries_whole.title</span></code> または <code class="docutils literal"><span class="pre">Terms.entries_whole.body</span></code> を指定します。 <code class="docutils literal"><span class="pre">Terms.entries_whole</span></code> をインデックスとして使い、 <code class="docutils literal"><span class="pre">title</span></code> カラムまたは、 <code class="docutils literal"><span class="pre">body</span></code> カラムを対象に検索します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Entries --output_columns title --match_columns Terms.entries_whole.title --query &quot;Groonga&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;Hello Groonga.&quot;
+#       ],
+#       [
+#         &quot;Hello Mroonga, bye Groonga.&quot;
+#       ],
+#       [
+#         &quot;Say, Hello Groonga!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>この例では、 <code class="docutils literal"><span class="pre">Terms.entries_whole</span></code> をインデックスとして、 <code class="docutils literal"><span class="pre">title</span></code> カラムを対象に&quot;Groonga&quot;を検索します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Entries --output_columns body --match_columns Terms.entries_whole.body --query &quot;Groonga&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;I love Groonga!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>この例では、 <code class="docutils literal"><span class="pre">Terms.entries_whole</span></code> をインデックスとして、 <code class="docutils literal"><span class="pre">body</span></code> カラムを対象に&quot;Groonga&quot;を検索します。</p>
+</div>
+<div class="section" id="nested-index-search-among-related-table-by-column-index">
+<span id="nested-index-search"></span><h2>4.7.3. カラムインデックスによる関連テーブルをまたぐ検索<a class="headerlink" href="#nested-index-search-among-related-table-by-column-index" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>複数のテーブルがカラムインデックスで関連付けられているなら、参照カラム名を指定して複数のテーブルにまたがって検索することができます。</p>
+<p>具体的な例を示します。</p>
+<p>ブログ記事や記事のコメントを保存するテーブルがあります。記事を保存するテーブルには記事とコメントのためのカラムがあります。そしてそのコメントカラムはCommentsテーブルを参照しています。コメントを保存するテーブルにはコメントと記事テーブルに対するカラムインデックスが設定されています。</p>
+<p>特定のキーワードをコメントに含む記事を探すには、コメントテーブルを全文検索する必要があり、全文検索結果を含むレコードをさらに検索する必要があります。</p>
+<p>しかし、カラムインデックスを指定することで一度にレコードを検索することができます。</p>
+<p>サンプルのスキーマ定義はこちらです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Comments TABLE_HASH_KEY UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Comments content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Articles TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Articles content COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Articles comment COLUMN_SCALAR Comments
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Lexicon TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Lexicon articles_content COLUMN_INDEX|WITH_POSITION Articles content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Lexicon comments_content COLUMN_INDEX|WITH_POSITION Comments content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Comments article COLUMN_INDEX Articles comment
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>サンプルデータはこちらです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Comments
+[
+{&quot;_key&quot;: 1, &quot;content&quot;: &quot;I&#39;m using Groonga too!&quot;},
+{&quot;_key&quot;: 2, &quot;content&quot;: &quot;I&#39;m using Groonga and Mroonga!&quot;},
+{&quot;_key&quot;: 3, &quot;content&quot;: &quot;I&#39;m using Mroonga too!&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+load --table Articles
+[
+{&quot;content&quot;: &quot;Groonga is fast!&quot;, &quot;comment&quot;: 1},
+{&quot;content&quot;: &quot;Groonga is useful!&quot;},
+{&quot;content&quot;: &quot;Mroonga is fast!&quot;, &quot;comment&quot;: 3}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p>特定のキーワードをコメントに含むレコードを検索するクエリを書くことができ、それによりレコードを参照する記事を取得します。</p>
+<p>これまでに記述したレコードを検索するクエリ:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Articles --match_columns comment.content --query groonga --output_columns &quot;_id, _score, *&quot;
+</pre></div>
+</div>
+<p>ArticlesテーブルのcommentカラムとCommentsテーブルのcontentカラムをピリオド( <code class="docutils literal"><span class="pre">.</span></code> )で連結し <code class="docutils literal"><span class="pre">--match_columns</span></code> の引数とする必要があります。</p>
+<p>最初に、このクエリはCommentsテーブルのcontentを全文検索し、次にCommentsテーブルを検索した結果のレコードを参照するArticlesテーブルのレコードを取得します。(これにより、Commentsテーブルの <code class="docutils literal"><span class="pre">article</span></code> インデックスカラムを生成するクエリをコメントアウトすると、意図した検索結果が得られません。)</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Articles --match_columns comment.content --query groonga --output_columns &quot;_id, _score, *&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ],
+#         [
+#           &quot;comment&quot;,
+#           &quot;Comments&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         1,
+#         1,
+#         &quot;Groonga is fast!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>これで、特定のキーワードをコメントとして含む記事を検索できます。</p>
+<p>このネストしたインデックスの検索という特徴には関連するテーブルが2つだけに制限されません。</p>
+<p>前のものと似たサンプルのスキーマ定義です。違いは'返信'を表現するテーブルの追加と関連するテーブルが3つに増えたことです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Replies2 TABLE_HASH_KEY UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Replies2 content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Comments2 TABLE_HASH_KEY UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Comments2 content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Comments2 comment COLUMN_SCALAR Replies2
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Articles2 TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Articles2 content COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Articles2 comment COLUMN_SCALAR Comments2
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Lexicon2 TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Lexicon2 articles_content COLUMN_INDEX|WITH_POSITION Articles2 content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Lexicon2 comments_content COLUMN_INDEX|WITH_POSITION Comments2 content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Lexicon2 replies_content COLUMN_INDEX|WITH_POSITION Replies2 content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Comments2 article COLUMN_INDEX Articles2 comment
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Replies2 reply_to COLUMN_INDEX Comments2 comment
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>サンプルデータはこちらです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Replies2
+[
+{&quot;_key&quot;: 1, &quot;content&quot;: &quot;I&#39;m using Rroonga too!&quot;},
+{&quot;_key&quot;: 2, &quot;content&quot;: &quot;I&#39;m using Groonga and Mroonga and Rroonga!&quot;},
+{&quot;_key&quot;: 3, &quot;content&quot;: &quot;I&#39;m using Nroonga too!&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+load --table Comments2
+[
+{&quot;_key&quot;: 1, &quot;content&quot;: &quot;I&#39;m using Groonga too!&quot;, &quot;comment&quot;: 1},
+{&quot;_key&quot;: 2, &quot;content&quot;: &quot;I&#39;m using Groonga and Mroonga!&quot;, &quot;comment&quot;: 2},
+{&quot;_key&quot;: 3, &quot;content&quot;: &quot;I&#39;m using Mroonga too!&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+load --table Articles2
+[
+{&quot;content&quot;: &quot;Groonga is fast!&quot;, &quot;comment&quot;: 1},
+{&quot;content&quot;: &quot;Groonga is useful!&quot;, &quot;comment&quot;: 2},
+{&quot;content&quot;: &quot;Mroonga is fast!&quot;, &quot;comment&quot;: 3}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p>これまでに記述したレコードを検索するクエリ:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Articles2 --match_columns comment.content --query mroonga --output_columns &quot;_id, _score, *&quot;
+select Articles2 --match_columns comment.comment.content --query mroonga --output_columns &quot;_id, _score, *&quot;
+</pre></div>
+</div>
+<p>最初のクエリは <code class="docutils literal"><span class="pre">Comments2</span></code> テーブルから <code class="docutils literal"><span class="pre">mroonga</span></code> を検索します。2つめのクエリは <code class="docutils literal"><span class="pre">Replies2</span></code> と <code class="docutils literal"><span class="pre">Comments2</span></code> テーブルからカラムインデックスによる参照を用いて <code class="docutils literal"><span class="pre">mroonga</span></code> を検索します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Articles2 --match_columns comment.content --query mroonga --output_columns &quot;_id, _score, *&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ],
+#         [
+#           &quot;comment&quot;,
+#           &quot;Comments2&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         1,
+#         2,
+#         &quot;Groonga is useful!&quot;
+#       ],
+#       [
+#         3,
+#         1,
+#         3,
+#         &quot;Mroonga is fast!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select Articles2 --match_columns comment.comment.content --query mroonga --output_columns &quot;_id, _score, *&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ],
+#         [
+#           &quot;comment&quot;,
+#           &quot;Comments2&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;Text&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         1,
+#         2,
+#         &quot;Groonga is useful!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>結果として、最初のクエリは <code class="docutils literal"><span class="pre">Comments2</span></code> テーブルに <code class="docutils literal"><span class="pre">mroonga</span></code> をキーワードとして含むレコードが2つあるので、該当する記事2つにマッチします。</p>
+<p>一方、2つめのクエリは <code class="docutils literal"><span class="pre">Replies2</span></code> テーブルに <code class="docutils literal"><span class="pre">mroonga</span></code> というキーワードにマッチするレコードが1つしかなく、 <code class="docutils literal"><span class="pre">Comments2</span></code> テーブルでそのキーワードを含むレコードを参照するコメントが1つなので、該当する記事は1つだけとなります。</p>
+</div>
+<div class="section" id="indexes-with-weight">
+<h2>4.7.4. インデックスの重み<a class="headerlink" href="#indexes-with-weight" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.7. match_columnsパラメータ</a><ul>
+<li><a class="reference internal" href="#full-text-search-against-multiple-columns">4.7.1. 複数のカラムに対する全文検索</a><ul>
+<li><a class="reference internal" href="#creating-column-index-against-each-column">4.7.1.1. カラムごとにインデックスを付与する場合</a></li>
+<li><a class="reference internal" href="#creating-one-column-index-against-multiple-columns">4.7.1.2. 複数のカラムにまたがったインデックスを付与する場合</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#full-text-search-with-specific-index-name">4.7.2. インデックス名を指定した全文検索</a></li>
+<li><a class="reference internal" href="#nested-index-search-among-related-table-by-column-index">4.7.3. カラムインデックスによる関連テーブルをまたぐ検索</a></li>
+<li><a class="reference internal" href="#indexes-with-weight">4.7.4. インデックスの重み</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="index.html"
+                        title="前の章へ">4.6. タグ検索・参照関係の逆引き</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="patricia_trie.html"
+                        title="次の章へ">4.8. パトリシア木による前方一致検索</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="patricia_trie.html" title="4.8. パトリシア木による前方一致検索"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="4.6. タグ検索・参照関係の逆引き"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

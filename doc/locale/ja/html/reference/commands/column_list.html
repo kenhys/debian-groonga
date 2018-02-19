@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.12. column_list &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.3.13. column_remove" href="column_remove.html" />
+    <link rel="prev" title="7.3.11. column_create" href="column_create.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/commands/column_list.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="column_remove.html" title="7.3.13. column_remove"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="column_create.html" title="7.3.11. column_create"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="column-list">
+<h1>7.3.12. <code class="docutils literal"><span class="pre">column_list</span></code><a class="headerlink" href="#column-list" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.12.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">column_list</span></code> コマンドはテーブルにあるカラムの一覧を返します。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.12.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このコマンドの引数は1つで必須です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>column_list table
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.12.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下は <code class="docutils literal"><span class="pre">column_list</span></code> コマンドの簡単な使用例です。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Users TABLE_PAT_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Users age COLUMN_SCALAR UInt8
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Users tags COLUMN_VECTOR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_list Users
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         &quot;id&quot;,
+#         &quot;UInt32&quot;
+#       ],
+#       [
+#         &quot;name&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;path&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;type&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;flags&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;domain&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;range&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;source&quot;,
+#         &quot;ShortText&quot;
+#       ]
+#     ],
+#     [
+#       256,
+#       &quot;_key&quot;,
+#       &quot;&quot;,
+#       &quot;&quot;,
+#       &quot;COLUMN_SCALAR&quot;,
+#       &quot;Users&quot;,
+#       &quot;ShortText&quot;,
+#       []
+#     ],
+#     [
+#       257,
+#       &quot;age&quot;,
+#       &quot;/tmp/groonga-databases/commands_column_list.0000101&quot;,
+#       &quot;fix&quot;,
+#       &quot;COLUMN_SCALAR|PERSISTENT&quot;,
+#       &quot;Users&quot;,
+#       &quot;UInt8&quot;,
+#       []
+#     ],
+#     [
+#       258,
+#       &quot;tags&quot;,
+#       &quot;/tmp/groonga-databases/commands_column_list.0000102&quot;,
+#       &quot;var&quot;,
+#       &quot;COLUMN_VECTOR|PERSISTENT&quot;,
+#       &quot;Users&quot;,
+#       &quot;ShortText&quot;,
+#       []
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.12.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションでは <code class="docutils literal"><span class="pre">column_list</span></code> の引数について説明します。</p>
+<div class="section" id="required-parameters">
+<h3>7.3.12.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>すべての引数は必須です。</p>
+<div class="section" id="table">
+<h4>7.3.12.4.1.1. <code class="docutils literal"><span class="pre">table</span></code><a class="headerlink" href="#table" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>カラムの一覧を取得するテーブルの名前を指定します。</p>
+</div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.12.5. 戻り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">column_list</span></code> はテーブルのカラム一覧を返します。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  HEADER,
+  [
+    COLUMN_LIST_HEADER,
+    COLUMN_INFORMATION1,
+    COLUMN_INFORMATION2,
+    ...
+  ]
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code></p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">HEADER</span></code> については <a class="reference internal" href="../command/output_format.html"><span class="doc">出力形式</span></a> を参照してください。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">COLUMN_LIST_HEADER</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">COLUMN_LIST_HEADER</span></code> は 各 <code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> の内容を説明します。</p>
+<p><code class="docutils literal"><span class="pre">COLUMN_LIST_HEADER</span></code> は以下の形式です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  [&quot;id&quot;,     &quot;UInt32&quot;],
+  [&quot;name&quot;,   &quot;ShortText&quot;],
+  [&quot;path&quot;,   &quot;ShortText&quot;],
+  [&quot;type&quot;,   &quot;ShortText&quot;],
+  [&quot;flags&quot;,  &quot;ShortText&quot;],
+  [&quot;domain&quot;, &quot;ShortText&quot;],
+  [&quot;range&quot;,  &quot;ShortText&quot;],
+  [&quot;source&quot;, &quot;ShortText&quot;]
+]
+</pre></div>
+</div>
+<p>以下のことを意味します。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> の1番目の要素は <code class="docutils literal"><span class="pre">id</span></code> の値で、その値の型は <code class="docutils literal"><span class="pre">UInt32</span></code> です。</li>
+<li><code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> の2番目の要素は <code class="docutils literal"><span class="pre">name</span></code> の値で、その値の型は <code class="docutils literal"><span class="pre">ShortText</span></code> です。</li>
+<li><code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> の3番目の要素は…</li>
+</ul>
+</div></blockquote>
+<p>詳細については、次の <code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> の説明を参照して下さい。</p>
+<p>このフィールドはカラムの情報のメタデータを提供します。したがって、このフィールドは人ではなくプログラムに有用です。</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code></p>
+<blockquote>
+<div><p>各 <code class="docutils literal"><span class="pre">COLUMN_INFORMATION</span></code> は以下の形式です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  ID,
+  NAME,
+  PATH,
+  TYPE,
+  FLAGS,
+  DOMAIN,
+  RANGE,
+  SOURCES
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ID</span></code></p>
+<blockquote>
+<div>GroongaデータベースのカラムIDです。通常、それを気にする必要はありません。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">NAME</span></code></p>
+<blockquote>
+<div>カラム名。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">PATH</span></code></p>
+<blockquote>
+<div>カラムのデータを保存しているパス。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">TYPE</span></code></p>
+<blockquote>
+<div><p>カラムの型。次のうちのどれかです。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">fix</span></code></td>
+<td>このカラムは、固定長カラムです。固定長型のスカラーカラムは、固定長カラムです。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">var</span></code></td>
+<td>このカラムは、可変長カラムです。ベクターカラムまたは可変長型のスカラーカラムは、可変長カラムです。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">index</span></code></td>
+<td>このカラムはインデックスカラムです。</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">FLAGS</span></code></p>
+<blockquote>
+<div><p>カラムのフラグです。各フラグは、<code class="docutils literal"><span class="pre">COLUMN_VECTOR|WITH_WEIGHT</span></code> のように <code class="docutils literal"><span class="pre">|</span></code> で分けられています。 <code class="docutils literal"><span class="pre">FLAGS</span></code> は、<code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code> , <code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code> , <code class="docutils literal"><span class="pre">COLUMN_INDEX</span></code> のいずれか１つを含まなければいけません。他のフラグは省略可能です。</p>
+<p>有効なフラグは以下の通りです。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">フラグ</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code></td>
+<td>このカラムはスカラーカラムです。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code></td>
+<td>このカラムはベクターカラムです。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">COLUMN_INDEX</span></code></td>
+<td>このカラムはインデックスカラムです。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">WITH_WEIGHT</span></code></td>
+<td>このカラムは、重みを持つことができます。 <code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code> と <code class="docutils literal"><span class="pre">COLUMN_INDEX</span></code> は重みを持てます。 <code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code> は、重みを持ちません。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">WITH_SECTION</span></code></td>
+<td><p class="first">このカラムはセクション(段落)情報を持つことができます。 <code class="docutils literal"><span class="pre">COLUMN_INDEX</span></code> はセクション(段落)情報を持てます。 <code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code> と <code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code> はセクション(段落)情報を持ちません。</p>
+<p class="last">マルチカラムインデックスはこのフラグを持ちます。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">WITH_POSITION</span></code></td>
+<td><p class="first">このカラムは出現位置情報を持つことができます。 <code class="docutils literal"><span class="pre">COLUMN_INDEX</span></code> は出現位置情報を持てます。 <code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code> と <code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code> は出現位置情報を持ちません。</p>
+<p class="last">全文検索インデックスはこのフラグを持つべきです。</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">PERSISTENT</span></code></td>
+<td>このカラムは永続カラムです。それは <a class="reference internal" href="../columns/pseudo.html"><span class="doc">擬似カラム</span></a> ではないことを意味します。</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">DOMAIN</span></code></p>
+<blockquote>
+<div>カラムを持っているテーブルの名前です。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">RANGE</span></code></p>
+<blockquote>
+<div>カラムの型名です。型名かテーブル名です。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">SOURCES</span></code></p>
+<blockquote>
+<div><p>インデックスのソースカラム名の配列です。インデックスカラムがマルチカラムインデックスの場合、配列は2つまたはそれ以上のソースカラム名を有します。</p>
+<p><code class="docutils literal"><span class="pre">COLUMN_SCALAR</span></code> と <code class="docutils literal"><span class="pre">COLUMN_VECTOR</span></code> では常に空の配列です。</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.12.6. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="column_create.html"><span class="doc">column_create</span></a></li>
+<li><a class="reference internal" href="../column.html"><span class="doc">カラム</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.12. <code class="docutils literal"><span class="pre">column_list</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.12.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.3.12.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">7.3.12.3. 使い方</a></li>
+<li><a class="reference internal" href="#parameters">7.3.12.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">7.3.12.4.1. 必須引数</a><ul>
+<li><a class="reference internal" href="#table">7.3.12.4.1.1. <code class="docutils literal"><span class="pre">table</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">7.3.12.5. 戻り値</a></li>
+<li><a class="reference internal" href="#see-also">7.3.12.6. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="column_create.html"
+                        title="前の章へ">7.3.11. <code class="docutils literal"><span class="pre">column_create</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="column_remove.html"
+                        title="次の章へ">7.3.13. <code class="docutils literal"><span class="pre">column_remove</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="column_remove.html" title="7.3.13. column_remove"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="column_create.html" title="7.3.11. column_create"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

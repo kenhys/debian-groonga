@@ -1,0 +1,312 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.4. grn_cache &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.24.5. grn_column" href="grn_column.html" />
+    <link rel="prev" title="7.24.3. Plugin" href="plugin.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/api/grn_cache.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="grn_column.html" title="7.24.5. grn_column"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="plugin.html" title="7.24.3. Plugin"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-cache">
+<h1>7.24.4. <code class="docutils literal"><span class="pre">grn_cache</span></code><a class="headerlink" href="#grn-cache" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.4.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This API is experimental.</p>
+</div>
+<p><code class="docutils literal"><span class="pre">grn_cache</span></code> is a data store that keeps responses of
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command. It is not general use cache
+object. It is only for <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command.</p>
+<p>You can just change the current cache object by
+<a class="reference internal" href="#c.grn_cache_current_set" title="grn_cache_current_set"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_current_set()</span></code></a>. <a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a>
+command response cache is done internally.</p>
+<p><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command uses one global cache
+object. If you open multiple databases, the one cache is shared. It is
+an important problem.</p>
+<p>If you open multiple databases and use
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command, you need to use
+<code class="docutils literal"><span class="pre">grn_cache</span></code> object. It is <a class="reference internal" href="../executables/groonga-httpd.html"><span class="doc">groonga-httpd</span></a>
+case. If you open only one database or don't use
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command, you don't need to use
+<code class="docutils literal"><span class="pre">grn_cache</span></code> object. It is <a class="reference external" href="http://ranguba.org/#about-rroonga">rroonga</a> case.</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.4.2. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here is an example that change the current cache object.</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">grn_cache</span> <span class="o">*</span><span class="n">cache</span><span class="p">;</span>
+<span class="n">grn_cache</span> <span class="o">*</span><span class="n">cache_previous</span><span class="p">;</span>
+<span class="n">cache</span> <span class="o">=</span> <span class="n">grn_cache_open</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="n">cache_previous</span> <span class="o">=</span> <span class="n">grn_cache_current_get</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+<span class="n">grn_cache_current_set</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cache</span><span class="p">);</span>
+<span class="cm">/* grn_ctx_send(ctx, ...); */</span>
+<span class="n">grn_cache_current_set</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">cache_previous</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference">
+<h2>7.24.4.3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="c.grn_cache">
+<code class="descname">grn_cache</code><a class="headerlink" href="#c.grn_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>It is an opaque cache object. You can create a <code class="docutils literal"><span class="pre">grn_cache</span></code> by
+<a class="reference internal" href="#c.grn_cache_open" title="grn_cache_open"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_open()</span></code></a> and free the created object by
+<a class="reference internal" href="#c.grn_cache_close" title="grn_cache_close"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_close()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_open">
+<a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a> *<code class="descname">grn_cache_open</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new cache object.</p>
+<p>If memory allocation for the new cache object is failed, <code class="docutils literal"><span class="pre">NULL</span></code>
+is returned. Error information is stored into the <code class="docutils literal"><span class="pre">ctx</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A newly allocated cache object on success, <code class="docutils literal"><span class="pre">NULL</span></code>
+otherwise. The returned cache object must be freed by
+<a class="reference internal" href="#c.grn_cache_close" title="grn_cache_close"><code class="xref c c-func docutils literal"><span class="pre">grn_cache_close()</span></code></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_close">
+grn_rc <code class="descname">grn_cache_close</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Frees resourses of the <code class="docutils literal"><span class="pre">cache</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+<li><strong>cache</strong> -- The cache object to be freed.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_current_set">
+grn_rc <code class="descname">grn_cache_current_set</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_current_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the cache object that is used in
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+<li><strong>cache</strong> -- The cache object that is used in
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_current_get">
+<a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a> *<code class="descname">grn_cache_current_get</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_current_get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the cache object that is used in
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The cache object that is used in
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> command. It may be <code class="docutils literal"><span class="pre">NULL</span></code>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_set_max_n_entries">
+grn_rc <code class="descname">grn_cache_set_max_n_entries</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em>, unsigned int<em>&nbsp;n</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_set_max_n_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the max number of entries of the cache object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+<li><strong>cache</strong> -- The cache object to be changed.</li>
+<li><strong>n</strong> -- The new max number of entries of the cache object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> otherwise.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_cache_get_max_n_entries">
+unsigned int <code class="descname">grn_cache_get_max_n_entries</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="#c.grn_cache" title="grn_cache">grn_cache</a><em>&nbsp;*cache</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_cache_get_max_n_entries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the max number of entries of the cache object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context.</li>
+<li><strong>cache</strong> -- The target cache object.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The max number of entries of the cache object.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.4. <code class="docutils literal"><span class="pre">grn_cache</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.24.4.1. Summary</a></li>
+<li><a class="reference internal" href="#example">7.24.4.2. Example</a></li>
+<li><a class="reference internal" href="#reference">7.24.4.3. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plugin.html"
+                        title="previous chapter">7.24.3. Plugin</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="grn_column.html"
+                        title="next chapter">7.24.5. <code class="docutils literal"><span class="pre">grn_column</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="grn_column.html" title="7.24.5. grn_column"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="plugin.html" title="7.24.3. Plugin"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

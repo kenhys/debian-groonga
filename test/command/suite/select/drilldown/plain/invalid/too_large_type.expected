@@ -1,0 +1,26 @@
+table_create Memos TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Memos tag1 COLUMN_SCALAR Text
+[[0,0.0,0.0],true]
+column_create Memos tag2 COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+load --table Memos
+[
+{"_key": "Groonga is fast!", "tag1": "Groonga"},
+{"_key": "Mroonga is fast!", "tag1": "Mroonga", "tag2": "Groonga"},
+{"_key": "Groonga sticker!", "tag1": "Groonga"},
+{"_key": "Rroonga is fast!", "tag1": "Rroonga", "tag2": "Groonga"}
+]
+[[0,0.0,0.0],4]
+select Memos --drilldown tag1,tag2
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[table][create] key size too big: <> <Text>(65536) (max:4096)"
+  ]
+]
+#|e| [table][create] key size too big: <> <Text>(65536) (max:4096)

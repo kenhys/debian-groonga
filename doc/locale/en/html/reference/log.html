@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.22. Log &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.23. Tuning" href="tuning.html" />
+    <link rel="prev" title="7.21. Sharding" href="sharding.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/log.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tuning.html" title="7.23. Tuning"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="sharding.html" title="7.21. Sharding"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="log">
+<h1>7.22. Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h1>
+<p>Groonga has two log files. They are process log and query
+log. Process log is for all of <a class="reference internal" href="executables/groonga.html"><span class="doc">groonga executable file</span></a>
+works. Query log is just for query processing.</p>
+<div class="section" id="process-log">
+<span id="id1"></span><h2>7.22.1. Process log<a class="headerlink" href="#process-log" title="Permalink to this headline">¶</a></h2>
+<p>Process log is enabled by default. Log path can be customized by
+<a class="reference internal" href="executables/groonga.html#cmdoption-groonga-log-path"><code class="xref std std-option docutils literal"><span class="pre">groonga</span> <span class="pre">--log-path</span></code></a> option. Each log has its log level. If a
+log is smaller than Groonga process' log level, it's not logged. Log
+level can be customized by <a class="reference internal" href="executables/groonga.html#cmdoption-groonga-l"><code class="xref std std-option docutils literal"><span class="pre">groonga</span> <span class="pre">-l</span></code></a> or
+<a class="reference internal" href="commands/log_level.html"><span class="doc">log_level</span></a>.</p>
+<div class="section" id="format">
+<h3>7.22.1.1. Format<a class="headerlink" href="#format" title="Permalink to this headline">¶</a></h3>
+<p>Process log uses the following format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>#{TIME_STAMP}|#{L}| #{MESSAGE}
+</pre></div>
+</div>
+<p>Some multi-process based applications such as
+<a class="reference internal" href="executables/groonga-httpd.html"><span class="doc">groonga-httpd</span></a> and <a class="reference external" href="https://pgroonga.github.io/">PGroonga</a> use the following format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>#{TIME_STAMP}|#{L}|#{PID}: #{MESSAGE}
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>TIME_STAMP</dt>
+<dd><p class="first">It's time stamp uses the following format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>YYYY-MM-DD hh:mm:ss.SSSSSS
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>YYYY</dt>
+<dd>Year with four digits.</dd>
+<dt>MM</dt>
+<dd>Month with two digits.</dd>
+<dt>DD</dt>
+<dd>Day with two digits.</dd>
+<dt>hh</dt>
+<dd>Hour with two digits.</dd>
+<dt>mm</dt>
+<dd>Minute with two digits.</dd>
+<dt>ss</dt>
+<dd>Second with two digits.</dd>
+<dt>SSSSSS</dt>
+<dd>Microsecond with six digits.</dd>
+</dl>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>2011-07-05 06:25:18.345734
+</pre></div>
+</div>
+</dd>
+<dt>L</dt>
+<dd><p class="first">Log level with a character. Here is a character and log
+level map.</p>
+<dl class="docutils">
+<dt>E</dt>
+<dd>Emergency</dd>
+<dt>A</dt>
+<dd>Alert</dd>
+<dt>C</dt>
+<dd>Critical</dd>
+<dt>e</dt>
+<dd>Error</dd>
+<dt>w</dt>
+<dd>Warning</dd>
+<dt>n</dt>
+<dd>Notification</dd>
+<dt>i</dt>
+<dd>Information</dd>
+<dt>d</dt>
+<dd>Debug</dd>
+<dt>-</dt>
+<dd>Dump</dd>
+</dl>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>E
+</pre></div>
+</div>
+</dd>
+<dt>PID</dt>
+<dd><p class="first">The process ID.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>1129
+</pre></div>
+</div>
+</dd>
+<dt>MESSAGE</dt>
+<dd><p class="first">Details about the log with free format.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>log opened.
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>2011-07-05 08:35:09.276421|n| grn_init
+2011-07-05 08:35:09.276553|n| RLIMIT_NOFILE(4096,4096)
+</pre></div>
+</div>
+<p>Example with PID:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>2011-07-05 08:35:09.276421|n|1129: grn_init
+2011-07-05 08:35:09.276553|n|1129: RLIMIT_NOFILE(4096,4096)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="query-log">
+<span id="id2"></span><h2>7.22.2. Query log<a class="headerlink" href="#query-log" title="Permalink to this headline">¶</a></h2>
+<p>Query log is disabled by default. It can be enabled by
+<a class="reference internal" href="executables/groonga.html#cmdoption-groonga-query-log-path"><code class="xref std std-option docutils literal"><span class="pre">groonga</span> <span class="pre">--query-log-path</span></code></a> option.</p>
+<div class="section" id="id3">
+<h3>7.22.2.1. Format<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Query log uses the following formats:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>#{TIME_STAMP}|#{MESSAGE}
+#{TIME_STAMP}|#{ID}|&gt;#{QUERY}
+#{TIME_STAMP}|#{ID}|:#{ELAPSED_TIME} #{PROGRESS}
+#{TIME_STAMP}|#{ID}|&lt;#{ELAPSED_TIME} #{RETURN_CODE}
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>TIME_STAMP</dt>
+<dd><p class="first">It's time stamp uses the following format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>YYYY-MM-DD hh:mm:ss.SSSSSS
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>YYYY</dt>
+<dd>Year with four digits.</dd>
+<dt>MM</dt>
+<dd>Month with two digits.</dd>
+<dt>DD</dt>
+<dd>Day with two digits.</dd>
+<dt>hh</dt>
+<dd>Hour with two digits.</dd>
+<dt>mm</dt>
+<dd>Minute with two digits.</dd>
+<dt>ss</dt>
+<dd>Second with two digits.</dd>
+<dt>SSSSSS</dt>
+<dd>Microsecond with six digits.</dd>
+</dl>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>2011-07-05 06:25:18.345734
+</pre></div>
+</div>
+</dd>
+<dt>ID</dt>
+<dd><p class="first">ID of a thread. Groonga process creates threads to process
+requests concurrently. Each thread outputs some logs for a
+request. This ID can be used to extract a log sequence by
+a thread.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>45ea3034
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="docutils">
+<dt>&gt;</dt>
+<dd>A character that indicates query is started.</dd>
+</dl>
+<dl class="docutils">
+<dt>:</dt>
+<dd>A character that indicates query is processing.</dd>
+</dl>
+<dl class="docutils">
+<dt>&lt;</dt>
+<dd>A character that indicates query is finished.</dd>
+<dt>MESSAGE</dt>
+<dd><p class="first">Details about the log with free format.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>query log opened.
+</pre></div>
+</div>
+</dd>
+<dt>QUERY</dt>
+<dd><p class="first">A query to be processed.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>select users --match_columns hobby --query music
+</pre></div>
+</div>
+</dd>
+<dt>ELAPSED_TIME</dt>
+<dd><p class="first">Elapsed time in nanoseconds since query is started.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>000000000075770
+(It means 75,770 nanoseconds.)
+</pre></div>
+</div>
+</dd>
+<dt>PROGRESS</dt>
+<dd><p class="first">A processed work at the time.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>select(313401)
+(It means that &#39;select&#39; is processed and 313,401 records are remained.)
+</pre></div>
+</div>
+</dd>
+<dt>RETURN_CODE</dt>
+<dd><p class="first">A return code for the query.</p>
+<p>Example:</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>rc=0
+(It means return code is 0. 0 means GRN_SUCCESS.)
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>2011-07-05 06:25:19.458756|45ea3034|&gt;select Properties --limit 0
+2011-07-05 06:25:19.458829|45ea3034|:000000000072779 select(19)
+2011-07-05 06:25:19.458856|45ea3034|:000000000099998 output(0)
+2011-07-05 06:25:19.458875|45ea3034|&lt;000000000119062 rc=0
+2011-07-05 06:25:19.458986|45ea3034|&gt;quit
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.22. Log</a><ul>
+<li><a class="reference internal" href="#process-log">7.22.1. Process log</a><ul>
+<li><a class="reference internal" href="#format">7.22.1.1. Format</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#query-log">7.22.2. Query log</a><ul>
+<li><a class="reference internal" href="#id3">7.22.2.1. Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="sharding.html"
+                        title="previous chapter">7.21. Sharding</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tuning.html"
+                        title="next chapter">7.23. Tuning</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tuning.html" title="7.23. Tuning"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="sharding.html" title="7.21. Sharding"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

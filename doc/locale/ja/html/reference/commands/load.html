@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.24. load &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.3.25. lock_acquire" href="lock_acquire.html" />
+    <link rel="prev" title="7.3.23. io_flush" href="io_flush.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/commands/load.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="lock_acquire.html" title="7.3.25. lock_acquire"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="io_flush.html" title="7.3.23. io_flush"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="load">
+<h1>7.3.24. <code class="docutils literal"><span class="pre">load</span></code><a class="headerlink" href="#load" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.24.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">load</span></code> は、使用しているデータベースのテーブルにレコードを登録し、カラムの値を更新します。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.24.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load values table [columns [ifexists [input_type]]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.24.3. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではすべての引数について説明します。</p>
+<p><code class="docutils literal"><span class="pre">values</span></code></p>
+<blockquote>
+<div><p>input_typeに指定する形式で登録するレコードの値を表現した文字列を渡します。
+input_typeがjsonである場合には、以下のいずれかの形式が使用できます。</p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">Format</span> <span class="pre">1:</span></code></dt>
+<dd>[[カラム名1, カラム名2,..], [カラム値1, カラム値2,..], [カラム値1, カラム値2,..],..]</dd>
+<dt><code class="docutils literal"><span class="pre">Format</span> <span class="pre">2:</span></code></dt>
+<dd>[{カラム名1: カラム値1, カラム名2: カラム値2}, {カラム名1: カラム値1, カラム名2: カラム値2},..]</dd>
+</dl>
+<p>形式1の[カラム名1, カラム名2,..]の要素は <code class="docutils literal"><span class="pre">columns</span></code> 引数が省略された場合のみ有効です。</p>
+<p>対象のテーブルが主キーを持つテーブルであった場合は、カラム名の中に <code class="docutils literal"><span class="pre">_key</span></code> (主キーを示す疑似カラム名)が含まれていなければなりません。</p>
+<p><code class="docutils literal"><span class="pre">values</span></code> 引数が省略された場合には、括弧の対応が取れるまで標準入力から <code class="docutils literal"><span class="pre">values</span></code> の値を読み取ります。引数として値を指定する場合は、文字列のエスケープが必要ですが、標準入力から与える文字列はエスケープする必要がありません。</p>
+<p>続きの文字列については、空白文字(' ')をエスケープする必要はありません。</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">table</span></code></p>
+<blockquote>
+<div>レコードを追加しようとするテーブルの名前を指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">columns</span></code></p>
+<blockquote>
+<div>テーブルに登録するレコードに値を設定するカラム名のリストを、カンマ区切りで指定します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">ifexists</span></code></p>
+<blockquote>
+<div>指定した主キーに対応するレコードが既にテーブルに登録済みであった場合に実行するscript形式の <code class="docutils literal"><span class="pre">grn_expr</span></code> 文字列を指定します。 <code class="docutils literal"><span class="pre">ifexists</span></code> に <code class="docutils literal"><span class="pre">grn_expr</span></code> が指定された場合は、式の値が真である場合に限り、その他のカラムの値が更新されます。(デフォルトはtrue)</div></blockquote>
+<p><code class="docutils literal"><span class="pre">input_type</span></code></p>
+<blockquote>
+<div>入力形式を指定します。JSONのみに対応しています。</div></blockquote>
+</div>
+<div class="section" id="usage">
+<h2>7.3.24.4. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>テーブルEntryにレコードを登録します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Entry --input_type json --values [{\&quot;_key\&quot;:\&quot;Groonga\&quot;,\&quot;body\&quot;:\&quot;It&#39;s very fast!!\&quot;}]
+
+[1]
+</pre></div>
+</div>
+<p>標準入力からvaluesの値を与えます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Entry --input_type json
+[
+{&quot;_key&quot;: &quot;Groonga&quot;, &quot;body&quot;: &quot;It&#39;s very fast!!&quot;}
+]
+
+[1]
+</pre></div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.24.5. 戻り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="json-format">
+<h3>7.3.24.5.1. JSON形式<a class="headerlink" href="#json-format" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<blockquote>
+<div><p>テーブルに登録されたレコードの件数が返されます。</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[NUMBER]
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.24.6. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><a class="reference internal" href="../grn_expr.html"><span class="doc">grn_expr</span></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.24. <code class="docutils literal"><span class="pre">load</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.24.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.3.24.2. 構文</a></li>
+<li><a class="reference internal" href="#parameters">7.3.24.3. 引数</a></li>
+<li><a class="reference internal" href="#usage">7.3.24.4. 使い方</a></li>
+<li><a class="reference internal" href="#return-value">7.3.24.5. 戻り値</a><ul>
+<li><a class="reference internal" href="#json-format">7.3.24.5.1. JSON形式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">7.3.24.6. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="io_flush.html"
+                        title="前の章へ">7.3.23. <code class="docutils literal"><span class="pre">io_flush</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="lock_acquire.html"
+                        title="次の章へ">7.3.25. <code class="docutils literal"><span class="pre">lock_acquire</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="lock_acquire.html" title="7.3.25. lock_acquire"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="io_flush.html" title="7.3.23. io_flush"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

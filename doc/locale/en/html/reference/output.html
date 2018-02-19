@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.2. Output &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.3. Command" href="command.html" />
+    <link rel="prev" title="7.1.9. groonga-suggest-learner" href="executables/groonga-suggest-learner.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/output.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="command.html" title="7.3. Command"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="executables/groonga-suggest-learner.html" title="7.1.9. groonga-suggest-learner"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output">
+<h1>7.2. Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h1>
+<p>Groonga supports the following output format types:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.json.org/">JSON</a></li>
+<li><a class="reference external" href="http://www.w3.org/XML/">XML</a></li>
+<li>TSV (Tab Separated Values)</li>
+<li><a class="reference external" href="http://msgpack.org/">MessagePack</a></li>
+</ul>
+</div></blockquote>
+<p>JSON is the default output format.</p>
+<div class="section" id="usage">
+<h2>7.2.1. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Groonga has the following query interfaces:</p>
+<blockquote>
+<div><ul class="simple">
+<li>command line</li>
+<li>HTTP</li>
+</ul>
+</div></blockquote>
+<p>They provides different ways to change output format type.</p>
+<div class="section" id="command-line">
+<h3>7.2.1.1. Command line<a class="headerlink" href="#command-line" title="Permalink to this headline">¶</a></h3>
+<p>You can use command line query interface by <code class="docutils literal"><span class="pre">groonga</span>
+<span class="pre">DB_PATH</span></code> or <code class="docutils literal"><span class="pre">groonga</span> <span class="pre">-c</span></code>. Those groonga commands shows
+<code class="docutils literal"><span class="pre">&gt;</span></code> prompt. In this query interface, you can specify
+output format type by <code class="docutils literal"><span class="pre">output_type</span></code> option.</p>
+<p>If you don't specify <code class="docutils literal"><span class="pre">output_type</span></code> option, you will get
+a result in JSON format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; status
+[[0,1327721628.10738,0.000131845474243164],{&quot;alloc_count&quot;:142,&quot;starttime&quot;:1327721626,&quot;uptime&quot;:2,&quot;version&quot;:&quot;1.2.9-92-gb87d9f8&quot;,&quot;n_queries&quot;:0,&quot;cache_hit_rate&quot;:0.0,&quot;command_version&quot;:1,&quot;default_command_version&quot;:1,&quot;max_command_version&quot;:2}]
+</pre></div>
+</div>
+<p>You can specify <code class="docutils literal"><span class="pre">json</span></code> as <code class="docutils literal"><span class="pre">output_type</span></code> value to get a
+result in JSON format explicitly:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; status --output_type json
+[[0,1327721639.08321,7.93933868408203e-05],{&quot;alloc_count&quot;:144,&quot;starttime&quot;:1327721626,&quot;uptime&quot;:13,&quot;version&quot;:&quot;1.2.9-92-gb87d9f8&quot;,&quot;n_queries&quot;:0,&quot;cache_hit_rate&quot;:0.0,&quot;command_version&quot;:1,&quot;default_command_version&quot;:1,&quot;max_command_version&quot;:2}]
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">xml</span></code> as <code class="docutils literal"><span class="pre">output_type</span></code> value to
+get a result in XML format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; status --output_type xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RESULT CODE=&quot;0&quot; UP=&quot;1327721649.61095&quot; ELAPSED=&quot;0.000126361846923828&quot;&gt;
+&lt;RESULT&gt;
+&lt;TEXT&gt;alloc_count&lt;/TEXT&gt;
+&lt;INT&gt;146&lt;/INT&gt;
+&lt;TEXT&gt;starttime&lt;/TEXT&gt;
+&lt;INT&gt;1327721626&lt;/INT&gt;
+&lt;TEXT&gt;uptime&lt;/TEXT&gt;
+&lt;INT&gt;23&lt;/INT&gt;
+&lt;TEXT&gt;version&lt;/TEXT&gt;
+&lt;TEXT&gt;1.2.9-92-gb87d9f8&lt;/TEXT&gt;
+&lt;TEXT&gt;n_queries&lt;/TEXT&gt;
+&lt;INT&gt;0&lt;/INT&gt;
+&lt;TEXT&gt;cache_hit_rate&lt;/TEXT&gt;
+&lt;FLOAT&gt;0.0&lt;/FLOAT&gt;
+&lt;TEXT&gt;command_version&lt;/TEXT&gt;
+&lt;INT&gt;1&lt;/INT&gt;
+&lt;TEXT&gt;default_command_version&lt;/TEXT&gt;
+&lt;INT&gt;1&lt;/INT&gt;
+&lt;TEXT&gt;max_command_version&lt;/TEXT&gt;
+&lt;INT&gt;2&lt;/INT&gt;&lt;/RESULT&gt;
+&lt;/RESULT&gt;
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">tsv</span></code> as <code class="docutils literal"><span class="pre">output_type</span></code> value to
+get a result in TSV format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; status --output_type tsv
+0     1327721664.82675        0.000113964080810547
+&quot;alloc_count&quot; 146
+&quot;starttime&quot;   1327721626
+&quot;uptime&quot;      38
+&quot;version&quot;     &quot;1.2.9-92-gb87d9f8&quot;
+&quot;n_queries&quot;   0
+&quot;cache_hit_rate&quot;      0.0
+&quot;command_version&quot;     1
+&quot;default_command_version&quot;     1
+&quot;max_command_version&quot; 2
+END
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">msgpack</span></code> as <code class="docutils literal"><span class="pre">output_type</span></code> value to
+get a result in MessagePack format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>&gt; status --output_type msgpack
+(... omitted because MessagePack is binary data format. ...)
+</pre></div>
+</div>
+</div>
+<div class="section" id="http">
+<h3>7.2.1.2. HTTP<a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h3>
+<p>You can use HTTP query interface by <code class="docutils literal"><span class="pre">groonga</span> <span class="pre">--protocol</span>
+<span class="pre">http</span> <span class="pre">-s</span> <span class="pre">DB_PATH</span></code>. Groonga HTTP server starts on port 10041
+by default. In this query interface, you can specify
+output format type by extension.</p>
+<p>If you don't specify extension, you will get a result in
+JSON format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% curl http://localhost:10041/d/status
+[[0,1327809294.54311,0.00082087516784668],{&quot;alloc_count&quot;:155,&quot;starttime&quot;:1327809282,&quot;uptime&quot;:12,&quot;version&quot;:&quot;1.2.9-92-gb87d9f8&quot;,&quot;n_queries&quot;:0,&quot;cache_hit_rate&quot;:0.0,&quot;command_version&quot;:1,&quot;default_command_version&quot;:1,&quot;max_command_version&quot;:2}]
+</pre></div>
+</div>
+<p>You can specify <code class="docutils literal"><span class="pre">json</span></code> as extension to get a result in
+JSON format explicitly:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% curl http://localhost:10041/d/status.json
+[[0,1327809319.01929,9.5367431640625e-05],{&quot;alloc_count&quot;:157,&quot;starttime&quot;:1327809282,&quot;uptime&quot;:37,&quot;version&quot;:&quot;1.2.9-92-gb87d9f8&quot;,&quot;n_queries&quot;:0,&quot;cache_hit_rate&quot;:0.0,&quot;command_version&quot;:1,&quot;default_command_version&quot;:1,&quot;max_command_version&quot;:2}]
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">xml</span></code> as extension to get a result in
+XML format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% curl http://localhost:10041/d/status.xml
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RESULT CODE=&quot;0&quot; UP=&quot;1327809339.5782&quot; ELAPSED=&quot;9.56058502197266e-05&quot;&gt;
+&lt;RESULT&gt;
+&lt;TEXT&gt;alloc_count&lt;/TEXT&gt;
+&lt;INT&gt;159&lt;/INT&gt;
+&lt;TEXT&gt;starttime&lt;/TEXT&gt;
+&lt;INT&gt;1327809282&lt;/INT&gt;
+&lt;TEXT&gt;uptime&lt;/TEXT&gt;
+&lt;INT&gt;57&lt;/INT&gt;
+&lt;TEXT&gt;version&lt;/TEXT&gt;
+&lt;TEXT&gt;1.2.9-92-gb87d9f8&lt;/TEXT&gt;
+&lt;TEXT&gt;n_queries&lt;/TEXT&gt;
+&lt;INT&gt;0&lt;/INT&gt;
+&lt;TEXT&gt;cache_hit_rate&lt;/TEXT&gt;
+&lt;FLOAT&gt;0.0&lt;/FLOAT&gt;
+&lt;TEXT&gt;command_version&lt;/TEXT&gt;
+&lt;INT&gt;1&lt;/INT&gt;
+&lt;TEXT&gt;default_command_version&lt;/TEXT&gt;
+&lt;INT&gt;1&lt;/INT&gt;
+&lt;TEXT&gt;max_command_version&lt;/TEXT&gt;
+&lt;INT&gt;2&lt;/INT&gt;&lt;/RESULT&gt;
+&lt;/RESULT&gt;
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">tsv</span></code> as extension to get a result in
+TSV format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% curl http://localhost:10041/d/status.tsv
+0     1327809366.84187        8.44001770019531e-05
+&quot;alloc_count&quot; 159
+&quot;starttime&quot;   1327809282
+&quot;uptime&quot;      84
+&quot;version&quot;     &quot;1.2.9-92-gb87d9f8&quot;
+&quot;n_queries&quot;   0
+&quot;cache_hit_rate&quot;      0.0
+&quot;command_version&quot;     1
+&quot;default_command_version&quot;     1
+&quot;max_command_version&quot; 2
+END
+</pre></div>
+</div>
+<p>You need to specify <code class="docutils literal"><span class="pre">msgpack</span></code> as extension to get a result
+in MessagePack format:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% curl http://localhost:10041/d/status.msgpack
+(... omitted because MessagePack is binary data format. ...)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.2. Output</a><ul>
+<li><a class="reference internal" href="#usage">7.2.1. Usage</a><ul>
+<li><a class="reference internal" href="#command-line">7.2.1.1. Command line</a></li>
+<li><a class="reference internal" href="#http">7.2.1.2. HTTP</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="executables/groonga-suggest-learner.html"
+                        title="previous chapter">7.1.9. groonga-suggest-learner</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="command.html"
+                        title="next chapter">7.3. Command</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="command.html" title="7.3. Command"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="executables/groonga-suggest-learner.html" title="7.1.9. groonga-suggest-learner"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

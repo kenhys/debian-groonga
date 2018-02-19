@@ -1,0 +1,62 @@
+table_create Lexicon TABLE_PAT_KEY ShortText   --default_tokenizer TokenRegexp
+[[0,0.0,0.0],true]
+table_tokenize Lexicon "xyz" --mode ADD
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "￯",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "xy",
+      "position": 1,
+      "force_prefix": false
+    },
+    {
+      "value": "yz",
+      "position": 2,
+      "force_prefix": false
+    },
+    {
+      "value": "z",
+      "position": 3,
+      "force_prefix": false
+    },
+    {
+      "value": "￰",
+      "position": 4,
+      "force_prefix": false
+    }
+  ]
+]
+table_tokenize Lexicon "￯xyz" --mode GET
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "￯",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "xy",
+      "position": 1,
+      "force_prefix": false
+    },
+    {
+      "value": "yz",
+      "position": 2,
+      "force_prefix": false
+    }
+  ]
+]

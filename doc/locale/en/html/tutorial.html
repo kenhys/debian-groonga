@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4. Tutorial &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.1. Basic operations" href="tutorial/introduction.html" />
+    <link rel="prev" title="3. Community" href="community.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../ja/html/tutorial.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tutorial/introduction.html" title="4.1. Basic operations"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="3. Community"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>4. Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">4.1. Basic operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-database">4.1.1. Create a database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#operate-a-database">4.1.2. Operate a database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#command-format">4.1.3. Command format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#basic-commands">4.1.4. Basic commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-table">4.1.5. Create a table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#view-a-table">4.1.6. View a table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-column">4.1.7. Create a column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#load-records">4.1.8. Load records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#get-a-record">4.1.9. Get a record</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-lexicon-table-for-full-text-search">4.1.10. Create a lexicon table for full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-an-index-column-for-full-text-search">4.1.11. Create an index column for full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#full-text-search">4.1.12. Full text search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#specify-output-columns">4.1.13. Specify output columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#specify-output-ranges">4.1.14. Specify output ranges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#sort-a-search-result">4.1.15. Sort a search result</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/network.html">4.2. Remote access</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#hypertext-transfer-protocol-http">4.2.1. Hypertext transfer protocol (HTTP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#administration-tool-http">4.2.2. Administration tool (HTTP)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#security-issues">4.2.3. Security issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/data.html">4.3. Various data types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#overview">4.3.1. Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#boolean-type">4.3.2. Boolean type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#numeric-types">4.3.3. Numeric types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#string-types">4.3.4. String types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#date-and-time-type">4.3.5. Date and time type</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#longitude-and-latitude-types">4.3.6. Longitude and latitude types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#reference-types">4.3.7. Reference types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#vector-types">4.3.8. Vector types</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/search.html">4.4. Various search conditions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#narrow-down-full-text-search-by-using-syntax-like-javascript">4.4.1. Narrow down &amp; Full-text search by using syntax like JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#sort-by-using-scorer">4.4.2. Sort by using <code class="docutils literal"><span class="pre">scorer</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#narrow-down-sort-by-using-location-information">4.4.3. Narrow down &amp; sort by using location information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/drilldown.html">4.5. Drilldown</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#drilldown-with-multiple-column">4.5.1. Drilldown with multiple column</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#sorting-drildown-results">4.5.2. Sorting drildown results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#limits-drildown-results">4.5.3. limits drildown results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">4.6. Tag search and reverse resolution of reference relationships</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#tag-search">4.6.1. Tag search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#reverse-resolution-of-reference-relationships">4.6.2. Reverse resolution of reference relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#geo-location-search-with-index">4.6.3. Geo location search with index</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/match_columns.html">4.7. match_columns parameter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#full-text-search-against-multiple-columns">4.7.1. Full-text search against multiple columns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#full-text-search-with-specific-index-name">4.7.2. Full text search with specific index name</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#nested-index-search-among-related-table-by-column-index">4.7.3. Nested index search among related table by column index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#indexes-with-weight">4.7.4. Indexes with Weight</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/patricia_trie.html">4.8. Prefix search with patricia trie</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/patricia_trie.html#prefix-search-by-primary-key">4.8.1. Prefix search by primary key</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/patricia_trie.html#suffix-search-by-primary-key">4.8.2. Suffix search by primary key</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/lexicon.html">4.9. Additional information about lexicon for full text search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/micro_blog.html">4.10. Let's create micro-blog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#create-a-table">4.10.1. Create a table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#loading-data">4.10.2. Loading data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#search">4.10.3. Search</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/query_expansion.html">4.11. Query expansion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/query_expansion.html#preparation">4.11.1. Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/query_expansion.html#search">4.11.2. Search</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="community.html"
+                        title="previous chapter">3. Community</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorial/introduction.html"
+                        title="next chapter">4.1. Basic operations</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tutorial/introduction.html" title="4.1. Basic operations"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="3. Community"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.12. grn_expr &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="7.12.1. クエリー構文" href="grn_expr/query_syntax.html" />
+    <link rel="prev" title="7.11.3.2. scorer_tf_idf" href="scorers/scorer_tf_idf.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/reference/grn_expr.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="grn_expr/query_syntax.html" title="7.12.1. クエリー構文"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="scorers/scorer_tf_idf.html" title="7.11.3.2. scorer_tf_idf"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-expr">
+<h1>7.12. grn_expr<a class="headerlink" href="#grn-expr" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>grn_exprは特定の条件にマッチするレコードを検索したり、データベースを操作するオブジェクトです。 <code class="docutils literal"><span class="pre">ぐるんしき</span></code> と読みます。（由来は「Groongaの式」。）</p>
+<p>データベースからレコードを検索する条件は条件式を集合演算で結合して表現できます。例えば、条件式には <code class="docutils literal"><span class="pre">等価条件式</span></code> や <code class="docutils literal"><span class="pre">小なり条件式</span></code> などがあります。集合演算には <code class="docutils literal"><span class="pre">積（AND）</span></code> 、 <code class="docutils literal"><span class="pre">和（OR）</span></code> 、 <code class="docutils literal"><span class="pre">差（NOT）</span></code> などがあります。gnr_exprはこれらの条件を使ってレコードを検索します。類似文書検索や近傍検索などといった高度な検索もgrn_exprで実行できます。柔軟な全文検索も実行できます。例えば、特定の単語にマッチしたときのヒットスコアを調整したり、検索結果数によって検索漏れの少ないアルゴリズムで再検索し、再現率を向上するといったことも実現できます。</p>
+<p>grn_exprを作る方法は3つあります:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="grn_expr/query_syntax.html"><span class="doc">クエリー構文</span></a> の文字列をパースする。</li>
+<li><a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> の文字列をパースする。</li>
+<li>grn_expr関連のAPIを呼ぶ。</li>
+</ul>
+</div></blockquote>
+<p><a class="reference internal" href="grn_expr/query_syntax.html"><span class="doc">クエリー構文</span></a> は一般的なインターネット検索サイトにある検索フォーム用の構文です。シンプルで使いやすいですが、制限があります。 <a class="reference internal" href="grn_expr/query_syntax.html"><span class="doc">クエリー構文</span></a> では実行できない条件式や集合演算があります。 <a class="reference internal" href="grn_expr/query_syntax.html"><span class="doc">クエリー構文</span></a> は <a class="reference internal" href="commands/select.html"><span class="doc">select</span></a> の <code class="docutils literal"><span class="pre">query</span></code> オプションで指定する検索条件で使えます。</p>
+<p><a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> はECMAScriptに似た構文です。 <a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> ではすべての条件式と集合演算を使えます。 <a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> は <a class="reference internal" href="commands/select.html"><span class="doc">select</span></a> の <code class="docutils literal"><span class="pre">filter</span></code> オプションで指定する検索条件や <code class="docutils literal"><span class="pre">scorer</span></code> オプションで指定する式で使えます。</p>
+<p>groongaをライブラリとして使うと、grn_expr関連のAPIを呼び出してgrn_exprを作ることができます。 <a class="reference internal" href="grn_expr/script_syntax.html"><span class="doc">スクリプト構文</span></a> のように、APIを呼び出すと全ての機能を使えます。grn_exprを作る構文を新しく作るときにはAPIが便利です。APIは <a class="reference external" href="http://ranguba.org/#about-rroonga">rroonga</a> というGroongaのRubyバインディングで使われています。rroongaでは文字列をパースするのではなく、Rubyの構文を使ってgrn_exprを作ることができます。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="grn_expr/query_syntax.html">7.12.1. クエリー構文</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grn_expr/script_syntax.html">7.12.2. スクリプト構文</a></li>
+</ul>
+</div>
+<div class="section" id="see-also">
+<h2>7.12.3. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="api/grn_expr.html"><span class="doc">grn_expr</span></a>: grn_expr関連のAPI</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.12. grn_expr</a><ul>
+<li><a class="reference internal" href="#see-also">7.12.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="scorers/scorer_tf_idf.html"
+                        title="前の章へ">7.11.3.2. <code class="docutils literal"><span class="pre">scorer_tf_idf</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="grn_expr/query_syntax.html"
+                        title="次の章へ">7.12.1. クエリー構文</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="grn_expr/query_syntax.html" title="7.12.1. クエリー構文"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="scorers/scorer_tf_idf.html" title="7.11.3.2. scorer_tf_idf"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

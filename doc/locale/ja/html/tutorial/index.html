@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.6. タグ検索・参照関係の逆引き &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4.7. match_columnsパラメータ" href="match_columns.html" />
+    <link rel="prev" title="4.5. ドリルダウン" href="drilldown.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/tutorial/index.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columnsパラメータ"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. ドリルダウン"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tag-search-and-reverse-resolution-of-reference-relationships">
+<h1>4.6. タグ検索・参照関係の逆引き<a class="headerlink" href="#tag-search-and-reverse-resolution-of-reference-relationships" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaはカラム値として他のテーブルへの参照の配列を持つことができます。実は、テーブルへの参照の配列データを用いることによって、いわゆるタグ検索を行うことが可能となります。</p>
+<p>タグ検索はGroongaの転置インデックスというデータ構造を用いて高速に行われます。</p>
+<div class="section" id="tag-search">
+<h2>4.6.1. タグ検索<a class="headerlink" href="#tag-search" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>動画共有サイトの検索エンジンを作ることを想定します。1つの動画には、その動画の特徴を表す、複数の語句が付与されています。「ある語句が付与されている動画の一覧を取得する」検索を行いたいとします。</p>
+<p>実際に、動画情報のテーブルを作成し、検索をしてみましょう。</p>
+<p>動画の情報を保存する、Videoテーブルを作成します。Videoテーブルでは、動画のタイトルをtitleカラムに、動画のタグ情報をtagsカラムにTagテーブル型で複数格納しています。</p>
+<p>タグの情報を保存する、Tagテーブルを作成します。Tagテーブルでは、タグ文字列を主キーに格納し、Videoテーブルのtagsカラムに対するインデックスをindex_tagsカラムに格納しています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name Video --flags TABLE_HASH_KEY --key_type UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name Tag --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Video --name title --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Video --name tags --flags COLUMN_VECTOR --type Tag
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Tag --name index_tags --flags COLUMN_INDEX --type Video --source tags
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Video
+[
+{&quot;_key&quot;:1,&quot;title&quot;:&quot;Soccer 2010&quot;,&quot;tags&quot;:[&quot;Sports&quot;,&quot;Soccer&quot;]},
+{&quot;_key&quot;:2,&quot;title&quot;:&quot;Zenigata Kinjirou&quot;,&quot;tags&quot;:[&quot;Variety&quot;,&quot;Money&quot;]},
+{&quot;_key&quot;:3,&quot;title&quot;:&quot;groonga Demo&quot;,&quot;tags&quot;:[&quot;IT&quot;,&quot;Server&quot;,&quot;groonga&quot;]},
+{&quot;_key&quot;:4,&quot;title&quot;:&quot;Moero!! Ultra Baseball&quot;,&quot;tags&quot;:[&quot;Sports&quot;,&quot;Baseball&quot;]},
+{&quot;_key&quot;:5,&quot;title&quot;:&quot;Hex Gone!&quot;,&quot;tags&quot;:[&quot;Variety&quot;,&quot;Quiz&quot;]},
+{&quot;_key&quot;:6,&quot;title&quot;:&quot;Pikonyan 1&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Pikonyan&quot;]},
+{&quot;_key&quot;:7,&quot;title&quot;:&quot;Draw 8 Month&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Raccoon&quot;]},
+{&quot;_key&quot;:8,&quot;title&quot;:&quot;K.O.&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Music&quot;]}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 8]
+</pre></div>
+</div>
+<p>インデックスカラムを作成すると、全文検索が高速に行えるようになります。インデックスカラムは、対象のカラムに保存されたデータに更新があったとき、自動的に更新されます。</p>
+<p>「ある語句が付与されている動画の一覧を取得する」検索を行いましょう。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Video --query tags:@Variety --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;Zenigata Kinjirou&quot;
+#       ],
+#       [
+#         5,
+#         &quot;Hex Gone!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Video --query tags:@Sports --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;Soccer 2010&quot;
+#       ],
+#       [
+#         4,
+#         &quot;Moero!! Ultra Baseball&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Video --query tags:@Animation --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         6,
+#         &quot;Pikonyan 1&quot;
+#       ],
+#       [
+#         7,
+#         &quot;Draw 8 Month&quot;
+#       ],
+#       [
+#         8,
+#         &quot;K.O.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>このように、「Variety」、「Sports」、「Animation」のようなタグで検索を行うことができました。</p>
+</div>
+<div class="section" id="reverse-resolution-of-reference-relationships">
+<h2>4.6.2. 参照関係の逆引き<a class="headerlink" href="#reverse-resolution-of-reference-relationships" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaはテーブル間の参照関係の逆引きを高速に行うためのインデックスを付与することができます。タグ検索は、その1例にすぎません。</p>
+<p>例えば、ソーシャルネットワーキングサイトにおける友人関係を逆引き検索することができます。</p>
+<p>以下の例では、ユーザー情報を格納するUserテーブルを作成し、ユーザー名を格納するusernameカラム、ユーザーの友人一覧を配列で格納するfriendsカラムとそのインデックスのindex_friendsカラムを追加しています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name User --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name username --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name friends --flags COLUMN_VECTOR --type User
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name index_friends --flags COLUMN_INDEX --type User --source friends
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table User
+[
+{&quot;_key&quot;:&quot;ken&quot;,&quot;username&quot;:&quot;健作&quot;,&quot;friends&quot;:[&quot;taro&quot;,&quot;jiro&quot;,&quot;tomo&quot;,&quot;moritapo&quot;]}
+{&quot;_key&quot;:&quot;moritapo&quot;,&quot;username&quot;:&quot;森田&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;taro&quot;,&quot;username&quot;:&quot;ぐるんが太郎&quot;,&quot;friends&quot;:[&quot;jiro&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;jiro&quot;,&quot;username&quot;:&quot;ぐるんが次郎&quot;,&quot;friends&quot;:[&quot;taro&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;tomo&quot;,&quot;username&quot;:&quot;トモちゃん&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;hana&quot;]}
+{&quot;_key&quot;:&quot;hana&quot;,&quot;username&quot;:&quot;花子&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;taro&quot;,&quot;jiro&quot;,&quot;moritapo&quot;,&quot;tomo&quot;]}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 6]
+</pre></div>
+</div>
+<p>指定したユーザーを友人リストに入れているユーザーの一覧を表示してみましょう。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table User --query friends:@tomo --output_columns _key,username
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         5
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         &quot;健作&quot;
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         &quot;ぐるんが太郎&quot;
+#       ],
+#       [
+#         &quot;jiro&quot;,
+#         &quot;ぐるんが次郎&quot;
+#       ],
+#       [
+#         &quot;moritapo&quot;,
+#         &quot;森田&quot;
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         &quot;花子&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table User --query friends:@jiro --output_columns _key,username
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         &quot;健作&quot;
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         &quot;ぐるんが太郎&quot;
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         &quot;花子&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>さらに、ドリルダウンを使って、友人リストに入っている数の一覧を表示してみましょう。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table User --limit 0 --drilldown friends
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         6
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;friends&quot;,
+#           &quot;User&quot;
+#         ],
+#         [
+#           &quot;index_friends&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ]
+#     ],
+#     [
+#       [
+#         6
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_nsubrecs&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         3
+#       ],
+#       [
+#         &quot;jiro&quot;,
+#         3
+#       ],
+#       [
+#         &quot;tomo&quot;,
+#         5
+#       ],
+#       [
+#         &quot;moritapo&quot;,
+#         2
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         3
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         1
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>このように、テーブルの参照関係を逆にたどる検索ができました。</p>
+</div>
+<div class="section" id="geo-location-search-with-index">
+<h2>4.6.3. インデックス付きジオサーチ<a class="headerlink" href="#geo-location-search-with-index" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaでは位置情報のカラムに対して、インデックスを付与することが出来ます。大量の位置情報レコードを検索する場合に、検索速度が速くなります。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name GeoSite --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table GeoSite --name location --type WGS84GeoPoint
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name GeoIndex --flags TABLE_PAT_KEY --key_type WGS84GeoPoint
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table GeoIndex --name index_point --type GeoSite --flags COLUMN_INDEX --source location
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table GeoSite
+[
+ {&quot;_key&quot;:&quot;http://example.org/&quot;,&quot;location&quot;:&quot;128452975x503157902&quot;},
+ {&quot;_key&quot;:&quot;http://example.net/&quot;,&quot;location&quot;:&quot;128487316x502920929&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+select --table GeoSite --filter &#39;geo_in_circle(location, &quot;128515259x503187188&quot;, 5000)&#39; --output_columns _key,location
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>これらのインデックスは、位置情報レコードを用いてソートする場合に使われます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table GeoSite --filter &#39;geo_in_circle(location, &quot;128515259x503187188&quot;, 50000)&#39; --output_columns _key,location,_score --sort_keys &#39;-geo_distance(location, &quot;128515259x503187188&quot;)&#39; --scorer &#39;_score = geo_distance(location, &quot;128515259x503187188&quot;)&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;,
+#         2054
+#       ],
+#       [
+#         &quot;http://example.net/&quot;,
+#         &quot;128487316x502920929&quot;,
+#         6720
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.6. タグ検索・参照関係の逆引き</a><ul>
+<li><a class="reference internal" href="#tag-search">4.6.1. タグ検索</a></li>
+<li><a class="reference internal" href="#reverse-resolution-of-reference-relationships">4.6.2. 参照関係の逆引き</a></li>
+<li><a class="reference internal" href="#geo-location-search-with-index">4.6.3. インデックス付きジオサーチ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="drilldown.html"
+                        title="前の章へ">4.5. ドリルダウン</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="match_columns.html"
+                        title="次の章へ">4.7. match_columnsパラメータ</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columnsパラメータ"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. ドリルダウン"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,4 @@
+Execution example::
+
+  % curl 'http://localhost:8080/?n=query&t=complete&q=G&frequency_threshold=1'
+  

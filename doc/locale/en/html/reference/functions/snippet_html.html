@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.14.18. snippet_html &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.14.19. string_length" href="string_length.html" />
+    <link rel="prev" title="7.14.17. rand" href="rand.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/functions/snippet_html.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="string_length.html" title="7.14.19. string_length"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rand.html" title="7.14.17. rand"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../function.html" accesskey="U">7.14. Function</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="snippet-html">
+<h1>7.14.18. <code class="docutils literal"><span class="pre">snippet_html</span></code><a class="headerlink" href="#snippet-html" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.14.18.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">snippet_html</span></code> extracts snippets of target text around search
+keywords (<code class="docutils literal"><span class="pre">KWIC</span></code>. <code class="docutils literal"><span class="pre">KeyWord</span> <span class="pre">In</span> <span class="pre">Context</span></code>). The snippets are prepared
+for embedding HTML. Special characters such as <code class="docutils literal"><span class="pre">&lt;</span></code> and <code class="docutils literal"><span class="pre">&gt;</span></code> are
+escapsed as <code class="docutils literal"><span class="pre">&amp;lt;</span></code> and <code class="docutils literal"><span class="pre">&amp;gt;</span></code>. Keyword is surrounded with <code class="docutils literal"><span class="pre">&lt;span</span>
+<span class="pre">class=&quot;keyword&quot;&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;/span&gt;</span></code>. For example, a snippet of <code class="docutils literal"><span class="pre">I</span> <span class="pre">am</span> <span class="pre">a</span>
+<span class="pre">groonga</span> <span class="pre">user.</span> <span class="pre">&lt;3</span></code> for keyword <code class="docutils literal"><span class="pre">groonga</span></code> is <code class="docutils literal"><span class="pre">I</span> <span class="pre">am</span> <span class="pre">a</span> <span class="pre">&lt;span</span>
+<span class="pre">class=&quot;keyword&quot;&gt;groonga&lt;/span&gt;</span> <span class="pre">user.</span> <span class="pre">&amp;lt;3</span></code>.</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.14.18.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">snippet_html</span></code> has only one parameter:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>snippet_html(column)
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">snippet_html</span></code> has many parameters internally but they can't be
+specified for now. You will be able to custom those parameters soon.</p>
+</div>
+<div class="section" id="usage">
+<h2>7.14.18.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here are a schema definition and sample data to show usage.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Documents TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Documents content COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram  --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms documents_content_index COLUMN_INDEX|WITH_POSITION Documents content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Documents
+[
+[&quot;content&quot;],
+[&quot;Groonga is a fast and accurate full text search engine based on inverted index. One of the characteristics of groonga is that a newly registered document instantly appears in search results. Also, groonga allows updates without read locks. These characteristics result in superior performance on real-time applications.&quot;],
+[&quot;Groonga is also a column-oriented database management system (DBMS). Compared with well-known row-oriented systems, such as MySQL and PostgreSQL, column-oriented systems are more suited for aggregate queries. Due to this advantage, groonga can cover weakness of row-oriented systems.&quot;]
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">snippet_html</span></code> can be used in only <code class="docutils literal"><span class="pre">--output_columns</span></code> in
+<a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a>.</p>
+<p>You also need to specify <code class="docutils literal"><span class="pre">--query</span></code> and/or <code class="docutils literal"><span class="pre">--filter</span></code>. Keywords are
+extracted from <code class="docutils literal"><span class="pre">--query</span></code> and <code class="docutils literal"><span class="pre">--filter</span></code> arguments.</p>
+<p>The following example uses <code class="docutils literal"><span class="pre">--query</span> <span class="pre">&quot;fast</span> <span class="pre">performance&quot;</span></code>. In this
+case, <code class="docutils literal"><span class="pre">fast</span></code> and <code class="docutils literal"><span class="pre">performance</span></code> are used as keywords.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Documents --output_columns &quot;snippet_html(content)&quot; --command_version 2 --match_columns content --query &quot;fast performance&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;snippet_html&quot;,
+#           null
+#         ]
+#       ],
+#       [
+#         [
+#           &quot;Groonga is a &lt;span class=\&quot;keyword\&quot;&gt;fast&lt;/span&gt; and accurate full text search engine based on inverted index. One of the characteristics of groonga is that a newly registered document instantly appears in search results. Also, gro&quot;,
+#           &quot;onga allows updates without read locks. These characteristics result in superior &lt;span class=\&quot;keyword\&quot;&gt;performance&lt;/span&gt; on real-time applications.&quot;
+#         ]
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">--query</span> <span class="pre">&quot;fast</span> <span class="pre">performance&quot;</span></code> matches to only the first record's
+content. <code class="docutils literal"><span class="pre">snippet_html(content)</span></code> extracts two text parts that
+include the keywords <code class="docutils literal"><span class="pre">fast</span></code> or <code class="docutils literal"><span class="pre">performance</span></code> and surrounds the
+keywords with <code class="docutils literal"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;/span&gt;</span></code>.</p>
+<p>The max number of text parts is 3. If there are 4 or more text parts
+that include the keywords, only the leading 3 parts are only used.</p>
+<p>The max size of a text part is 200byte. The unit is bytes not
+characters. The size doesn't include inserted <code class="docutils literal"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code>
+and <code class="docutils literal"><span class="pre">&lt;/span&gt;</span></code>.</p>
+<p>Both the max number of text parts and the max size of a text part
+aren't customizable.</p>
+<p>You can specify string literal instead of column.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Documents --output_columns &#39;snippet_html(&quot;Groonga is very fast fulltext search engine.&quot;)&#39; --command_version 2 --match_columns content --query &quot;fast performance&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;snippet_html&quot;,
+#           null
+#         ]
+#       ],
+#       [
+#         [
+#           &quot;Groonga is very &lt;span class=\&quot;keyword\&quot;&gt;fast&lt;/span&gt; fulltext search engine.&quot;
+#         ]
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.14.18.4. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">snippet_html</span></code> returns an array of string or <code class="docutils literal"><span class="pre">null</span></code>. If
+<code class="docutils literal"><span class="pre">snippet_html</span></code> can't find any snippets, it returns <code class="docutils literal"><span class="pre">null</span></code>.</p>
+<p>An element of array is a snippet:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[SNIPPET1, SNIPPET2, SNIPPET3]
+</pre></div>
+</div>
+<p>A snippet includes one or more keywords. The max byte size of a
+snippet except <code class="docutils literal"><span class="pre">&lt;span</span> <span class="pre">class=&quot;keyword&quot;&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;/span&gt;</span></code> is
+200byte. The unit isn't the number of characters.</p>
+<p>The array size is larger than or equal to 0 and less than or equal
+to 3. The max size 3 will be customizable soon.</p>
+</div>
+<div class="section" id="todo">
+<h2>7.14.18.5. TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Make the max number of text parts customizable.</li>
+<li>Make the max size of a text part customizable.</li>
+<li>Make keywords customizable.</li>
+<li>Make tag that surrounds a keyword customizable.</li>
+<li>Make normalization customizable.</li>
+<li>Support options by object literal.</li>
+</ul>
+</div>
+<div class="section" id="see-also">
+<h2>7.14.18.6. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.14.18. <code class="docutils literal"><span class="pre">snippet_html</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.14.18.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.14.18.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.14.18.3. Usage</a></li>
+<li><a class="reference internal" href="#return-value">7.14.18.4. Return value</a></li>
+<li><a class="reference internal" href="#todo">7.14.18.5. TODO</a></li>
+<li><a class="reference internal" href="#see-also">7.14.18.6. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="rand.html"
+                        title="previous chapter">7.14.17. rand</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="string_length.html"
+                        title="next chapter">7.14.19. <code class="docutils literal"><span class="pre">string_length</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="string_length.html" title="7.14.19. string_length"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="rand.html" title="7.14.17. rand"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../function.html" >7.14. Function</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+table_create Entries TABLE_NO_KEY
+column_create Entries content COLUMN_SCALAR ShortText
+
+load --table Entries
+[
+{"content": "groonga and MySQL and PosrgreSQL"}
+]
+
+select Entries \
+  --output_columns ' \
+  snippet(content, \
+  "sql", "<span class=\\"keyword\\">", "</span>", \
+  {"normalizer": "NormalizerAuto"} \
+  )'

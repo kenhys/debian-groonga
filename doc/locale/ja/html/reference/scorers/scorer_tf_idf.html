@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.11.3.2. scorer_tf_idf &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.12. grn_expr" href="../grn_expr.html" />
+    <link rel="prev" title="7.11.3.1. scorer_tf_at_most" href="scorer_tf_at_most.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/scorers/scorer_tf_idf.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../grn_expr.html" title="7.12. grn_expr"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="scorer_tf_at_most.html" title="7.11.3.1. scorer_tf_at_most"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../scorer.html" accesskey="U">7.11. スコアラー</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="scorer-tf-idf">
+<h1>7.11.3.2. <code class="docutils literal"><span class="pre">scorer_tf_idf</span></code><a class="headerlink" href="#scorer-tf-idf" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">スコアラーは実験的な機能です。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 5.0.1 で追加.</span></p>
+</div>
+<div class="section" id="summary">
+<h2>7.11.3.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">scorer_tf_idf</span></code> は <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> （term frequency-inverse document frequency。その文書中での単語の出現数を、その単語を文書の数で割ったもの）ベースのスコアー関数です。</p>
+<p>簡単に言うと、TF-IDFとはTF（term frequency。その文書中での単語出現数）をDF（document frequency。その単語を含むドキュメント数）で割ったものです。「TF」は「単語がたくさん出現している方がより重要」という意味を表します。「TFをDFで割る」というのは「重要な単語がたくさん出現している方がより重要」という意味を表します。</p>
+<p>Groongaのデフォルトのスコアー関数はTF（term frequency。単語の出現数）です。この関数は単語の重要度は考慮しませんが高速です。</p>
+<p>TF-IDFは単語の重要度を考慮しますが、TFより遅くなります。</p>
+<p>TF-IDFは多くの場合でTFよりも適切なスコアーを計算しますが、完璧ではありません。</p>
+<p>「They are keyword, keyword, keyword ... and keyword」のように文書中に同じキーワードがたくさん含まれている場合、TFでもTF-IDFでもスコアーが増えます。検索エンジンのスパマーはこのテクニックを使うかもしれません。しかし、TF-IDFはこのテクニックを防ぐことができません。</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Okapi_BM25">Okapi BM25</a> はこのケースを解決できます。しかし、TF-IDFよりも遅くなります。また、Groongaではまだ実装されていません。</p>
+<p>Groongaは <a class="reference internal" href="scorer_tf_at_most.html"><span class="doc">scorer_tf_at_most</span></a> スコアラーという別の方法でこのケースを解決できるスコアラーを提供しています。</p>
+<blockquote id="note">
+<div><p>スコアー関数だけでスコアの計算をする必要はありません。スコアー関数は検索クエリーに非常に依存しています。検索クエリーだけでなく、マッチしたレコードのメタデータも使えないか検討しましょう。</p>
+<p>たとえば、Googleはスコアーの計算に <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%9A%E3%83%BC%E3%82%B8%E3%83%A9%E3%83%B3%E3%82%AF">ページランク</a> を使っています。あなたも、データの種類（たとえば、「メモ」データよりも「タイトル」データの方が重要など）、タグ、位置情報などを使えないか検討してみましょう。</p>
+<p>スコアーの計算をスコアー関数だけで考えることはやめましょう。</p>
+</div></blockquote>
+</div>
+<div class="section" id="syntax">
+<h2>7.11.3.2.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このスコアラーの引数は1つです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>scorer_tf_idf(column)
+scorer_tf_idf(index)
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.11.3.2.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではscorerの使い方について説明します。</p>
+<p>使い方を示すために使うスキーマ定義とサンプルデータは以下の通りです。</p>
+<p>サンプルスキーマ:</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Logs TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Logs message COLUMN_SCALAR Text
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Terms message_index COLUMN_INDEX|WITH_POSITION Logs message
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>サンプルデータ:</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Logs
+[
+{&quot;message&quot;: &quot;Error&quot;},
+{&quot;message&quot;: &quot;Warning&quot;},
+{&quot;message&quot;: &quot;Warning Warning&quot;},
+{&quot;message&quot;: &quot;Warning Warning Warning&quot;},
+{&quot;message&quot;: &quot;Info&quot;},
+{&quot;message&quot;: &quot;Info Info&quot;},
+{&quot;message&quot;: &quot;Info Info Info&quot;},
+{&quot;message&quot;: &quot;Info Info Info Info&quot;},
+{&quot;message&quot;: &quot;Notice&quot;},
+{&quot;message&quot;: &quot;Notice Notice&quot;},
+{&quot;message&quot;: &quot;Notice Notice Notice&quot;},
+{&quot;message&quot;: &quot;Notice Notice Notice Notice&quot;},
+{&quot;message&quot;: &quot;Notice Notice Notice Notice Notice&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 13]
+</pre></div>
+</div>
+<p><a class="reference internal" href="../commands/select.html#select-match-columns"><span class="std std-ref">match_columns</span></a> の中で <code class="docutils literal"><span class="pre">scorer_tf_idf</span></code> を次のようにして指定できます:</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Logs \
+  --match_columns &quot;scorer_tf_idf(message)&quot; \
+  --query &quot;Error OR Info&quot; \
+  --output_columns &quot;message, _score&quot; \
+  --sort_keys &quot;-_score&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         5
+#       ],
+#       [
+#         [
+#           &quot;message&quot;,
+#           &quot;Text&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;Info Info Info Info&quot;,
+#         3
+#       ],
+#       [
+#         &quot;Error&quot;,
+#         2
+#       ],
+#       [
+#         &quot;Info Info Info&quot;,
+#         2
+#       ],
+#       [
+#         &quot;Info Info&quot;,
+#         1
+#       ],
+#       [
+#         &quot;Info&quot;,
+#         1
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Info</span> <span class="pre">Info</span> <span class="pre">Info</span></code> には <code class="docutils literal"><span class="pre">Info</span></code> という単語が3回もでてきますが、 <code class="docutils literal"><span class="pre">Info</span> <span class="pre">Info</span> <span class="pre">Info</span></code> も <code class="docutils literal"><span class="pre">Error</span></code> もどちらもスコアーは <code class="docutils literal"><span class="pre">2</span></code> です。なぜなら、 <code class="docutils literal"><span class="pre">Error</span></code> は <code class="docutils literal"><span class="pre">Info</span></code> よりもより重要な単語だからです。 <code class="docutils literal"><span class="pre">Info</span></code> を含むドキュメントの数は <code class="docutils literal"><span class="pre">4</span></code> です。 <code class="docutils literal"><span class="pre">Error</span></code> を含むドキュメントの数は <code class="docutils literal"><span class="pre">1</span></code> です。少しのドキュメントにしか含まれていない単語はより特徴的な単語です。特徴的な単語は重要な単語です。</p>
+</div>
+<div class="section" id="parameters">
+<h2>7.11.3.2.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではすべての引数について説明します。</p>
+<div class="section" id="required-parameters">
+<h3>7.11.3.2.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>1つだけ必須の引数があります。</p>
+<div class="section" id="column">
+<h4>7.11.3.2.4.1.1. <code class="docutils literal"><span class="pre">column</span></code><a class="headerlink" href="#column" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>マッチ対象のデータカラムです。このデータカラムにはインデックスが張られていなければいけません。</p>
+</div>
+<div class="section" id="index">
+<h4>7.11.3.2.4.1.2. <code class="docutils literal"><span class="pre">index</span></code><a class="headerlink" href="#index" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>検索に使うインデックスカラムです。</p>
+</div>
+</div>
+<div class="section" id="optional-parameters">
+<h3>7.11.3.2.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>省略可能な引数はありません。</p>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.11.3.2.5. 戻り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このスコアラーは <a class="reference internal" href="../types.html#builtin-type-float"><span class="std std-ref">Float</span></a> でスコアーの値を返します。</p>
+<p><a class="reference internal" href="../commands/select.html"><span class="doc">select</span></a> は <code class="docutils literal"><span class="pre">Float</span></code> ではなく <code class="docutils literal"><span class="pre">Int32</span></code> で <code class="docutils literal"><span class="pre">_score</span></code> を返します。これは、後方互換性を維持するために <code class="docutils literal"><span class="pre">Float</span></code> から <code class="docutils literal"><span class="pre">Int32</span></code> にキャストしているためです。</p>
+<p>スコアーはTF-IDFベースのアルゴリズムで計算します。</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.11.3.2.6. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../scorer.html"><span class="doc">スコアラー</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.11.3.2. <code class="docutils literal"><span class="pre">scorer_tf_idf</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.11.3.2.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.11.3.2.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">7.11.3.2.3. 使い方</a></li>
+<li><a class="reference internal" href="#parameters">7.11.3.2.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">7.11.3.2.4.1. 必須引数</a><ul>
+<li><a class="reference internal" href="#column">7.11.3.2.4.1.1. <code class="docutils literal"><span class="pre">column</span></code></a></li>
+<li><a class="reference internal" href="#index">7.11.3.2.4.1.2. <code class="docutils literal"><span class="pre">index</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-parameters">7.11.3.2.4.2. 省略可能引数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">7.11.3.2.5. 戻り値</a></li>
+<li><a class="reference internal" href="#see-also">7.11.3.2.6. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="scorer_tf_at_most.html"
+                        title="前の章へ">7.11.3.1. <code class="docutils literal"><span class="pre">scorer_tf_at_most</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../grn_expr.html"
+                        title="次の章へ">7.12. grn_expr</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../grn_expr.html" title="7.12. grn_expr"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="scorer_tf_at_most.html" title="7.11.3.1. scorer_tf_at_most"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../scorer.html" >7.11. スコアラー</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

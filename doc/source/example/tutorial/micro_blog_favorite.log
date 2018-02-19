@@ -1,0 +1,4 @@
+Execution example::
+
+  select --table Users --query _key:bob --output_columns favorites.posted_by,favorites.comment
+  # [[0, 1337566253.89858, 0.000355720520019531], [[[0], []]]]

@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.2. リモートアクセス &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="4.3. いろいろなデータの保存" href="data.html" />
+    <link rel="prev" title="4.1. 基本的な操作" href="introduction.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/tutorial/network.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="data.html" title="4.3. いろいろなデータの保存"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="4.1. 基本的な操作"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="remote-access">
+<h1>4.2. リモートアクセス<a class="headerlink" href="#remote-access" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaをサーバとして起動することにより、ネットワークを介してデータベースにアクセスできるようになります。Groongaがサポートしているプロトコルは、Groongaの専用プロトコルであるGQTP、memcachedバイナリプロトコル、HTTPの三種類です。</p>
+<div class="section" id="hypertext-transfer-protocol-http">
+<h2>4.2.1. HTTP<a class="headerlink" href="#hypertext-transfer-protocol-http" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="how-to-run-an-http-server">
+<h3>4.2.1.1. HTTPサーバの起動<a class="headerlink" href="#how-to-run-an-http-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GroongaはHTTPをサポートしています。以下の書式はHTTPサーバをデーモンとして起動する方法を示しています。</p>
+<p>書式:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [-p PORT_NUMBER] -d --protocol http DB_PATH
+</pre></div>
+</div>
+<p><cite>--protocol</cite> オプションとその引数により、サーバのプロトコルを指定することができます。&quot;http&quot;はHTTPサーバの起動を指示しています。<cite>-p</cite> オプションを省略した場合は10041のポート番号が使用されます。</p>
+<p>以下のコマンドは、ポート番号80で待ち受けるHTTPサーバをデーモンとして起動します。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo groonga -p 80 -d --protocol http /tmp/groonga-databases/introduction.db
+%
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">80番ポートで待ち受けるにはroot権限が必須です。1024番以降のポート番号にはそのような制限はありません。</p>
+</div>
+</div>
+<div class="section" id="how-to-send-a-command-to-an-http-server">
+<h3>4.2.1.2. HTTPサーバへのコマンド送信<a class="headerlink" href="#how-to-send-a-command-to-an-http-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GroongaがHTTPサーバとして起動されているときは、/d/COMMAND_NAME というURLにアクセスすることにより、コマンドを実行することができます。コマンドの引数は、HTTPのGETパラメータとして渡します。引数の書式は &quot;?NAME_1=VALUE_1&amp;NAME_2=VALUE_2&amp;...&quot; となります。</p>
+<p>以下の例は、HTTPサーバに対するコマンドの送り方を示しています。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>http://HOST_NAME_OR_IP_ADDRESS[:PORT_NUMBER]/d/status
+Executed command:
+status
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;uptime&quot;: 0,
+#     &quot;max_command_version&quot;: 3,
+#     &quot;start_time&quot;: 1514346072,
+#     &quot;cache_hit_rate&quot;: 0.0,
+#     &quot;version&quot;: &quot;7.0.9&quot;,
+#     &quot;alloc_count&quot;: 13344,
+#     &quot;command_version&quot;: 1,
+#     &quot;starttime&quot;: 1514346072,
+#     &quot;default_command_version&quot;: 1,
+#     &quot;n_queries&quot;: 0
+#   }
+# ]
+http://HOST_NAME_OR_IP_ADDRESS[:PORT_NUMBER]/d/select?table=Site&amp;query=title:@this
+Executed command:
+select --table Site --query title:@this
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;country&quot;,
+#           &quot;SiteCountry&quot;
+#         ],
+#         [
+#           &quot;domain&quot;,
+#           &quot;SiteDomain&quot;
+#         ],
+#         [
+#           &quot;link&quot;,
+#           &quot;Site&quot;
+#         ],
+#         [
+#           &quot;links&quot;,
+#           &quot;Site&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;http://example.org/&quot;,
+#         &quot;japan&quot;,
+#         &quot;.org&quot;,
+#         &quot;http://example.net/&quot;,
+#         [
+#           &quot;http://example.net/&quot;,
+#           &quot;http://example.org/&quot;,
+#           &quot;http://example.com/&quot;
+#         ],
+#         &quot;128452975x503157902&quot;,
+#         &quot;This is test record 1!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="administration-tool-http">
+<h2>4.2.2. ブラウザベースの管理ツール<a class="headerlink" href="#administration-tool-http" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>GroongaをHTTPサーバとして起動しているときは、ブラウザベースの管理ツールを使うことにより、データベースを簡単に管理することができます。管理ツールを使いたいときは、ブラウザを使って <a class="reference external" href="http://HOST_NAME_OR_IP_ADDRESS[:PORT_NUMBER]/">http://HOST_NAME_OR_IP_ADDRESS[:PORT_NUMBER]/</a> へとアクセスしてください。管理ツールの使用には、JavaScriptの実行が有効になっている必要があります。</p>
+</div>
+<div class="section" id="security-issues">
+<h2>4.2.3. セキュリティ<a class="headerlink" href="#security-issues" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaのサーバには認証機能がありません。誰でもデータベースの内容を閲覧・修正することができます。iptablesなどを用いてアクセス元IPアドレスを制限することを推奨します。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.2. リモートアクセス</a><ul>
+<li><a class="reference internal" href="#hypertext-transfer-protocol-http">4.2.1. HTTP</a><ul>
+<li><a class="reference internal" href="#how-to-run-an-http-server">4.2.1.1. HTTPサーバの起動</a></li>
+<li><a class="reference internal" href="#how-to-send-a-command-to-an-http-server">4.2.1.2. HTTPサーバへのコマンド送信</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#administration-tool-http">4.2.2. ブラウザベースの管理ツール</a></li>
+<li><a class="reference internal" href="#security-issues">4.2.3. セキュリティ</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="introduction.html"
+                        title="前の章へ">4.1. 基本的な操作</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="data.html"
+                        title="次の章へ">4.3. いろいろなデータの保存</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="data.html" title="4.3. いろいろなデータの保存"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="introduction.html" title="4.1. 基本的な操作"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. チュートリアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

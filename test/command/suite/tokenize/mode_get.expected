@@ -1,0 +1,25 @@
+tokenize TokenBigram "あいabアイ" NormalizerAuto NONE GET
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "あい",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "ab",
+      "position": 2,
+      "force_prefix": false
+    },
+    {
+      "value": "アイ",
+      "position": 3,
+      "force_prefix": false
+    }
+  ]
+]

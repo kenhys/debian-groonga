@@ -1,0 +1,36 @@
+table_create Readings TABLE_PAT_KEY ShortText --normalizer NormalizerAuto
+[[0,0.0,0.0],true]
+load --table Readings
+[
+{"_key": "グルンガ"}
+]
+[[0,0.0,0.0],1]
+select Readings --filter 'prefix_rk_search(_key, "グル")'
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          "_id",
+          "UInt32"
+        ],
+        [
+          "_key",
+          "ShortText"
+        ]
+      ],
+      [
+        1,
+        "グルンガ"
+      ]
+    ]
+  ]
+]

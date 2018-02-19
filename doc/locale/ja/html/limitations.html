@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>9. 制限事項 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="10. トラブルシューティング" href="troubleshooting.html" />
+    <link rel="prev" title="8.2. 検索" href="spec/search.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../en/html/limitations.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="10. トラブルシューティング"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="spec/search.html" title="8.2. 検索"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="limitations">
+<h1>9. 制限事項<a class="headerlink" href="#limitations" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaにはいくつか制限事項があります。</p>
+<div class="section" id="limitations-of-table">
+<h2>9.1. テーブルの制限<a class="headerlink" href="#limitations-of-table" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>テーブルには以下の制限があります。</p>
+<ul class="simple">
+<li>1つのキーの最大サイズ：4KiB</li>
+<li>キーに格納した値の合計サイズの上限値：<ul>
+<li>デフォルトは4GiB。</li>
+<li><a class="reference internal" href="reference/commands/table_create.html#table-create-flags"><span class="std std-ref">flags</span></a> に <code class="docutils literal"><span class="pre">KEY_LARGE</span></code> フラグを指定すると1TiB。ただし、 <code class="docutils literal"><span class="pre">KEY_LARGE</span></code> は <a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a> でしか使えない。</li>
+</ul>
+</li>
+<li>最大レコード数：<ul>
+<li><a class="reference internal" href="reference/tables.html#table-no-key"><span class="std std-ref">TABLE_NO_KEY</span></a>: 1,073,741,815 (2 <sup>30</sup> - 9)</li>
+<li><a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a>: 536,870,912 (2 <sup>29</sup>)</li>
+<li><a class="reference internal" href="reference/tables.html#table-pat-key"><span class="std std-ref">TABLE_PAT_KEY</span></a>: 1,073,741,823 (2 <sup>30</sup> - 1)</li>
+<li><a class="reference internal" href="reference/tables.html#table-dat-key"><span class="std std-ref">TABLE_DAT_KEY</span></a>: 268,435,455 (2 <sup>28</sup> - 1)</li>
+</ul>
+</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+<p>たとえば、大量のレコードを保存する場合はキーの型は小さいサイズの型を使う必要があります。なぜなら、最大レコード数の上限に達する前に最大総キーサイズの上限に達するからです。もし、 <code class="docutils literal"><span class="pre">UInt64</span></code> （8バイト）型を使って 2 <sup>29</sup> レコード保存すると、総キーサイズは4GiB（= 8 * (2 <sup>29</sup>)）になります。この状態ではこれ以上レコードを追加できません。さらにレコードを保存したい場合は、キーのサイズを小さくする（たとえば <code class="docutils literal"><span class="pre">UInt32</span></code> にする）か、 <code class="docutils literal"><span class="pre">KEY_LARGE</span></code> と <a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a> を使うか、どちらかを選びます。</p>
+</div>
+<div class="section" id="limitations-of-indexing">
+<h2>9.2. インデックス上限値<a class="headerlink" href="#limitations-of-indexing" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1つのインデックスにおける論理上の上限値は以下のとおりです。</p>
+<ul class="simple">
+<li>最大語彙数: 268,435,455 (約2億6千万)</li>
+<li>最大インデックスサイズ: 256GiB</li>
+</ul>
+<p>実際には他の諸条件の制約により上記の値まで到達しない場合もあります。</p>
+</div>
+<div class="section" id="limitations-of-column">
+<h2>9.3. カラムの制限<a class="headerlink" href="#limitations-of-column" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>1つのカラムにつき、次の制限があります。</p>
+<ul class="simple">
+<li>カラムに格納した値の合計サイズの上限値: 256GiB</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9. 制限事項</a><ul>
+<li><a class="reference internal" href="#limitations-of-table">9.1. テーブルの制限</a></li>
+<li><a class="reference internal" href="#limitations-of-indexing">9.2. インデックス上限値</a></li>
+<li><a class="reference internal" href="#limitations-of-column">9.3. カラムの制限</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="spec/search.html"
+                        title="前の章へ">8.2. 検索</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="次の章へ">10. トラブルシューティング</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="10. トラブルシューティング"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="spec/search.html" title="8.2. 検索"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

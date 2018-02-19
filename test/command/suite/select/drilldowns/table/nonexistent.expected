@@ -1,0 +1,35 @@
+table_create Tags TABLE_PAT_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Tags category COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+table_create Memos TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Memos tag COLUMN_SCALAR Tags
+[[0,0.0,0.0],true]
+load --table Memos
+[
+{"_key": "Groonga is fast!", "tag": "Groonga"},
+{"_key": "Mroonga is fast!", "tag": "Mroonga"},
+{"_key": "Groonga sticker!", "tag": "Groonga"},
+{"_key": "Rroonga is fast!", "tag": "Rroonga"}
+]
+[[0,0.0,0.0],4]
+load --table Tags
+[
+{"_key": "Groonga", "category": "C/C++"},
+{"_key": "Mroonga", "category": "C/C++"},
+{"_key": "Rroonga", "category": "Ruby"}
+]
+[[0,0.0,0.0],3]
+select Memos   --drilldowns[category].table nonexistent   --drilldowns[category].keys category   --drilldowns[category].output_columns _key,_nsubrecs   --drilldowns[tag].keys tag   --drilldowns[tag].output_columns _key,_nsubrecs,category
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[select][drilldowns][category][table] nonexistent label: <nonexistent>"
+  ]
+]
+#|e| [select][drilldowns][category][table] nonexistent label: <nonexistent>

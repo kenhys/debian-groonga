@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.4. Request ID &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.5. Request timeout" href="request_timeout.html" />
+    <link rel="prev" title="7.3.3. Pretty print" href="pretty_print.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/command/request_id.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="request_timeout.html" title="7.3.5. Request timeout"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. Pretty print"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="request-id">
+<h1>7.3.4. Request ID<a class="headerlink" href="#request-id" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.4.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 4.0.9.</span></p>
+</div>
+<p>You can assign ID to each request.</p>
+<p>The ID can be used by canceling the request. See also
+<a class="reference internal" href="../commands/request_cancel.html"><span class="doc">request_cancel</span></a> for details about canceling
+a request.</p>
+<p>Request ID should be managed by user. If you assign the same ID for
+some running requests, you can't cancel the request.</p>
+<p>The simplest ID sequence is incremented numbers such as <code class="docutils literal"><span class="pre">1</span></code>,
+<code class="docutils literal"><span class="pre">2</span></code> , <code class="docutils literal"><span class="pre">...</span></code>.</p>
+<p>A request ID is a string. The maximum request ID size is 4096 byte.</p>
+</div>
+<div class="section" id="how-to-assign-id-to-request">
+<h2>7.3.4.2. How to assign ID to request<a class="headerlink" href="#how-to-assign-id-to-request" title="Permalink to this headline">¶</a></h2>
+<p>All commands accept <code class="docutils literal"><span class="pre">request_id</span></code> parameter. You can assign ID to
+request by adding <code class="docutils literal"><span class="pre">request_id</span></code> parameter.</p>
+<p>Here is an example to assign <code class="docutils literal"><span class="pre">id-1</span></code> ID to a request:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Users --request_id id-1
+</pre></div>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.4.3. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../commands/request_cancel.html"><span class="doc">request_cancel</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.4. Request ID</a><ul>
+<li><a class="reference internal" href="#summary">7.3.4.1. Summary</a></li>
+<li><a class="reference internal" href="#how-to-assign-id-to-request">7.3.4.2. How to assign ID to request</a></li>
+<li><a class="reference internal" href="#see-also">7.3.4.3. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pretty_print.html"
+                        title="previous chapter">7.3.3. Pretty print</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="request_timeout.html"
+                        title="next chapter">7.3.5. Request timeout</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="request_timeout.html" title="7.3.5. Request timeout"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. Pretty print"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.16. grn_info &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.24.17. grn_match_escalation" href="grn_match_escalation.html" />
+    <link rel="prev" title="7.24.15. grn_index_cursor" href="grn_index_cursor.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/api/grn_info.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="grn_match_escalation.html" title="7.24.17. grn_match_escalation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grn_index_cursor.html" title="7.24.15. grn_index_cursor"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-info">
+<h1>7.24.16. <code class="docutils literal"><span class="pre">grn_info</span></code><a class="headerlink" href="#grn-info" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.24.16.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="example">
+<h2>7.24.16.2. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="reference">
+<h2>7.24.16.3. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="c.grn_info_type">
+<code class="descname">grn_info_type</code><a class="headerlink" href="#c.grn_info_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>TODO...</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_obj_get_info">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_obj_get_info</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, <a class="reference internal" href="#c.grn_info_type" title="grn_info_type">grn_info_type</a><em>&nbsp;type</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*valuebuf</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_obj_get_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>objのtypeに対応する情報をvaluebufに格納します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> -- 対象objを指定します。</li>
+<li><strong>type</strong> -- 取得する情報の種類を指定します。</li>
+<li><strong>valuebuf</strong> -- 値を格納するバッファ（呼出側で準備）を指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_obj_set_info">
+grn_rc <code class="descname">grn_obj_set_info</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, <a class="reference internal" href="#c.grn_info_type" title="grn_info_type">grn_info_type</a><em>&nbsp;type</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_obj_set_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>objのtypeに対応する情報をvalueの内容に更新します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> -- 対象objを指定します。</li>
+<li><strong>type</strong> -- 設定する情報の種類を指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_obj_get_element_info">
+<a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_obj_get_element_info</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, grn_id<em>&nbsp;id</em>, <a class="reference internal" href="#c.grn_info_type" title="grn_info_type">grn_info_type</a><em>&nbsp;type</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_obj_get_element_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>objのidに対応するレコードの、typeに対応する情報をvaluebufに格納します。呼出側ではtypeに応じて十分なサイズのバッファを確保しなければいけません。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> -- 対象objを指定します。</li>
+<li><strong>id</strong> -- 対象IDを指定します。</li>
+<li><strong>type</strong> -- 取得する情報の種類を指定します。</li>
+<li><strong>value</strong> -- 値を格納するバッファ（呼出側で準備）を指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_obj_set_element_info">
+grn_rc <code class="descname">grn_obj_set_element_info</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, grn_id<em>&nbsp;id</em>, <a class="reference internal" href="#c.grn_info_type" title="grn_info_type">grn_info_type</a><em>&nbsp;type</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*value</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_obj_set_element_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>objのidに対応するレコードのtypeに対応する情報をvalueの内容に更新します。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> -- 対象objectを指定します。</li>
+<li><strong>id</strong> -- 対象IDを指定します。</li>
+<li><strong>type</strong> -- 設定する情報の種類を指定します。</li>
+<li><strong>value</strong> -- 設定しようとする値を指定します。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.16. <code class="docutils literal"><span class="pre">grn_info</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.24.16.1. Summary</a></li>
+<li><a class="reference internal" href="#example">7.24.16.2. Example</a></li>
+<li><a class="reference internal" href="#reference">7.24.16.3. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grn_index_cursor.html"
+                        title="previous chapter">7.24.15. <code class="docutils literal"><span class="pre">grn_index_cursor</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="grn_match_escalation.html"
+                        title="next chapter">7.24.17. <code class="docutils literal"><span class="pre">grn_match_escalation</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="grn_match_escalation.html" title="7.24.17. grn_match_escalation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grn_index_cursor.html" title="7.24.15. grn_index_cursor"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

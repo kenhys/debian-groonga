@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.2. Output format &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.3. Pretty print" href="pretty_print.html" />
+    <link rel="prev" title="7.3.1. Command version" href="command_version.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/command/output_format.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. Pretty print"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="command_version.html" title="7.3.1. Command version"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output-format">
+<h1>7.3.2. Output format<a class="headerlink" href="#output-format" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.2.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>Commands output their result as JSON, MessagePack, XML or TSV format.</p>
+<p>JSON and MessagePack output have the same structure. XML and TSV are
+their original structure.</p>
+<p>JSON or MessagePack is recommend format. XML is useful for visual
+result check. TSV is just for special use. Normally you doesn't need
+to use TSV.</p>
+</div>
+<div class="section" id="json-and-messagepack">
+<h2>7.3.2.2. JSON and MessagePack<a class="headerlink" href="#json-and-messagepack" title="Permalink to this headline">¶</a></h2>
+<p>This secsion describes the structure of command result on JSON and
+MessagePack format. JSON is used to show structure because MessagePack
+is binary format. Binary format isn't proper for documenataion.</p>
+<p>JSON and MessagePack uses the following structure:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, BODY]
+</pre></div>
+</div>
+<p>For example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  [
+    0,
+    1337566253.89858,
+    0.000355720520019531
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          &quot;_id&quot;,
+          &quot;UInt32&quot;
+        ],
+        [
+          &quot;_key&quot;,
+          &quot;ShortText&quot;
+        ],
+        [
+          &quot;content&quot;,
+          &quot;Text&quot;
+        ],
+        [
+          &quot;n_likes&quot;,
+          &quot;UInt32&quot;
+        ]
+      ],
+      [
+        2,
+        &quot;Groonga&quot;,
+        &quot;I started to use groonga. It&#39;s very fast!&quot;,
+        10
+      ]
+    ]
+  ]
+]
+</pre></div>
+</div>
+<p>In the example, the following part is <code class="docutils literal"><span class="pre">HEADER</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  0,
+  1337566253.89858,
+  0.000355720520019531
+]
+</pre></div>
+</div>
+<p>The following part is <code class="docutils literal"><span class="pre">BODY</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  [
+    [
+      1
+    ],
+    [
+      [
+        &quot;_id&quot;,
+        &quot;UInt32&quot;
+      ],
+      [
+        &quot;_key&quot;,
+        &quot;ShortText&quot;
+      ],
+      [
+        &quot;content&quot;,
+        &quot;Text&quot;
+      ],
+      [
+        &quot;n_likes&quot;,
+        &quot;UInt32&quot;
+      ]
+    ],
+    [
+      2,
+      &quot;Groonga&quot;,
+      &quot;I started to use groonga. It&#39;s very fast!&quot;,
+      10
+    ]
+  ]
+]
+</pre></div>
+</div>
+<div class="section" id="header">
+<h3>7.3.2.2.1. <code class="docutils literal"><span class="pre">HEADER</span></code><a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> is an array. The content of <code class="docutils literal"><span class="pre">HEADER</span></code> has some patterns.</p>
+<div class="section" id="success-case">
+<h4>7.3.2.2.1.1. Success case<a class="headerlink" href="#success-case" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> has three elements on success:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[0, UNIX_TIME_WHEN_COMMAND_IS_STARTED, ELAPSED_TIME]
+</pre></div>
+</div>
+<p>The first element is always <code class="docutils literal"><span class="pre">0</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> is the number of seconds
+since 1970-01-01 00:00:00 UTC when the command is started
+processing. <code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> is the elapsed time for processing the
+command in seconds. Both <code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> and
+<code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> are float value. The precision of them are
+nanosecond.</p>
+</div>
+<div class="section" id="error-case">
+<h4>7.3.2.2.1.2. Error case<a class="headerlink" href="#error-case" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> has four or five elements on error:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  RETURN_CODE,
+  UNIX_TIME_WHEN_COMMAND_IS_STARTED,
+  ELAPSED_TIME,
+  ERROR_MESSAGE,
+  ERROR_LOCATION
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> may not be included in <code class="docutils literal"><span class="pre">HEADER</span></code> but other four
+elements are always included.</p>
+<p><code class="docutils literal"><span class="pre">RETURN_CODE</span></code> is non 0 value. See <a class="reference internal" href="return_code.html"><span class="doc">Return code</span></a> about available
+return codes.</p>
+<p><code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> and <code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> are the
+same as success case.</p>
+<p><code class="docutils literal"><span class="pre">ERROR_MESSAGE</span></code> is an error message in string.</p>
+<p><code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> is optional. If error location is collected,
+<code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> is included. <code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> is an
+array. <code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> has one ore two elements:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  LOCATION_IN_GROONGA,
+  LOCATION_IN_INPUT
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> is the source location that error is occurred
+in groonga. It is useful for groonga developers but not useful for
+users. <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> is an array. <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> has
+three elements:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  FUNCTION_NAME,
+  SOURCE_FILE_NAME,
+  LINE_NUMBER
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">FUNCTION_NAME</span></code> is the name of function that error is occurred.</p>
+<p><code class="docutils literal"><span class="pre">SOURCE_FILE_NAME</span></code> is the name of groonga's source file that error is
+occurred.</p>
+<p><code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> is the line number of <code class="docutils literal"><span class="pre">SOURCE_FILE_NAME</span></code> that error
+is occurred.</p>
+<p><code class="docutils literal"><span class="pre">LOCATION_IN_INPUT</span></code> is optional. <code class="docutils literal"><span class="pre">LOCATION_IN_INPUT</span></code> is included
+when the location that error is occurred in input file is
+collected. Input file can be specified by <code class="docutils literal"><span class="pre">--file</span></code> command line
+option for <code class="docutils literal"><span class="pre">groonga</span></code> command. <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> is an
+array. <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> has three elements:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  INPUT_FILE_NAME,
+  LINE_NUMBER,
+  LINE_CONTENT
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code> is the input file name that error is occurred.</p>
+<p><code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> is the line number of <code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code> that error
+is occurred.</p>
+<p><code class="docutils literal"><span class="pre">LINE_CONTENT</span></code> is the content at <code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> in
+<code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code>.</p>
+</div>
+</div>
+<div class="section" id="body">
+<h3>7.3.2.2.2. <code class="docutils literal"><span class="pre">BODY</span></code><a class="headerlink" href="#body" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">BODY</span></code> content depends on the executed command. It may be omitted.</p>
+<p><code class="docutils literal"><span class="pre">BODY</span></code> may be an error message on error case.</p>
+</div>
+</div>
+<div class="section" id="xml">
+<h2>7.3.2.3. XML<a class="headerlink" href="#xml" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="tsv">
+<h2>7.3.2.4. TSV<a class="headerlink" href="#tsv" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.2.5. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="return_code.html"><span class="doc">Return code</span></a> describes about return code.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.2. Output format</a><ul>
+<li><a class="reference internal" href="#summary">7.3.2.1. Summary</a></li>
+<li><a class="reference internal" href="#json-and-messagepack">7.3.2.2. JSON and MessagePack</a><ul>
+<li><a class="reference internal" href="#header">7.3.2.2.1. <code class="docutils literal"><span class="pre">HEADER</span></code></a><ul>
+<li><a class="reference internal" href="#success-case">7.3.2.2.1.1. Success case</a></li>
+<li><a class="reference internal" href="#error-case">7.3.2.2.1.2. Error case</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#body">7.3.2.2.2. <code class="docutils literal"><span class="pre">BODY</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml">7.3.2.3. XML</a></li>
+<li><a class="reference internal" href="#tsv">7.3.2.4. TSV</a></li>
+<li><a class="reference internal" href="#see-also">7.3.2.5. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="command_version.html"
+                        title="previous chapter">7.3.1. Command version</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pretty_print.html"
+                        title="next chapter">7.3.3. Pretty print</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. Pretty print"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="command_version.html" title="7.3.1. Command version"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

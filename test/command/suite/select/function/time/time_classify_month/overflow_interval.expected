@@ -1,0 +1,42 @@
+plugin_register functions/time
+[[0,0.0,0.0],true]
+table_create Timestamps TABLE_PAT_KEY Time
+[[0,0.0,0.0],true]
+load --table Timestamps
+[
+{"_key": "2016-07-01 00:00:00.000001"}
+]
+[[0,0.0,0.0],1]
+select Timestamps   --output_columns '_key, time_classify_month(_key, 4294967296)'
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "time_classify_month(): the second argument must not be zero: <4294967296>"
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          "_key",
+          "Time"
+        ],
+        [
+          "time_classify_month",
+          null
+        ]
+      ],
+      [
+        1467298800.000001,
+        "time_classify_month(): the second argument must not be zero: <4294967296>"
+      ]
+    ]
+  ]
+]
+#|e| time_classify_month(): the second argument must not be zero: <4294967296>

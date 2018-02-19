@@ -1,0 +1,46 @@
+Execution example::
+
+  table_list
+  # [
+  #   [
+  #     0, 
+  #     1337566253.89858, 
+  #     0.000355720520019531
+  #   ], 
+  #   [
+  #     [
+  #       [
+  #         "id", 
+  #         "UInt32"
+  #       ], 
+  #       [
+  #         "name", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "path", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "flags", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "domain", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "range", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "default_tokenizer", 
+  #         "ShortText"
+  #       ], 
+  #       [
+  #         "normalizer", 
+  #         "ShortText"
+  #       ]
+  #     ]
+  #   ]
+  # ]

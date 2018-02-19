@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.4. Various search conditions &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.5. Drilldown" href="drilldown.html" />
+    <link rel="prev" title="4.3. Various data types" href="data.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/tutorial/search.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. Drilldown"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="data.html" title="4.3. Various data types"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="various-search-conditions">
+<h1>4.4. Various search conditions<a class="headerlink" href="#various-search-conditions" title="Permalink to this headline">¶</a></h1>
+<p>Groonga supports to narrow down by using syntax like JavaScript, sort by the calculated value. Additionally, Groonga also supports to narrow down &amp; sort search results by using location information (latitude &amp; longitude).</p>
+<div class="section" id="narrow-down-full-text-search-by-using-syntax-like-javascript">
+<h2>4.4.1. Narrow down &amp; Full-text search by using syntax like JavaScript<a class="headerlink" href="#narrow-down-full-text-search-by-using-syntax-like-javascript" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">filter</span></code> parameter of <code class="docutils literal"><span class="pre">select</span></code> command accepts the search condition.
+There is one difference between <code class="docutils literal"><span class="pre">filter</span></code> parameter and <code class="docutils literal"><span class="pre">query</span></code> parameter, you need to specify the condition by syntax like JavaScript for <code class="docutils literal"><span class="pre">filter</span></code> parameter.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --filter &quot;_id &lt;= 1&quot; --output_columns _id,_key
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;http://example.org/&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>See the detail of above query. Here is the condition which is specified as <code class="docutils literal"><span class="pre">filter</span></code> parameter:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>_id &lt;= 1
+</pre></div>
+</div>
+<p>In this case, this query returns the records which meets the condition that the value of <code class="docutils literal"><span class="pre">_id</span></code> is equal to or less than 1.</p>
+<p>Moreover, you can use <code class="docutils literal"><span class="pre">&amp;&amp;</span></code> for AND search, <code class="docutils literal"><span class="pre">||</span></code> for OR search.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --filter &quot;_id &gt;= 4 &amp;&amp; _id &lt;= 6&quot; --output_columns _id,_key
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         4,
+#         &quot;http://example.net/afr&quot;
+#       ],
+#       [
+#         5,
+#         &quot;http://example.org/aba&quot;
+#       ],
+#       [
+#         6,
+#         &quot;http://example.com/rab&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Site --filter &quot;_id &lt;= 2 || _id &gt;= 7&quot; --output_columns _id,_key
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         5
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;http://example.org/&quot;
+#       ],
+#       [
+#         2,
+#         &quot;http://example.net/&quot;
+#       ],
+#       [
+#         7,
+#         &quot;http://example.net/atv&quot;
+#       ],
+#       [
+#         8,
+#         &quot;http://example.org/gat&quot;
+#       ],
+#       [
+#         9,
+#         &quot;http://example.com/vdw&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>If you specify <code class="docutils literal"><span class="pre">query</span></code> parameter and <code class="docutils literal"><span class="pre">filter</span></code> parameter at the same time, you can get the records which meets both of the condition as a result.</p>
+</div>
+<div class="section" id="sort-by-using-scorer">
+<h2>4.4.2. Sort by using <code class="docutils literal"><span class="pre">scorer</span></code><a class="headerlink" href="#sort-by-using-scorer" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">select</span></code> command accepts <code class="docutils literal"><span class="pre">scorer</span></code> parameter which is used to process each record of full-text search results.</p>
+<p>This parameter accepts the conditions which is specified by syntax like JavaScript as same as <code class="docutils literal"><span class="pre">filter</span></code> parameter.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --filter &quot;true&quot; --scorer &quot;_score = rand()&quot; --output_columns _id,_key,_score --sort_keys _score
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         9
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         6,
+#         &quot;http://example.com/rab&quot;,
+#         424238335
+#       ],
+#       [
+#         9,
+#         &quot;http://example.com/vdw&quot;,
+#         596516649
+#       ],
+#       [
+#         7,
+#         &quot;http://example.net/atv&quot;,
+#         719885386
+#       ],
+#       [
+#         2,
+#         &quot;http://example.net/&quot;,
+#         846930886
+#       ],
+#       [
+#         8,
+#         &quot;http://example.org/gat&quot;,
+#         1649760492
+#       ],
+#       [
+#         3,
+#         &quot;http://example.com/&quot;,
+#         1681692777
+#       ],
+#       [
+#         4,
+#         &quot;http://example.net/afr&quot;,
+#         1714636915
+#       ],
+#       [
+#         1,
+#         &quot;http://example.org/&quot;,
+#         1804289383
+#       ],
+#       [
+#         5,
+#         &quot;http://example.org/aba&quot;,
+#         1957747793
+#       ]
+#     ]
+#   ]
+# ]
+select --table Site --filter &quot;true&quot; --scorer &quot;_score = rand()&quot; --output_columns _id,_key,_score --sort_keys _score
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         9
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         4,
+#         &quot;http://example.net/afr&quot;,
+#         783368690
+#       ],
+#       [
+#         2,
+#         &quot;http://example.net/&quot;,
+#         1025202362
+#       ],
+#       [
+#         5,
+#         &quot;http://example.org/aba&quot;,
+#         1102520059
+#       ],
+#       [
+#         1,
+#         &quot;http://example.org/&quot;,
+#         1189641421
+#       ],
+#       [
+#         3,
+#         &quot;http://example.com/&quot;,
+#         1350490027
+#       ],
+#       [
+#         8,
+#         &quot;http://example.org/gat&quot;,
+#         1365180540
+#       ],
+#       [
+#         9,
+#         &quot;http://example.com/vdw&quot;,
+#         1540383426
+#       ],
+#       [
+#         7,
+#         &quot;http://example.net/atv&quot;,
+#         1967513926
+#       ],
+#       [
+#         6,
+#         &quot;http://example.com/rab&quot;,
+#         2044897763
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>'_score' is one of a pseudo column. The score of full-text search is assigned to it.
+See <a class="reference internal" href="../reference/columns/pseudo.html"><span class="doc">Pseudo column</span></a> about '_score' column.</p>
+<p>In the above query, the condition of <code class="docutils literal"><span class="pre">scorer</span></code> parameter is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>_score = rand()
+</pre></div>
+</div>
+<p>In this case, the score of full-text search is overwritten by the value of rand() function.</p>
+<p>The condition of <code class="docutils literal"><span class="pre">sort_keys</span></code> parameter is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>_score
+</pre></div>
+</div>
+<p>This means that sorting the search result by ascending order.</p>
+<p>As a result, the order of search result is randomized.</p>
+</div>
+<div class="section" id="narrow-down-sort-by-using-location-information">
+<h2>4.4.3. Narrow down &amp; sort by using location information<a class="headerlink" href="#narrow-down-sort-by-using-location-information" title="Permalink to this headline">¶</a></h2>
+<p>Groonga supports to store location information (Longitude &amp; Latitude) and not only narrow down but also sort by using it.</p>
+<p>Groonga supports two kind of column types to store location information. One is <code class="docutils literal"><span class="pre">TokyoGeoPoint</span></code>, the other is <code class="docutils literal"><span class="pre">WGS84GeoPoint</span></code>. <code class="docutils literal"><span class="pre">TokyoGeoPoint</span></code> is used for Japan geodetic system. <code class="docutils literal"><span class="pre">WGS84GeoPoint</span></code> is used for world geodetic system.</p>
+<p>Specify longitude and latitude as follows:</p>
+<ul class="simple">
+<li>&quot;[latitude in milliseconds]x[longitude in milliseconds]&quot;（e.g.: &quot;128452975x503157902&quot;）</li>
+<li>&quot;[latitude in milliseconds],[longitude in milliseconds]&quot;（e.g.: &quot;128452975,503157902&quot;）</li>
+<li>&quot;[latitude in degrees]x[longitude in degrees]&quot;（e.g.: &quot;35.6813819x139.7660839&quot;）</li>
+<li>&quot;[latitude in degrees],[longitude in degrees]&quot;（e.g.: &quot;35.6813819,139.7660839&quot;）</li>
+</ul>
+<p>Let's store two location information about station in Japan by WGS. One is Tokyo station, the other is Shinjyuku station. Both of them are station in Japan. The latitude of Tokyo station is 35 degrees 40 minutes 52.975 seconds, the longitude of Tokyo station is 139 degrees 45 minutes 57.902 seconds. The latitude of Shinjyuku station is  35 degrees 41 minutes  27.316 seconds, the longitude of Shinjyuku station is 139 degrees 42 minutes 0.929 seconds. Thus, location information in milliseconds are &quot;128452975x503157902&quot; and &quot;128487316x502920929&quot; respectively. location information in degrees are  &quot;35.6813819x139.7660839&quot; and &quot;35.6909211x139.7002581&quot; respectively.</p>
+<p>Let's register location information in milliseconds.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>column_create --table Site --name location --type WGS84GeoPoint
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Site
+[
+ {&quot;_key&quot;:&quot;http://example.org/&quot;,&quot;location&quot;:&quot;128452975x503157902&quot;}
+ {&quot;_key&quot;:&quot;http://example.net/&quot;,&quot;location&quot;:&quot;128487316x502920929&quot;},
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+select --table Site --query &quot;_id:1 OR _id:2&quot; --output_columns _key,location
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;
+#       ],
+#       [
+#         &quot;http://example.net/&quot;,
+#         &quot;128487316x502920929&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Then assign the value of geo distance which is calculated by <a class="reference internal" href="../reference/functions/geo_distance.html"><span class="doc">geo_distance</span></a> function to <code class="docutils literal"><span class="pre">scorer</span></code> parameter.</p>
+<p>Let's show geo distance from Akihabara station in Japan. In world geodetic system, the latitude of Akihabara station is  35 degrees 41 minutes 55.259 seconds, the longitude of Akihabara station is 139 degrees 46 minutes 27.188 seconds. Specify &quot;128515259x503187188&quot; for geo_distance function.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --query &quot;_id:1 OR _id:2&quot; --output_columns _key,location,_score --scorer &#39;_score = geo_distance(location, &quot;128515259x503187188&quot;)&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;,
+#         2054
+#       ],
+#       [
+#         &quot;http://example.net/&quot;,
+#         &quot;128487316x502920929&quot;,
+#         6720
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>As you can see, the geo distance between Tokyo station and Akihabara station is 2054 meters, the geo distance between Akihabara station and Shinjyuku station is 6720 meters.</p>
+<p>The return value of geo_distance function is also used for sorting by specifying pseudo <code class="docutils literal"><span class="pre">_score</span></code> column to <code class="docutils literal"><span class="pre">sort_keys</span></code> parameter.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --query &quot;_id:1 OR _id:2&quot; --output_columns _key,location,_score --scorer &#39;_score = geo_distance(location, &quot;128515259x503187188&quot;)&#39; --sort_keys -_score
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.net/&quot;,
+#         &quot;128487316x502920929&quot;,
+#         6720
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;,
+#         2054
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Groonga also supports to narrow down by &quot;a certain point within specified meters&quot;.</p>
+<p>In such a case, use <a class="reference internal" href="../reference/functions/geo_in_circle.html"><span class="doc">geo_in_circle</span></a> function in <code class="docutils literal"><span class="pre">filter</span></code> parameter.</p>
+<p>For example, search the records which exists within 5000 meters from Akihabara station.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Site --output_columns _key,location --filter &#39;geo_in_circle(location, &quot;128515259x503187188&quot;, 5000)&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>There is <a class="reference internal" href="../reference/functions/geo_in_rectangle.html"><span class="doc">geo_in_rectangle</span></a> function which is used to search a certain point within specified region.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.4. Various search conditions</a><ul>
+<li><a class="reference internal" href="#narrow-down-full-text-search-by-using-syntax-like-javascript">4.4.1. Narrow down &amp; Full-text search by using syntax like JavaScript</a></li>
+<li><a class="reference internal" href="#sort-by-using-scorer">4.4.2. Sort by using <code class="docutils literal"><span class="pre">scorer</span></code></a></li>
+<li><a class="reference internal" href="#narrow-down-sort-by-using-location-information">4.4.3. Narrow down &amp; sort by using location information</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="data.html"
+                        title="previous chapter">4.3. Various data types</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="drilldown.html"
+                        title="next chapter">4.5. Drilldown</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. Drilldown"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="data.html" title="4.3. Various data types"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

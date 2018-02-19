@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.55. shutdown &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.3.56. status" href="status.html" />
+    <link rel="prev" title="7.3.54. select" href="select.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/commands/shutdown.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="status.html" title="7.3.56. status"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="select.html" title="7.3.54. select"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="shutdown">
+<h1>7.3.55. <code class="docutils literal"><span class="pre">shutdown</span></code><a class="headerlink" href="#shutdown" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.55.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">shutdown</span></code> はGroongaサーバープロセスを終了します。</p>
+<p><code class="docutils literal"><span class="pre">shutdown</span></code> はデフォルトではgraceful shutdownを使います。もし、実行中のコマンドがあるならそれらのコマンドが終了してからGroongaサーバープロセスを終了します。 <code class="docutils literal"><span class="pre">shutdown</span></code> コマンドを実行した後は新しいコマンドを実行されません。</p>
+<div class="versionadded">
+<p><span class="versionmodified">バージョン 6.0.1 で追加: </span><code class="docutils literal"><span class="pre">shutdown</span></code> は <code class="docutils literal"><span class="pre">mode</span></code> パラメーターに <code class="docutils literal"><span class="pre">immediate</span></code> を指定するとimmediate shutdownを使います。たとえ実行中のコマンドがあってもGroongaサーバープロセスをすぐに終了します。</p>
+<div class="admonition note">
+<p class="first admonition-title">注釈</p>
+<p class="last">immediate shutdownを使うにはすべてのリクエストに <a class="reference internal" href="../command/request_id.html"><span class="doc">リクエストID</span></a> を設定する必要があります。</p>
+</div>
+</div>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.55.2. 構文<a class="headerlink" href="#syntax" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このコマンドの引数は1つで省略できます:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>shutdown [mode=graceful]
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.55.3. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">shutdown</span></code> はデフォルトではgraceful shutdownを使います。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>shutdown
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>明示的に <code class="docutils literal"><span class="pre">mode</span></code> パラメーターに <code class="docutils literal"><span class="pre">graceful</span></code> を指定することもできます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>shutdown --mode graceful
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">mode</span></code> パラメーターに <code class="docutils literal"><span class="pre">immediate</span></code> を指定することでimmediate shutdownを使うことができます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>shutdown --mode immediate
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>immediate shutdownはgraceful shutdownする時間がないときに便利です。たとえば、WindowsはWindowsをシャットダウンするときに時間内に終了しないサービスを強制終了します。</p>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.55.4. 引数<a class="headerlink" href="#parameters" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではこのコマンドのパラメーターを説明します。</p>
+<div class="section" id="required-parameters">
+<h3>7.3.55.4.1. 必須引数<a class="headerlink" href="#required-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>必須の引数はありません。</p>
+</div>
+<div class="section" id="optional-parameters">
+<h3>7.3.55.4.2. 省略可能引数<a class="headerlink" href="#optional-parameters" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>いくつか省略可能な引数があります。</p>
+<div class="section" id="mode">
+<h4>7.3.55.4.2.1. <code class="docutils literal"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>シャットダウンのモードを指定します。利用可能なモードは次の通りです。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">graceful</span></code></td>
+<td><p class="first">実行中のコマンドが終了してから終了します。</p>
+<p class="last">これがデフォルトです。</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">immediate</span></code></td>
+<td><div class="first last versionadded">
+<p><span class="versionmodified">バージョン 6.0.1 で追加: </span>実行中のコマンドがあってもすぐに終了します。</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.55.5. 戻り値<a class="headerlink" href="#return-value" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">shutdown</span></code> はシャットダウンを受け付けたときは以下のようにボディが <code class="docutils literal"><span class="pre">true</span></code> になります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, true]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">shutdown</span></code> がシャットダウンを受け付けなかったら <code class="docutils literal"><span class="pre">HEADER</span></code> にエラーの詳細が含まれます。</p>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> については <a class="reference internal" href="../command/output_format.html"><span class="doc">出力形式</span></a> を参照してください。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.55. <code class="docutils literal"><span class="pre">shutdown</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.55.1. 概要</a></li>
+<li><a class="reference internal" href="#syntax">7.3.55.2. 構文</a></li>
+<li><a class="reference internal" href="#usage">7.3.55.3. 使い方</a></li>
+<li><a class="reference internal" href="#parameters">7.3.55.4. 引数</a><ul>
+<li><a class="reference internal" href="#required-parameters">7.3.55.4.1. 必須引数</a></li>
+<li><a class="reference internal" href="#optional-parameters">7.3.55.4.2. 省略可能引数</a><ul>
+<li><a class="reference internal" href="#mode">7.3.55.4.2.1. <code class="docutils literal"><span class="pre">mode</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">7.3.55.5. 戻り値</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="select.html"
+                        title="前の章へ">7.3.54. <code class="docutils literal"><span class="pre">select</span></code></a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="status.html"
+                        title="次の章へ">7.3.56. <code class="docutils literal"><span class="pre">status</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="status.html" title="7.3.56. status"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="select.html" title="7.3.54. select"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

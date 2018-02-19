@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.19. サジェスト &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="7.19.1. はじめに" href="suggest/introduction.html" />
+    <link rel="prev" title="7.18. エイリアス" href="alias.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/reference/suggest.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="suggest/introduction.html" title="7.19.1. はじめに"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="alias.html" title="7.18. エイリアス"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="suggest">
+<h1>7.19. サジェスト<a class="headerlink" href="#suggest" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>Groongaにはサジェスト機能があります。このセクションではこの機能の使い方とどのように動作しているかを説明します。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="suggest/introduction.html">7.19.1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#completion">7.19.1.1. 補完</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#correction">7.19.1.2. 補正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#suggestion">7.19.1.3. 提案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/introduction.html#learning">7.19.1.4. 学習</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/completion.html">7.19.2. 補完</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-it-works">7.19.2.1. どのように動作するか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-to-use">7.19.2.2. 使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-it-learns">7.19.2.3. 学習方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/completion.html#how-to-update-reading-data">7.19.2.4. 読みデータの更新方法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/correction.html">7.19.3. 補正</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-it-works">7.19.3.1. どのように動作するか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-to-use">7.19.3.2. 使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/correction.html#how-it-learns">7.19.3.3. 学習方法</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="suggest/suggestion.html">7.19.4. 提案</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-it-works">7.19.4.1. どのように動作するか</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-to-use">7.19.4.2. 使い方</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-it-learns">7.19.4.3. 学習方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="suggest/suggestion.html#how-to-extract-learning-data">7.19.4.4. 学習データを抽出する方法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="alias.html"
+                        title="前の章へ">7.18. エイリアス</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="suggest/introduction.html"
+                        title="次の章へ">7.19.1. はじめに</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="suggest/introduction.html" title="7.19.1. はじめに"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="alias.html" title="7.18. エイリアス"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. リファレンスマニュアル</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

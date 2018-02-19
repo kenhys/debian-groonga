@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>12.2.1. 導入 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="12.2.2. 国際化" href="i18n.html" />
+    <link rel="prev" title="12.2. ドキュメント関連のコントリビュート方法" href="../documentation.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/contribution/documentation/introduction.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="i18n.html" title="12.2.2. 国際化"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../documentation.html" title="12.2. ドキュメント関連のコントリビュート方法"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../contribution.html" >12. Groongaへのコントリビュート方法</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../documentation.html" accesskey="U">12.2. ドキュメント関連のコントリビュート方法</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<h1>12.2.1. 導入<a class="headerlink" href="#introduction" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>この文書では、Groongaドキュメントの執筆・生成・管理の方法について説明します。</p>
+<div class="section" id="install-depended-software">
+<h2>12.2.1.1. 必要なソフトウェアのインストール<a class="headerlink" href="#install-depended-software" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaはドキュメントツールとして <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> を使います。</p>
+<p>以下はSphinxをインストールするコマンドラインです。</p>
+<p>Debian GNU/Linux, Ubuntu:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get install -V -y python-sphinx
+</pre></div>
+</div>
+<p>CentOS, Fedora:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo yum install -y python-pip
+% sudo pip install sphinx
+</pre></div>
+</div>
+<p>OS X:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% brew install python
+% brew install gettext
+% export PATH=`brew --prefix gettext`/bin:$PATH
+% pip install sphinx
+</pre></div>
+</div>
+<p>プラットフォームに存在するPythonのバージョンが古すぎる場合は、Python 2.7のより新しいバージョンを手動でインストールする必要があります。例えば、 <a class="reference external" href="https://github.com/yyuu/pyenv">pyenv</a> を使ったインストール手順は以下の通りです:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% pyenv install 2.7.11
+% pyenv global 2.7.11
+% pip install sphinx
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-configure-with-enable-document">
+<h2>12.2.1.2. <code class="docutils literal"><span class="pre">configure</span></code> を <code class="docutils literal"><span class="pre">--enable-document</span></code> 付きで実行<a class="headerlink" href="#run-configure-with-enable-document" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groonga は、デフォルトではドキュメントの生成を無効化しています。 <code class="docutils literal"><span class="pre">configure</span></code> に <code class="docutils literal"><span class="pre">--enable-document</span></code> オプションを追加して明示的に有効にする必要があります。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure --enable-document
+</pre></div>
+</div>
+<p>これで、 Groonga ドキュメントをビルドする準備が出来ました。</p>
+</div>
+<div class="section" id="generate-html">
+<h2>12.2.1.3. HTMLファイルを生成<a class="headerlink" href="#generate-html" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>以下のコマンドでHTMLファイルを生成できます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make -C doc html
+</pre></div>
+</div>
+<p>生成されたHTMLドキュメントは <code class="docutils literal"><span class="pre">doc/locale/ja/html/</span></code> にあります。</p>
+</div>
+<div class="section" id="update">
+<h2>12.2.1.4. 更新<a class="headerlink" href="#update" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>ドキュメントのソースは <code class="docutils literal"><span class="pre">doc/source/</span></code> にあります。ソースは英語で書かれているはずです。ドキュメントの翻訳方法については、 <a class="reference internal" href="i18n.html"><span class="doc">国際化</span></a> をご覧ください。</p>
+<p>既に存在するドキュメントのファイルを更新すると、翻訳対象のファイルを更新できます。</p>
+<p>新規ファイル追加・ファイル位置変更・ファイル削除の後は、ファイル一覧を更新する必要があります。以下のコマンドでファイル一覧を更新できます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make -C doc update-files
+</pre></div>
+</div>
+<p>このコマンドは <code class="docutils literal"><span class="pre">doc/files.am</span></code> を更新します。</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">12.2.1. 導入</a><ul>
+<li><a class="reference internal" href="#install-depended-software">12.2.1.1. 必要なソフトウェアのインストール</a></li>
+<li><a class="reference internal" href="#run-configure-with-enable-document">12.2.1.2. <code class="docutils literal"><span class="pre">configure</span></code> を <code class="docutils literal"><span class="pre">--enable-document</span></code> 付きで実行</a></li>
+<li><a class="reference internal" href="#generate-html">12.2.1.3. HTMLファイルを生成</a></li>
+<li><a class="reference internal" href="#update">12.2.1.4. 更新</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../documentation.html"
+                        title="前の章へ">12.2. ドキュメント関連のコントリビュート方法</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="i18n.html"
+                        title="次の章へ">12.2.2. 国際化</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="i18n.html" title="12.2.2. 国際化"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../documentation.html" title="12.2. ドキュメント関連のコントリビュート方法"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../contribution.html" >12. Groongaへのコントリビュート方法</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../documentation.html" >12.2. ドキュメント関連のコントリビュート方法</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

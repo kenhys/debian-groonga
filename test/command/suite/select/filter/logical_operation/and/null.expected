@@ -1,0 +1,10 @@
+table_create Records TABLE_NO_KEY
+[[0,0.0,0.0],true]
+load --table Records
+[
+[],
+[]
+]
+[[0,0.0,0.0],1]
+select Records   --output_columns '_id, null && "not false"'
+[[0,0.0,0.0],[[[1],[["_id","UInt32"],["",null]],[1,false]]]]

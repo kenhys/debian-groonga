@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.20. Indexing &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7.21. Sharding" href="sharding.html" />
+    <link rel="prev" title="7.19.4. Suggestion" href="suggest/suggestion.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/reference/indexing.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="sharding.html" title="7.21. Sharding"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="suggest/suggestion.html" title="7.19.4. Suggestion"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" accesskey="U">7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="indexing">
+<h1>7.20. Indexing<a class="headerlink" href="#indexing" title="Permalink to this headline">¶</a></h1>
+<p>Groonga supports both online index construction and offline
+index construction since 2.0.0.</p>
+<div class="section" id="online-index-construction">
+<span id="id1"></span><h2>7.20.1. Online index construction<a class="headerlink" href="#online-index-construction" title="Permalink to this headline">¶</a></h2>
+<p>In online index construction, registered documents can be
+searchable quickly while indexing. But indexing requires
+more cost rather than indexing by offline index
+construction.</p>
+<p>Online index construction is suitable for a search system
+that values freshness. For example, a search system for
+tweets, news, blog posts and so on will value
+freshness. Online index construction can make fresh
+documents searchable and keep searchable while indexing.</p>
+</div>
+<div class="section" id="offline-index-construction">
+<span id="id2"></span><h2>7.20.2. Offline index construction<a class="headerlink" href="#offline-index-construction" title="Permalink to this headline">¶</a></h2>
+<p>In offline index construction, indexing cost is less than
+indexing cost by online index construction. Indexing time
+will be shorter. Index will be smaller. Resources required
+for indexing will be smaller. But a registering document
+cannot be searchable until all registered documents are
+indexed.</p>
+<p>Offline index construction is suitable for a search system
+that values less required resources. If a search system
+doesn't value freshness, offline index construction will be
+suitable. For example, a reference manual search system
+doesn't value freshness because a reference manual will be
+updated only at a release.</p>
+</div>
+<div class="section" id="how-to-use">
+<h2>7.20.3. How to use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
+<p>Groonga uses online index construction by default. We
+register a document, we can search it quickly.</p>
+<p>Groonga uses offline index construction by adding an index
+to a column that already has data.</p>
+<p>We define a schema:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Tweets TABLE_NO_KEY
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Tweets content COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Lexicon TABLE_HASH_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>We register data:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Tweets
+[
+{&quot;content&quot;:&quot;Hello!&quot;},
+{&quot;content&quot;:&quot;I just start it!&quot;},
+{&quot;content&quot;:&quot;I&#39;m sleepy... Have a nice day... Good night...&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p>We can search with sequential search when we don't have index:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Tweets --match_columns content --query &#39;good nice&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;I&#39;m sleepy... Have a nice day... Good night...&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>We create index for <code class="docutils literal"><span class="pre">Tweets.content</span></code>. Already registered
+data in <code class="docutils literal"><span class="pre">Tweets.content</span></code> are indexed by offline index
+construction:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>column_create Lexicon tweet COLUMN_INDEX|WITH_POSITION Tweets content
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>We search with index. We get a matched record:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Tweets --match_columns content --query &#39;good nice&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;I&#39;m sleepy... Have a nice day... Good night...&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>We register data again. They are indexed by online index
+construction:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table Tweets
+[
+{&quot;content&quot;:&quot;Good morning! Nice day.&quot;},
+{&quot;content&quot;:&quot;Let&#39;s go shopping.&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+</pre></div>
+</div>
+<p>We can also get newly registered records by searching:</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Tweets --match_columns content --query &#39;good nice&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;content&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         3,
+#         &quot;I&#39;m sleepy... Have a nice day... Good night...&quot;
+#       ],
+#       [
+#         4,
+#         &quot;Good morning! Nice day.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.20. Indexing</a><ul>
+<li><a class="reference internal" href="#online-index-construction">7.20.1. Online index construction</a></li>
+<li><a class="reference internal" href="#offline-index-construction">7.20.2. Offline index construction</a></li>
+<li><a class="reference internal" href="#how-to-use">7.20.3. How to use</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="suggest/suggestion.html"
+                        title="previous chapter">7.19.4. Suggestion</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="sharding.html"
+                        title="next chapter">7.21. Sharding</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="sharding.html" title="7.21. Sharding"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="suggest/suggestion.html" title="7.19.4. Suggestion"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../reference.html" >7. Reference manual</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

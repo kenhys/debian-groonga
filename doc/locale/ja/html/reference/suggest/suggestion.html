@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.19.4. 提案 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.20. インデックス構築" href="../indexing.html" />
+    <link rel="prev" title="7.19.3. 補正" href="correction.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/suggest/suggestion.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../indexing.html" title="7.20. インデックス構築"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="correction.html" title="7.19.3. 補正"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../suggest.html" accesskey="U">7.19. サジェスト</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="suggestion">
+<h1>7.19.4. 提案<a class="headerlink" href="#suggestion" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>このセクションでは以下の補完機能について説明します。:</p>
+<ul class="simple">
+<li>どのように動作するか</li>
+<li>使い方</li>
+<li>学習方法</li>
+</ul>
+<div class="section" id="how-it-works">
+<h2>7.19.4.1. どのように動作するか<a class="headerlink" href="#how-it-works" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>提案機能は提案する語を計算するために1種類の検索を使います。:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>学習したデータを共起検索。</li>
+</ol>
+</div></blockquote>
+<div class="section" id="cooccurrence-search">
+<h3>7.19.4.1.1. 共起検索<a class="headerlink" href="#cooccurrence-search" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>共起検索はユーザの入力と関連する語を検索します。共起検索ではユーザの実行したときの検索クエリを使います。このデータはクエリログやアクセスログなどから学習します。</p>
+<p>例えば、ユーザが以下のように検索を実行したとします。:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">query</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>search engine</td>
+</tr>
+<tr class="row-odd"><td>web search realtime</td>
+</tr>
+</tbody>
+</table>
+<p>Groongaは以下のような提案ペアを作成します。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">入力</th>
+<th class="head">提案される語</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>search</td>
+<td>search engine</td>
+</tr>
+<tr class="row-odd"><td>engine</td>
+<td>search engine</td>
+</tr>
+<tr class="row-even"><td>web</td>
+<td>web search realtime</td>
+</tr>
+<tr class="row-odd"><td>search</td>
+<td>web search realtime</td>
+</tr>
+<tr class="row-even"><td>realtime</td>
+<td>web search realtime</td>
+</tr>
+</tbody>
+</table>
+<p>これらのペアは以下の手順で作成します。:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>ユーザの入力をTokenDelimitトークナイザーでトークナイズします。TokenDelimitは空白をトークンの区切りに使います。（例えば、&quot;search engine&quot;は&quot;search&quot;トークンと&quot;engine&quot;トークンの2つのトークンにトークナイズされます。）</li>
+<li>各トークンについて、トークンと元のクエリからなるペアを作成する。</li>
+</ol>
+</div></blockquote>
+<p>ユーザが&quot;search&quot;と入力したとき、共起検索は&quot;search engine&quot;と&quot;web search raltime&quot;を返します。これは、&quot;search&quot;が2つの「入力」カラムに含まれていて、対応するそれぞれの「提案される語」カラムの値が&quot;search engine&quot;と&quot;web search realtime&quot;だからです。</p>
+</div>
+</div>
+<div class="section" id="how-to-use">
+<h2>7.19.4.2. 使い方<a class="headerlink" href="#how-to-use" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaは提案機能を使うために <a class="reference internal" href="../commands/suggest.html"><span class="doc">suggest</span></a> コマンドを用意しています。 <cite>--type suggest</cite> オプションを使うと提案機能を利用できます。</p>
+<p>例えば、&quot;search&quot;と入力した時の提案結果を取得するコマンドは以下の通りです。:</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>suggest --table item_query --column kana --types suggest --frequency_threshold 1 --query search
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;suggest&quot;: [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;search engine&quot;,
+#         1
+#       ],
+#       [
+#         &quot;web search realtime&quot;,
+#         1
+#       ]
+#     ]
+#   }
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-it-learns">
+<h2>7.19.4.3. 学習方法<a class="headerlink" href="#how-it-learns" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>共起検索は学習データを使います。学習データはクエリログやアクセスログなどを元に作成します。学習データを作成するには、タイムスタンプ付きの入力シーケンスと、タイムスタンプ付きの検索実行時の入力内容が必要です。</p>
+<p>例えば、ユーザが&quot;engine&quot;で検索したいとします。ユーザが以下のようなシーケンスで検索クエリを入力したとします。:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>2011-08-10T13:33:25+09:00: search engine （検索実行）</li>
+<li>2011-08-10T13:33:28+09:00: web search realtime （検索実行）</li>
+</ol>
+</div></blockquote>
+<p>以下のコマンドで上記の検索実行結果から学習します。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>load --table event_query --each &#39;suggest_preparer(_id, type, item, sequence, time, pair_query)&#39;
+[
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950803.86057, &quot;item&quot;: &quot;search engine&quot;, &quot;type&quot;: &quot;submit&quot;},
+{&quot;sequence&quot;: &quot;1&quot;, &quot;time&quot;: 1312950808.86057, &quot;item&quot;: &quot;web search realtime&quot;, &quot;type&quot;: &quot;submit&quot;}
+]
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-extract-learning-data">
+<h2>7.19.4.4. 学習データを抽出する方法<a class="headerlink" href="#how-to-extract-learning-data" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>The learning data is stored into item_DATASET and pair_DATASET tables.
+By using select command for such tables, you can all extract learing data.</p>
+<p>Here is the query to extract all learning data:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select item_DATASET --limit -1
+select pair_DATASET --filter &#39;freq0 &gt; 0 || freq1 &gt; 0 || freq2 &gt; 0&#39; --limit -1
+</pre></div>
+</div>
+<p>Without '--limit -1', you can't get all data.
+In pair table, the valid value of freq0, freq1 and freq2 column must be larger than 0.</p>
+<p>Don't execute above query via HTTP request because enourmous number of records are fetched.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.19.4. 提案</a><ul>
+<li><a class="reference internal" href="#how-it-works">7.19.4.1. どのように動作するか</a><ul>
+<li><a class="reference internal" href="#cooccurrence-search">7.19.4.1.1. 共起検索</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#how-to-use">7.19.4.2. 使い方</a></li>
+<li><a class="reference internal" href="#how-it-learns">7.19.4.3. 学習方法</a></li>
+<li><a class="reference internal" href="#how-to-extract-learning-data">7.19.4.4. 学習データを抽出する方法</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="correction.html"
+                        title="前の章へ">7.19.3. 補正</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../indexing.html"
+                        title="次の章へ">7.20. インデックス構築</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../indexing.html" title="7.20. インデックス構築"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="correction.html" title="7.19.3. 補正"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../suggest.html" >7.19. サジェスト</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

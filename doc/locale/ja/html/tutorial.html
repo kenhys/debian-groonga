@@ -1,0 +1,201 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4. チュートリアル &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="4.1. 基本的な操作" href="tutorial/introduction.html" />
+    <link rel="prev" title="3. コミュニティ" href="community.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../en/html/tutorial.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="tutorial/introduction.html" title="4.1. 基本的な操作"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="3. コミュニティ"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tutorial">
+<h1>4. チュートリアル<a class="headerlink" href="#tutorial" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/introduction.html">4.1. 基本的な操作</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-database">4.1.1. データベースの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#operate-a-database">4.1.2. データベースの操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#command-format">4.1.3. コマンドの書式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#basic-commands">4.1.4. 主なコマンド</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-table">4.1.5. テーブルの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#view-a-table">4.1.6. テーブルの表示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-column">4.1.7. カラムの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#load-records">4.1.8. データのロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#get-a-record">4.1.9. レコードの取得</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-a-lexicon-table-for-full-text-search">4.1.10. 全文検索用の語彙表の作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#create-an-index-column-for-full-text-search">4.1.11. 全文検索用のインデックスカラムの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#full-text-search">4.1.12. 全文検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#specify-output-columns">4.1.13. 出力カラムの指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#specify-output-ranges">4.1.14. 表示範囲指定</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/introduction.html#sort-a-search-result">4.1.15. 検索結果の並べ替え</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/network.html">4.2. リモートアクセス</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#hypertext-transfer-protocol-http">4.2.1. HTTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#administration-tool-http">4.2.2. ブラウザベースの管理ツール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/network.html#security-issues">4.2.3. セキュリティ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/data.html">4.3. いろいろなデータの保存</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#overview">4.3.1. データの種類</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#boolean-type">4.3.2. 真偽値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#numeric-types">4.3.3. 数値</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#string-types">4.3.4. 文字列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#date-and-time-type">4.3.5. 日時</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#longitude-and-latitude-types">4.3.6. 経緯度</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#reference-types">4.3.7. テーブル参照</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/data.html#vector-types">4.3.8. ベクターカラム</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/search.html">4.4. さまざまな検索条件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#narrow-down-full-text-search-by-using-syntax-like-javascript">4.4.1. JavaScriptに似た文法での絞込・全文検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#sort-by-using-scorer">4.4.2. <code class="docutils literal"><span class="pre">scorer</span></code> を利用したソート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/search.html#narrow-down-sort-by-using-location-information">4.4.3. 位置情報を用いた絞込・ソート</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/drilldown.html">4.5. ドリルダウン</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#drilldown-with-multiple-column">4.5.1. 複数のカラムでドリルダウン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#sorting-drildown-results">4.5.2. ドリルダウン結果をソートする</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/drilldown.html#limits-drildown-results">4.5.3. ドリルダウン結果の制限</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/index.html">4.6. タグ検索・参照関係の逆引き</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#tag-search">4.6.1. タグ検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#reverse-resolution-of-reference-relationships">4.6.2. 参照関係の逆引き</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/index.html#geo-location-search-with-index">4.6.3. インデックス付きジオサーチ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/match_columns.html">4.7. match_columnsパラメータ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#full-text-search-against-multiple-columns">4.7.1. 複数のカラムに対する全文検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#full-text-search-with-specific-index-name">4.7.2. インデックス名を指定した全文検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#nested-index-search-among-related-table-by-column-index">4.7.3. カラムインデックスによる関連テーブルをまたぐ検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/match_columns.html#indexes-with-weight">4.7.4. インデックスの重み</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/patricia_trie.html">4.8. パトリシア木による前方一致検索</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/patricia_trie.html#prefix-search-by-primary-key">4.8.1. 主キーによる前方一致検索</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/patricia_trie.html#suffix-search-by-primary-key">4.8.2. 主キーによる後方一致検索</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/lexicon.html">4.9. 全文検索用の語彙表の作成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/micro_blog.html">4.10. マイクロブログ検索システムの作成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#create-a-table">4.10.1. テーブルの作成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#loading-data">4.10.2. データのロード</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/micro_blog.html#search">4.10.3. 検索</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial/query_expansion.html">4.11. クエリ拡張</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/query_expansion.html#preparation">4.11.1. 準備</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial/query_expansion.html#search">4.11.2. 検索</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="community.html"
+                        title="前の章へ">3. コミュニティ</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="tutorial/introduction.html"
+                        title="次の章へ">4.1. 基本的な操作</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="tutorial/introduction.html" title="4.1. 基本的な操作"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="community.html" title="3. コミュニティ"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

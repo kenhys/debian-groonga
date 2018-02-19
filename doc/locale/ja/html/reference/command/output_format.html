@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.2. 出力形式 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.3.3. プリティープリント" href="pretty_print.html" />
+    <link rel="prev" title="7.3.1. コマンドバージョン" href="command_version.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/command/output_format.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. プリティープリント"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="command_version.html" title="7.3.1. コマンドバージョン"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="output-format">
+<h1>7.3.2. 出力形式<a class="headerlink" href="#output-format" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>コマンドは実行結果をJSONまたはMessagePack、XML、TSVのどれかで出力します。</p>
+<p>JSONとMessagePackの出力は同じ構造になっています。XMLとTSVはそれぞれ独自の構造になっています。</p>
+<p>JSONまたはMessagePackの利用を推奨します。XMLは目視で結果を確認する時に便利です。TSVは特殊な用途では有用です。通常はTSVを使う必要はありません。</p>
+</div>
+<div class="section" id="json-and-messagepack">
+<h2>7.3.2.2. JSONとMessagePack<a class="headerlink" href="#json-and-messagepack" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>このセクションではJSONとMessagePack形式を使った時のコマンド実行結果の構造を説明します。MessagePackはバイナリー形式なのでここでは構造を示すためにJSONを使います。バイナリー形式はドキュメントには向いていません。</p>
+<p>JSON形式、MessagePack形式のときは以下のような構造になります:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, BODY]
+</pre></div>
+</div>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  [
+    0,
+    1337566253.89858,
+    0.000355720520019531
+  ],
+  [
+    [
+      [
+        1
+      ],
+      [
+        [
+          &quot;_id&quot;,
+          &quot;UInt32&quot;
+        ],
+        [
+          &quot;_key&quot;,
+          &quot;ShortText&quot;
+        ],
+        [
+          &quot;content&quot;,
+          &quot;Text&quot;
+        ],
+        [
+          &quot;n_likes&quot;,
+          &quot;UInt32&quot;
+        ]
+      ],
+      [
+        2,
+        &quot;Groonga&quot;,
+        &quot;I started to use groonga. It&#39;s very fast!&quot;,
+        10
+      ]
+    ]
+  ]
+]
+</pre></div>
+</div>
+<p>この例では、以下の部分が <code class="docutils literal"><span class="pre">HEADER</span></code> に相当します:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  0,
+  1337566253.89858,
+  0.000355720520019531
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">BODY</span></code> に相当する部分は以下です:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  [
+    [
+      1
+    ],
+    [
+      [
+        &quot;_id&quot;,
+        &quot;UInt32&quot;
+      ],
+      [
+        &quot;_key&quot;,
+        &quot;ShortText&quot;
+      ],
+      [
+        &quot;content&quot;,
+        &quot;Text&quot;
+      ],
+      [
+        &quot;n_likes&quot;,
+        &quot;UInt32&quot;
+      ]
+    ],
+    [
+      2,
+      &quot;Groonga&quot;,
+      &quot;I started to use groonga. It&#39;s very fast!&quot;,
+      10
+    ]
+  ]
+]
+</pre></div>
+</div>
+<div class="section" id="header">
+<h3>7.3.2.2.1. <code class="docutils literal"><span class="pre">HEADER</span></code><a class="headerlink" href="#header" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code> は配列です。 <code class="docutils literal"><span class="pre">HEADER</span></code> の内容にはいくつかのパターンがあります。</p>
+<div class="section" id="success-case">
+<h4>7.3.2.2.1.1. 成功した場合<a class="headerlink" href="#success-case" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>コマンドが成功した場合は <code class="docutils literal"><span class="pre">HEADER</span></code> には3つの要素があります:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[0, UNIX_TIME_WHEN_COMMAND_IS_STARTED, ELAPSED_TIME]
+</pre></div>
+</div>
+<p>最初の値は常に <code class="docutils literal"><span class="pre">0</span></code> です。</p>
+<p><code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> はコマンドの実行が始まったときの時刻です。時刻は1970-01-01 00:00:00から経過した秒数で表現されています。 <code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> はコマンドの実行にかかった時間です。単位は秒です。 <code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> も <code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> も浮動小数点数です。小数部分はナノ秒を表します。</p>
+</div>
+<div class="section" id="error-case">
+<h4>7.3.2.2.1.2. エラーの場合<a class="headerlink" href="#error-case" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>エラーの場合、 <code class="docutils literal"><span class="pre">HEADER</span></code> には4個または5個の要素があります:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  RETURN_CODE,
+  UNIX_TIME_WHEN_COMMAND_IS_STARTED,
+  ELAPSED_TIME,
+  ERROR_MESSAGE,
+  ERROR_LOCATION
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> は <code class="docutils literal"><span class="pre">HEADER</span></code> には含まれないかもしれませんが、他の4個の要素は常に含まれます。</p>
+<p><code class="docutils literal"><span class="pre">RETURN_CODE</span></code> は0ではない値です。リターンコードの詳細は <a class="reference internal" href="return_code.html"><span class="doc">リターンコード</span></a> を見てください。</p>
+<p><code class="docutils literal"><span class="pre">UNIX_TIME_WHEN_COMMAND_IS_STARTED</span></code> と <code class="docutils literal"><span class="pre">ELAPSED_TIME</span></code> は成功した時と同じです。</p>
+<p><code class="docutils literal"><span class="pre">ERROR_MESSAGE</span></code> はエラーメッセージです。文字列です。</p>
+<p><code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> は存在しないことがあります。もし、エラーが発生した場所の情報を収集できていた場合は <code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> が含まれます。 <code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> は配列です。 <code class="docutils literal"><span class="pre">ERROR_LOCATION</span></code> は1個または2個の要素を含みます:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  LOCATION_IN_GROONGA,
+  LOCATION_IN_INPUT
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> はGroonga内でエラーが発生したソースコードの場所です。この情報はGroonga開発者には役に立ちますが、ユーザーの役には立ちません。 <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> は配列です。 <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> には3個の要素があります:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  FUNCTION_NAME,
+  SOURCE_FILE_NAME,
+  LINE_NUMBER
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">FUNCTION_NAME</span></code> はエラーが発生した関数の名前です。</p>
+<p><code class="docutils literal"><span class="pre">SOURCE_FILE_NAME</span></code> はエラーが発生した箇所を含んだGroongaのソースコードのファイル名です。</p>
+<p><code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> はエラーが発生した箇所の <code class="docutils literal"><span class="pre">SOURCE_FILE_NAME</span></code> での行番号です。</p>
+<p><code class="docutils literal"><span class="pre">LOCATION_IN_INPUT</span></code> は存在しないことがあります。 <code class="docutils literal"><span class="pre">LOCATION_IN_INPUT</span></code> は入力ファイルでエラーが発生した場所の情報を収集できたときに含まれます。入力ファイルは <code class="docutils literal"><span class="pre">groonga</span></code> コマンドのコマンドラインオプション <code class="docutils literal"><span class="pre">--file</span></code> で指定できます。 <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> は配列です。 <code class="docutils literal"><span class="pre">LOCATION_IN_GROONGA</span></code> には3個の要素があります:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[
+  INPUT_FILE_NAME,
+  LINE_NUMBER,
+  LINE_CONTENT
+]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code> はエラーが発生した入力ファイルのファイル名です。</p>
+<p><code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> はエラーが発生した箇所の <code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code> での行番号です。</p>
+<p><code class="docutils literal"><span class="pre">LINE_CONTENT</span></code> は <code class="docutils literal"><span class="pre">INPUT_FILE_NAME</span></code> 内の <code class="docutils literal"><span class="pre">LINE_NUMBER</span></code> 行目の内容です。</p>
+</div>
+</div>
+<div class="section" id="body">
+<h3>7.3.2.2.2. <code class="docutils literal"><span class="pre">BODY</span></code><a class="headerlink" href="#body" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p><code class="docutils literal"><span class="pre">BODY</span></code> の内容は実行したコマンドに依存します。 <code class="docutils literal"><span class="pre">BODY</span></code> がないこともあります。</p>
+<p>エラーが発生した時に、 <code class="docutils literal"><span class="pre">BODY</span></code> にエラーメッセージが入っていることもあります。</p>
+</div>
+</div>
+<div class="section" id="xml">
+<h2>7.3.2.3. XML<a class="headerlink" href="#xml" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="tsv">
+<h2>7.3.2.4. TSV<a class="headerlink" href="#tsv" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.2.5. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="return_code.html"><span class="doc">リターンコード</span></a> はリターンコードについて説明しています。</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.2. 出力形式</a><ul>
+<li><a class="reference internal" href="#summary">7.3.2.1. 概要</a></li>
+<li><a class="reference internal" href="#json-and-messagepack">7.3.2.2. JSONとMessagePack</a><ul>
+<li><a class="reference internal" href="#header">7.3.2.2.1. <code class="docutils literal"><span class="pre">HEADER</span></code></a><ul>
+<li><a class="reference internal" href="#success-case">7.3.2.2.1.1. 成功した場合</a></li>
+<li><a class="reference internal" href="#error-case">7.3.2.2.1.2. エラーの場合</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#body">7.3.2.2.2. <code class="docutils literal"><span class="pre">BODY</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#xml">7.3.2.3. XML</a></li>
+<li><a class="reference internal" href="#tsv">7.3.2.4. TSV</a></li>
+<li><a class="reference internal" href="#see-also">7.3.2.5. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="command_version.html"
+                        title="前の章へ">7.3.1. コマンドバージョン</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="pretty_print.html"
+                        title="次の章へ">7.3.3. プリティープリント</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="pretty_print.html" title="7.3.3. プリティープリント"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="command_version.html" title="7.3.1. コマンドバージョン"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. コマンド</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

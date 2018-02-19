@@ -1,0 +1,1105 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.65. tokenize &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.66. tokenizer_list" href="tokenizer_list.html" />
+    <link rel="prev" title="7.3.64. thread_limit" href="thread_limit.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/tokenize.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tokenizer_list.html" title="7.3.66. tokenizer_list"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="thread_limit.html" title="7.3.64. thread_limit"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tokenize">
+<h1>7.3.65. <code class="docutils literal"><span class="pre">tokenize</span></code><a class="headerlink" href="#tokenize" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.65.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">tokenize</span></code> command tokenizes text by the specified tokenizer.
+It is useful to debug tokenization.</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.65.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>This command takes many parameters.</p>
+<p><code class="docutils literal"><span class="pre">tokenizer</span></code> and <code class="docutils literal"><span class="pre">string</span></code> are required parameters. Others are
+optional:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize tokenizer
+         string
+         [normalizer=null]
+         [flags=NONE]
+         [mode=ADD]
+         [token_filters=NONE]
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.65.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Fulltext Search&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; S&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 14,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>It has only required parameters. <code class="docutils literal"><span class="pre">tokenizer</span></code> is <code class="docutils literal"><span class="pre">TokenBigram</span></code> and
+<code class="docutils literal"><span class="pre">string</span></code> is <code class="docutils literal"><span class="pre">&quot;Fulltext</span> <span class="pre">Search&quot;</span></code>. It returns tokens that is
+generated by tokenizing <code class="docutils literal"><span class="pre">&quot;Fulltext</span> <span class="pre">Search&quot;</span></code> with <code class="docutils literal"><span class="pre">TokenBigram</span></code>
+tokenizer. It doesn't normalize <code class="docutils literal"><span class="pre">&quot;Fulltext</span> <span class="pre">Search&quot;</span></code>.</p>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.65.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>This section describes all parameters. Parameters are categorized.</p>
+<div class="section" id="required-parameters">
+<h3>7.3.65.4.1. Required parameters<a class="headerlink" href="#required-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There are required parameters, <code class="docutils literal"><span class="pre">tokenizer</span></code> and <code class="docutils literal"><span class="pre">string</span></code>.</p>
+<div class="section" id="tokenizer">
+<span id="tokenize-tokenizer"></span><h4>7.3.65.4.1.1. <code class="docutils literal"><span class="pre">tokenizer</span></code><a class="headerlink" href="#tokenizer" title="Permalink to this headline">¶</a></h4>
+<p>Specifies the tokenizer name. <code class="docutils literal"><span class="pre">tokenize</span></code> command uses the
+tokenizer that is named <code class="docutils literal"><span class="pre">tokenizer</span></code>.</p>
+<p>See <a class="reference internal" href="../tokenizers.html"><span class="doc">Tokenizers</span></a> about built-in tokenizers.</p>
+<p>Here is an example to use built-in <code class="docutils literal"><span class="pre">TokenTrigram</span></code> tokenizer.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenTrigram &quot;Fulltext Search&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Ful&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ull&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;llt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lte&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;tex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ext&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt &quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t S&quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; Se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Sea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ear&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;arc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 14,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>If you want to use other tokenizers, you need to register additional
+tokenizer plugin by <a class="reference internal" href="register.html"><span class="doc">register</span></a> command. For example, you can use
+<a class="reference external" href="http://www.phontron.com/kytea/">KyTea</a> based tokenizer by
+registering <code class="docutils literal"><span class="pre">tokenizers/kytea</span></code>.</p>
+</div>
+<div class="section" id="string">
+<span id="tokenize-string"></span><h4>7.3.65.4.1.2. <code class="docutils literal"><span class="pre">string</span></code><a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h4>
+<p>Specifies any string which you want to tokenize.</p>
+<p>If you want to include spaces in <code class="docutils literal"><span class="pre">string</span></code>, you need to quote
+<code class="docutils literal"><span class="pre">string</span></code> by single quotation (<code class="docutils literal"><span class="pre">'</span></code>) or double quotation (<code class="docutils literal"><span class="pre">&quot;</span></code>).</p>
+<p>Here is an example to use spaces in <code class="docutils literal"><span class="pre">string</span></code>.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Groonga is a fast fulltext earch engine!&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Gr&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ro&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;oo&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;on&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ng&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ga&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;a &quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; i&quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;is&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;s &quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; a&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;a &quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; f&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;fa&quot;
+#     },
+#     {
+#       &quot;position&quot;: 14,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;as&quot;
+#     },
+#     {
+#       &quot;position&quot;: 15,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;st&quot;
+#     },
+#     {
+#       &quot;position&quot;: 16,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 17,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; f&quot;
+#     },
+#     {
+#       &quot;position&quot;: 18,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 19,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 20,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 21,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 22,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 23,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 24,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 25,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 26,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; e&quot;
+#     },
+#     {
+#       &quot;position&quot;: 27,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 28,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 29,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 30,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 31,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h &quot;
+#     },
+#     {
+#       &quot;position&quot;: 32,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; e&quot;
+#     },
+#     {
+#       &quot;position&quot;: 33,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;en&quot;
+#     },
+#     {
+#       &quot;position&quot;: 34,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ng&quot;
+#     },
+#     {
+#       &quot;position&quot;: 35,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;gi&quot;
+#     },
+#     {
+#       &quot;position&quot;: 36,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;in&quot;
+#     },
+#     {
+#       &quot;position&quot;: 37,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ne&quot;
+#     },
+#     {
+#       &quot;position&quot;: 38,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;e!&quot;
+#     },
+#     {
+#       &quot;position&quot;: 39,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;!&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="optional-parameters">
+<h3>7.3.65.4.2. Optional parameters<a class="headerlink" href="#optional-parameters" title="Permalink to this headline">¶</a></h3>
+<p>There are optional parameters.</p>
+<div class="section" id="normalizer">
+<span id="tokenize-normalizer"></span><h4>7.3.65.4.2.1. <code class="docutils literal"><span class="pre">normalizer</span></code><a class="headerlink" href="#normalizer" title="Permalink to this headline">¶</a></h4>
+<p>Specifies the normalizer name. <code class="docutils literal"><span class="pre">tokenize</span></code> command uses the
+normalizer that is named <code class="docutils literal"><span class="pre">normalizer</span></code>. Normalizer is important for
+N-gram family tokenizers such as <code class="docutils literal"><span class="pre">TokenBigram</span></code>.</p>
+<p>Normalizer detects character type for each character while
+normalizing. N-gram family tokenizers use character types while
+tokenizing.</p>
+<p>Here is an example that doesn't use normalizer.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Fulltext Search&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; S&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 14,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>All alphabets are tokenized by two characters. For example, <code class="docutils literal"><span class="pre">Fu</span></code> is
+a token.</p>
+<p>Here is an example that uses normalizer.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Fulltext Search&quot; NormalizerAuto
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;fulltext&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;search&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Continuous alphabets are tokenized as one token. For example,
+<code class="docutils literal"><span class="pre">fulltext</span></code> is a token.</p>
+<p>If you want to tokenize by two characters with noramlizer, use
+<code class="docutils literal"><span class="pre">TokenBigramSplitSymbolAlpha</span></code>.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigramSplitSymbolAlpha &quot;Fulltext Search&quot; NormalizerAuto
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t&quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>All alphabets are tokenized by two characters. And they are normalized
+to lower case characters. For example, <code class="docutils literal"><span class="pre">fu</span></code> is a token.</p>
+</div>
+<div class="section" id="flags">
+<span id="tokenize-flags"></span><h4>7.3.65.4.2.2. <code class="docutils literal"><span class="pre">flags</span></code><a class="headerlink" href="#flags" title="Permalink to this headline">¶</a></h4>
+<p>Specifies a tokenization customize options. You can specify
+multiple options separated by &quot;<code class="docutils literal"><span class="pre">|</span></code>&quot;. For example,
+<code class="docutils literal"><span class="pre">NONE|ENABLE_TOKENIZED_DELIMITER</span></code>.</p>
+<p>Here are available flags.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Flag</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">NONE</span></code></td>
+<td>Just ignored.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ENABLE_TOKENIZED_DELIMITER</span></code></td>
+<td>Enables tokenized delimiter. See <a class="reference internal" href="../tokenizers.html"><span class="doc">Tokenizers</span></a> about
+tokenized delimiter details.</td>
+</tr>
+</tbody>
+</table>
+<p>Here is an example that uses <code class="docutils literal"><span class="pre">ENABLE_TOKENIZED_DELIMITER</span></code>.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenDelimit &quot;Full￾text Sea￾crch&quot; NormalizerAuto ENABLE_TOKENIZED_DELIMITER
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;full&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;text sea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;crch&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">TokenDelimit</span></code> tokenizer is one of tokenized delimiter supported
+tokenizer. <code class="docutils literal"><span class="pre">ENABLE_TOKENIZED_DELIMITER</span></code> enables tokenized delimiter.
+Tokenized delimiter is special character that indicates token
+border. It is <code class="docutils literal"><span class="pre">U+FFFE</span></code>. The character is not assigned any
+character. It means that the character is not appeared in normal
+string. So the character is good character for this puropose. If
+<code class="docutils literal"><span class="pre">ENABLE_TOKENIZED_DELIMITER</span></code> is enabled, the target string is
+treated as already tokenized string. Tokenizer just tokenizes by
+tokenized delimiter.</p>
+</div>
+<div class="section" id="mode">
+<span id="tokenize-mode"></span><h4>7.3.65.4.2.3. <code class="docutils literal"><span class="pre">mode</span></code><a class="headerlink" href="#mode" title="Permalink to this headline">¶</a></h4>
+<p>Specifies a tokenize mode. If the mode is specified <code class="docutils literal"><span class="pre">ADD</span></code>, the text
+is tokenized by the rule that adding a document. If the mode is specified
+<code class="docutils literal"><span class="pre">GET</span></code>, the text is tokenized by the rule that searching a document. If
+the mode is omitted, the text is tokenized by the <code class="docutils literal"><span class="pre">ADD</span></code> mode.</p>
+<p>The default mode is <code class="docutils literal"><span class="pre">ADD</span></code>.</p>
+<p>Here is an example to the <code class="docutils literal"><span class="pre">ADD</span></code> mode.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Fulltext Search&quot; --mode ADD
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; S&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     },
+#     {
+#       &quot;position&quot;: 14,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;h&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>The last alphabet is tokenized by one character.</p>
+<p>Here is an example to the <code class="docutils literal"><span class="pre">GET</span></code> mode.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>tokenize TokenBigram &quot;Fulltext Search&quot; --mode GET
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;position&quot;: 0,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Fu&quot;
+#     },
+#     {
+#       &quot;position&quot;: 1,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ul&quot;
+#     },
+#     {
+#       &quot;position&quot;: 2,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ll&quot;
+#     },
+#     {
+#       &quot;position&quot;: 3,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;lt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 4,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;te&quot;
+#     },
+#     {
+#       &quot;position&quot;: 5,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ex&quot;
+#     },
+#     {
+#       &quot;position&quot;: 6,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;xt&quot;
+#     },
+#     {
+#       &quot;position&quot;: 7,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;t &quot;
+#     },
+#     {
+#       &quot;position&quot;: 8,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot; S&quot;
+#     },
+#     {
+#       &quot;position&quot;: 9,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;Se&quot;
+#     },
+#     {
+#       &quot;position&quot;: 10,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ea&quot;
+#     },
+#     {
+#       &quot;position&quot;: 11,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ar&quot;
+#     },
+#     {
+#       &quot;position&quot;: 12,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;rc&quot;
+#     },
+#     {
+#       &quot;position&quot;: 13,
+#       &quot;force_prefix&quot;: false,
+#       &quot;value&quot;: &quot;ch&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>The last alphabet is tokenized by two characters.</p>
+</div>
+<div class="section" id="token-filters">
+<span id="tokenize-token-filters"></span><h4>7.3.65.4.2.4. <code class="docutils literal"><span class="pre">token_filters</span></code><a class="headerlink" href="#token-filters" title="Permalink to this headline">¶</a></h4>
+<p>Specifies the token filter names. <code class="docutils literal"><span class="pre">tokenize</span></code> command uses the
+tokenizer that is named <code class="docutils literal"><span class="pre">token_filters</span></code>.</p>
+<p>See <a class="reference internal" href="../token_filters.html"><span class="doc">Token filters</span></a> about token filters.</p>
+</div>
+</div>
+</div>
+<div class="section" id="return-value">
+<span id="tokenize-return-value"></span><h2>7.3.65.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">tokenize</span></code> command returns tokenized tokens. Each token has some
+attributes except token itself. The attributes will be increased in
+the feature:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, tokens]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code></p>
+<blockquote>
+<div>See <a class="reference internal" href="../command/output_format.html"><span class="doc">Output format</span></a> about <code class="docutils literal"><span class="pre">HEADER</span></code>.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">tokens</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">tokens</span></code> is an array of token. Token is an object that has the following
+attributes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">value</span></code></td>
+<td>Token itself.</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">position</span></code></td>
+<td>The N-th token.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.65.6. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../tokenizers.html"><span class="doc">Tokenizers</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.65. <code class="docutils literal"><span class="pre">tokenize</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.65.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.65.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.65.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">7.3.65.4. Parameters</a><ul>
+<li><a class="reference internal" href="#required-parameters">7.3.65.4.1. Required parameters</a><ul>
+<li><a class="reference internal" href="#tokenizer">7.3.65.4.1.1. <code class="docutils literal"><span class="pre">tokenizer</span></code></a></li>
+<li><a class="reference internal" href="#string">7.3.65.4.1.2. <code class="docutils literal"><span class="pre">string</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-parameters">7.3.65.4.2. Optional parameters</a><ul>
+<li><a class="reference internal" href="#normalizer">7.3.65.4.2.1. <code class="docutils literal"><span class="pre">normalizer</span></code></a></li>
+<li><a class="reference internal" href="#flags">7.3.65.4.2.2. <code class="docutils literal"><span class="pre">flags</span></code></a></li>
+<li><a class="reference internal" href="#mode">7.3.65.4.2.3. <code class="docutils literal"><span class="pre">mode</span></code></a></li>
+<li><a class="reference internal" href="#token-filters">7.3.65.4.2.4. <code class="docutils literal"><span class="pre">token_filters</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#return-value">7.3.65.5. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.65.6. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="thread_limit.html"
+                        title="previous chapter">7.3.64. <code class="docutils literal"><span class="pre">thread_limit</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tokenizer_list.html"
+                        title="next chapter">7.3.66. <code class="docutils literal"><span class="pre">tokenizer_list</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tokenizer_list.html" title="7.3.66. tokenizer_list"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="thread_limit.html" title="7.3.64. thread_limit"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

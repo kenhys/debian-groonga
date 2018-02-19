@@ -1,0 +1,90 @@
+# -*- po -*-
+# Japanese translations for 1.2.1 package.
+# Copyright (C) 2009-2011, Brazil, Inc
+# This file is distributed under the same license as the groonga package.
+# Kouhei Sutou <kou@clear-code.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.2.1\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2015-11-18 18:21+0900\n"
+"Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Community"
+msgstr "コミュニティ"
+
+msgid ""
+"There are some places for sharing Groonga information. We welcome you to "
+"join our community."
+msgstr ""
+"Groongaに関する情報を共有するための場所がいくつかあります。あなたの参加をお待"
+"ちしています！"
+
+msgid "Mailing List"
+msgstr "メーリングリスト"
+
+msgid "There are mailing lists for discussion about Groonga."
+msgstr "Groongaに関する話題を扱うメーリングリストがあります。"
+
+msgid "For English speakers"
+msgstr "英語"
+
+msgid ""
+"`groonga-talk@lists.sourceforge.net <http://lists.sourceforge.net/mailman/"
+"listinfo/groonga-talk>`_"
+msgstr ""
+
+msgid "For Japanese speakers"
+msgstr "日本語"
+
+msgid ""
+"`groonga-dev@lists.osdn.me <http://lists.osdn.me/mailman/listinfo/groonga-"
+"dev>`_"
+msgstr ""
+
+msgid "Chat room"
+msgstr "チャットルーム"
+
+msgid "There are chat rooms for discussion about Groonga."
+msgstr "Groongaに関する話題を扱うチャットルームがあります。"
+
+msgid "`groonga/en chat room on Gitter <https://gitter.im/groonga/en>`_"
+msgstr "`Gitterにあるgroonga/enチャットルーム <https://gitter.im/groonga/en>`_"
+
+msgid "`groonga/ja chat room on Gitter <https://gitter.im/groonga/ja>`_"
+msgstr "`Gitterにあるgroonga/jaチャットルーム <https://gitter.im/groonga/ja>`_"
+
+msgid "Twitter"
+msgstr ""
+
+msgid ""
+"`@groonga <https://twitter.com/groonga/>`_ tweets Groonga related "
+"information."
+msgstr ""
+"`@groonga <https://twitter.com/groonga/>`_ がGroonga関連情報をツイートしてい"
+"ます。"
+
+msgid ""
+"Please follow the account to get the latest Groonga related information!"
+msgstr ""
+"このアカウントをフォローして最新のGroonga関連情報をゲットしてください！"
+
+msgid "Facebook"
+msgstr ""
+
+msgid ""
+"`Groonga page on Facebook <http://www.facebook.com/groonga>`_ shares Groonga "
+"related information."
+msgstr ""
+"`FacebookのGroongaページ <http://www.facebook.com/groonga>`_ ではGroonga関連"
+"情報をシェアしています。"
+
+msgid "Please like the page to get the latest Groonga related information!"
+msgstr "このページをいいね！して最新のGroonga関連情報をゲットしてください！"

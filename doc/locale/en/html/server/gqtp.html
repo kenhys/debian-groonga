@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>5.3. GQTP &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.4. Memcached binary protocol" href="memcached.html" />
+    <link rel="prev" title="5.2.3. groonga-httpd" href="http/groonga-httpd.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/server/gqtp.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="memcached.html" title="5.4. Memcached binary protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="http/groonga-httpd.html" title="5.2.3. groonga-httpd"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" accesskey="U">5. Server</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gqtp">
+<h1>5.3. GQTP<a class="headerlink" href="#gqtp" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>5.3.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>GQTP is the acronym standing for &quot;Groonga Query Transfer Protocol&quot;.</p>
+<p>GQTP is a protocol designed for Groonga. It's a stateful
+protocol. You can send multiple commands in one session.</p>
+<p>GQTP will be faster rather than <a class="reference internal" href="http.html"><span class="doc">HTTP</span></a> when you send many
+light commands like <a class="reference internal" href="../reference/commands/status.html"><span class="doc">status</span></a>. GQTP will be
+almost same performance as HTTP when you send heavy commands like
+<a class="reference internal" href="../reference/commands/select.html"><span class="doc">select</span></a>.</p>
+<p>We recommend that you use HTTP for many cases. Because there are many
+HTTP client libraries.</p>
+<p>If you want to use GQTP, you can use the following libraries:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Ruby: <a class="reference external" href="https://github.com/ranguba/groonga-client">groonga-client</a></li>
+<li>Python: <a class="reference external" href="https://github.com/hhatto/poyonga">poyonga</a></li>
+<li>Go: <a class="reference external" href="https://github.com/hhatto/goroo">goroo</a></li>
+<li>PHP: <a class="reference external" href="https://github.com/Yujiro3/proonga">proonga</a></li>
+<li>C/C++: Groonga (Groonga can be also used as library)</li>
+</ul>
+</div></blockquote>
+<p>It's not a library but you can use
+<a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a> as a GQTP client.</p>
+</div>
+<div class="section" id="how-to-run">
+<h2>5.3.2. How to run<a class="headerlink" href="#how-to-run" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a> is a GQTP server implementation.
+You can run a Groonga server by the following command line:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga --protocol gqtp -s [options] DB_PATH
+</pre></div>
+</div>
+<p>You can run a Groonga server as a daemon by the following command
+line:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga --protocol gqtp -d [options] DB_PATH
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga executable file</span></a> for available <code class="docutils literal"><span class="pre">options</span></code>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.3. GQTP</a><ul>
+<li><a class="reference internal" href="#summary">5.3.1. Summary</a></li>
+<li><a class="reference internal" href="#how-to-run">5.3.2. How to run</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="http/groonga-httpd.html"
+                        title="previous chapter">5.2.3. groonga-httpd</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="memcached.html"
+                        title="next chapter">5.4. Memcached binary protocol</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="memcached.html" title="5.4. Memcached binary protocol"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="http/groonga-httpd.html" title="5.2.3. groonga-httpd"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" >5. Server</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

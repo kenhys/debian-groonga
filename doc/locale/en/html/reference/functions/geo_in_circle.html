@@ -1,0 +1,202 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.14.5. geo_in_circle &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.14.6. geo_in_rectangle" href="geo_in_rectangle.html" />
+    <link rel="prev" title="7.14.4. geo_distance" href="geo_distance.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/functions/geo_in_circle.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="geo_in_rectangle.html" title="7.14.6. geo_in_rectangle"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="geo_distance.html" title="7.14.4. geo_distance"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../function.html" accesskey="U">7.14. Function</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="geo-in-circle">
+<h1>7.14.5. geo_in_circle<a class="headerlink" href="#geo-in-circle" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>7.14.5.1. 名前<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>geo_in_circle - 座標が円の範囲内に存在するかどうかを調べます。</p>
+</div>
+<div class="section" id="id2">
+<h2>7.14.5.2. 書式<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>geo_in_circle(point, center, radious_or_point[, approximate_type])
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>7.14.5.3. 説明<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Groonga組込関数の一つであるgeo_in_circleについて説明します。組込関数は、script形式のgrn_expr中で呼び出すことができます。</p>
+<p>geo_in_circle() 関数は、pointに指定した座標が、centerに指定した座標を中心とする円の範囲内にあるかどうかを調べます。</p>
+</div>
+<div class="section" id="id4">
+<h2>7.14.5.4. 引数<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">point</span></code></p>
+<blockquote>
+<div>円の範囲内に存在するかどうかを調べる座標を指定します。Point型の値を指定できます。 <a class="footnote-reference" href="#id8" id="id5">[1]</a></div></blockquote>
+<p><code class="docutils literal"><span class="pre">center</span></code></p>
+<blockquote>
+<div>円の中心となる座標を指定します。Point型の値、あるいは座標を示す文字列を指定できます。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">radious_or_point</span></code></p>
+<blockquote>
+<div>円の半径を指定します。数値を指定した場合には、半径(単位:メートル)が指定されたものとみなします。
+Point型の値、あるいは座標を示す文字列を指定した場合は、円周上の点の一つの座標が指定されたものとみなします。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">approximate_type</span></code></p>
+<blockquote>
+<div><p>半径からの距離を求めるために地形をどのように近似するかを指定します。指定できる値は以下の通りです。</p>
+<p><code class="docutils literal"><span class="pre">&quot;rectangle&quot;</span></code></p>
+<blockquote>
+<div><p>方形近似で近似します。単純な計算式で距離を求めることができるため高速ですが、極付近では誤差が大きくなります。</p>
+<p><code class="docutils literal"><span class="pre">&quot;rect&quot;</span></code> と省略して指定することもできます。</p>
+<p>この近似方法がデフォルト値です。 <code class="docutils literal"><span class="pre">approximate_type</span></code> を省略した場合は方形近似になります。</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">&quot;sphere&quot;</span></code></p>
+<blockquote>
+<div><p>球面近似で近似します。 <code class="docutils literal"><span class="pre">&quot;rectangle&quot;</span></code> よりも遅くなりますが、誤差は小さいです。</p>
+<p><code class="docutils literal"><span class="pre">&quot;sphr&quot;</span></code> と省略して指定することもできます。</p>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">&quot;ellipsoid&quot;</span></code></p>
+<blockquote>
+<div><p>楕円体近似で近似します。距離の計算にはヒュベニの距離計算式を用います。 <code class="docutils literal"><span class="pre">&quot;sphere&quot;</span></code> よりも遅くなりますが、誤差は小さくなります。</p>
+<p><code class="docutils literal"><span class="pre">&quot;ellip&quot;</span></code> と省略して指定することもできます。</p>
+</div></blockquote>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h2>7.14.5.5. 返値<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>pointに指定した座標が円の範囲内にあるかどうかをBool型の値で返します。</p>
+</div>
+<div class="section" id="id7">
+<h2>7.14.5.6. 例<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>geo_in_circle(pos, &quot;100x100&quot;, 100)
+true
+</pre></div>
+</div>
+<p class="rubric">脚注</p>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[1]</a></td><td>TokyoGeoPoint(日本測地系座標)かWGS84GeoPoint(世界測地系座標)のいずれかを指定できます。</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.14.5. geo_in_circle</a><ul>
+<li><a class="reference internal" href="#id1">7.14.5.1. 名前</a></li>
+<li><a class="reference internal" href="#id2">7.14.5.2. 書式</a></li>
+<li><a class="reference internal" href="#id3">7.14.5.3. 説明</a></li>
+<li><a class="reference internal" href="#id4">7.14.5.4. 引数</a></li>
+<li><a class="reference internal" href="#id6">7.14.5.5. 返値</a></li>
+<li><a class="reference internal" href="#id7">7.14.5.6. 例</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="geo_distance.html"
+                        title="previous chapter">7.14.4. <code class="docutils literal"><span class="pre">geo_distance</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="geo_in_rectangle.html"
+                        title="next chapter">7.14.6. geo_in_rectangle</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="geo_in_rectangle.html" title="7.14.6. geo_in_rectangle"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="geo_distance.html" title="7.14.4. geo_distance"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../function.html" >7.14. Function</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

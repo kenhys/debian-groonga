@@ -1,0 +1,176 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>9. Limitations &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10. Troubleshooting" href="troubleshooting.html" />
+    <link rel="prev" title="8.2. 検索" href="spec/search.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../ja/html/limitations.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="10. Troubleshooting"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="spec/search.html" title="8.2. 検索"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="limitations">
+<h1>9. Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h1>
+<p>Groonga has some limitations.</p>
+<div class="section" id="limitations-of-table">
+<h2>9.1. Limitations of table<a class="headerlink" href="#limitations-of-table" title="Permalink to this headline">¶</a></h2>
+<p>A table has the following limitations.</p>
+<ul class="simple">
+<li>The maximum one key size: 4KiB</li>
+<li>The maximum total size of keys:<ul>
+<li>4GiB by default.</li>
+<li>1TiB by specifying <code class="docutils literal"><span class="pre">KEY_LARGE</span></code> flag to
+<a class="reference internal" href="reference/commands/table_create.html#table-create-flags"><span class="std std-ref">flags</span></a>. <code class="docutils literal"><span class="pre">KEY_LARGE</span></code> can be used only with
+<a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a>.</li>
+</ul>
+</li>
+<li>The maximum number of records:<ul>
+<li><a class="reference internal" href="reference/tables.html#table-no-key"><span class="std std-ref">TABLE_NO_KEY</span></a>: 1,073,741,815 (2 <sup>30</sup> - 9)</li>
+<li><a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a>: 536,870,912 (2 <sup>29</sup>)</li>
+<li><a class="reference internal" href="reference/tables.html#table-pat-key"><span class="std std-ref">TABLE_PAT_KEY</span></a>: 1,073,741,823 (2 <sup>30</sup> - 1)</li>
+<li><a class="reference internal" href="reference/tables.html#table-dat-key"><span class="std std-ref">TABLE_DAT_KEY</span></a>: 268,435,455 (2 <sup>28</sup> - 1)</li>
+</ul>
+</li>
+</ul>
+<p>Keep in mind that these limitations may vary depending on
+conditions.</p>
+<p>For example, you need to use small size type for key to store many
+records. Because the maximum total size of keys limitation is exceeded
+before the maximum number of records limitation is exceeded. If you
+use <code class="docutils literal"><span class="pre">UInt64</span></code> (8byte) type and store 2 <sup>29</sup> records, total key
+size is 4GiB (= 8 * (2 <sup>29</sup>)). You can't add more records. You
+need to choose decreasing key size (e.g. <code class="docutils literal"><span class="pre">UInt32</span></code>) or using
+<code class="docutils literal"><span class="pre">KEY_LARGE</span></code> and <a class="reference internal" href="reference/tables.html#table-hash-key"><span class="std std-ref">TABLE_HASH_KEY</span></a> to store more records.</p>
+</div>
+<div class="section" id="limitations-of-indexing">
+<h2>9.2. Limitations of indexing<a class="headerlink" href="#limitations-of-indexing" title="Permalink to this headline">¶</a></h2>
+<p>A full-text index has the following limitations.</p>
+<ul class="simple">
+<li>The maximum number of distinct terms: 268,435,455 (more than 268 million)</li>
+<li>The maximum index size: 256GiB</li>
+</ul>
+<p>Keep in mind that these limitations may vary depending on conditions.</p>
+</div>
+<div class="section" id="limitations-of-column">
+<h2>9.3. Limitations of column<a class="headerlink" href="#limitations-of-column" title="Permalink to this headline">¶</a></h2>
+<p>A column has the following limitation.</p>
+<ul class="simple">
+<li>The maximum stored data size of a column: 256GiB</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">9. Limitations</a><ul>
+<li><a class="reference internal" href="#limitations-of-table">9.1. Limitations of table</a></li>
+<li><a class="reference internal" href="#limitations-of-indexing">9.2. Limitations of indexing</a></li>
+<li><a class="reference internal" href="#limitations-of-column">9.3. Limitations of column</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="spec/search.html"
+                        title="previous chapter">8.2. 検索</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="troubleshooting.html"
+                        title="next chapter">10. Troubleshooting</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="troubleshooting.html" title="10. Troubleshooting"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="spec/search.html" title="8.2. 検索"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

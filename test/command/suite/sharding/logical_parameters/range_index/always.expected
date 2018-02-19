@@ -1,0 +1,4 @@
+plugin_register sharding
+[[0,0.0,0.0],true]
+logical_parameters --range_index always
+[[0,0.0,0.0],{"range_index":"auto"}]

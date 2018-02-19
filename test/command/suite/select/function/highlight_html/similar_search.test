@@ -1,0 +1,20 @@
+table_create Entries TABLE_NO_KEY
+column_create Entries body COLUMN_SCALAR ShortText
+
+table_create Terms TABLE_PAT_KEY ShortText \
+  --default_tokenizer TokenBigram \
+  --normalizer NormalizerAuto
+column_create Terms document_index COLUMN_INDEX|WITH_POSITION Entries body
+column_create Terms is_stop_word COLUMN_SCALAR Bool
+
+load --table Entries
+[
+{"body": "Mroonga is a ＭｙＳＱＬ storage engine based on Groonga. <b>Rroonga</b> is a Ruby binding of Groonga."},
+{"body": "It is a pen."},
+{"body": "I am a boy."},
+{"body": "This is good."}
+]
+
+select Entries \
+  --filter 'body *S "Groonga is fast full text search engine. There are SQL interfaces by Mroonga and PGroonga and Ruby interface by Rroonga."' \
+  --output_columns 'highlight_html(body)'

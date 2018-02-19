@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>10.2. How to analyze error messages &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="10.3. How to avoid mmap Cannot allocate memory error" href="mmap_cannot_allocate_memory.html" />
+    <link rel="prev" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる" href="different_results_with_the_same_keyword.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/troubleshooting/how_to_analyze_error_message.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mmap_cannot_allocate_memory.html" title="10.3. How to avoid mmap Cannot allocate memory error"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="different_results_with_the_same_keyword.html" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../troubleshooting.html" accesskey="U">10. Troubleshooting</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-analyze-error-messages">
+<h1>10.2. How to analyze error messages<a class="headerlink" href="#how-to-analyze-error-messages" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to analyze Groonga error messages.</p>
+<div class="section" id="how-to-analyze-socket-errors">
+<h2>10.2.1. How to analyze socket errors<a class="headerlink" href="#how-to-analyze-socket-errors" title="Permalink to this headline">¶</a></h2>
+<p>This subsection describes how to analyze socket errors with an example.</p>
+<div class="section" id="example">
+<h3>10.2.1.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The following is an example of an error message repoted by Groonga, where xxxxx is an arbitrary number:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>socket error[xxxxx]: no buffer: accept
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-analyze">
+<h3>10.2.1.2. How to analyze<a class="headerlink" href="#how-to-analyze" title="Permalink to this headline">¶</a></h3>
+<p>First, grep Groonga source files for &quot;SOERR&quot; that is the name of a macro for socket errors.</p>
+<p>Then, extract SOERRs whose argument contains &quot;accept&quot; from the grep output and you will find the following SOERRs:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>lib/com.c:      SOERR(&quot;listen - start accept&quot;);
+lib/com.c:      SOERR(&quot;listen - disable accept&quot;);
+lib/com.c:        SOERR(&quot;accept&quot;);
+</pre></div>
+</div>
+<p>It is clear that the above error message is associated with the last line because the error message contains only &quot;accept&quot;.</p>
+<p>The source code around the line is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>grn_sock fd = accept(com-&gt;fd, NULL, NULL);
+if (fd == -1) {
+  if (errno == EMFILE) {
+    grn_com_event_stop_accept(ctx, ev);
+  } else {
+    SOERR(&quot;accept&quot;);
+  }
+  return;
+}
+</pre></div>
+</div>
+<p>From the above source code, you can confirm that the error occurred due to accept.
+Let's dig into the cause.</p>
+<p>The error message provides hints for investigation:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[10055]: no buffer
+</pre></div>
+</div>
+<p>10055 is a Windows socket error code and &quot;no buffer&quot; is a message by Groonga given in SOERR.</p>
+<p>Windows socket error codes are listed in the following page:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>https://msdn.microsoft.com/ja-jp/library/windows/desktop/ms740668(v=vs.85).aspx
+</pre></div>
+</div>
+<p>10055 is assigned to WSAENOBUFS and its description is as follows:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>No buffer space available.
+
+An operation on a socket could not be performed because the system lacked sufficient buffer space or because a queue was full.
+</pre></div>
+</div>
+<p>From the above description, you can narrow down the causes.
+The possible causes are the lack of memory and too many connections.
+Finally, determine which one is appropriate for the situation when the error occurred.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">10.2. How to analyze error messages</a><ul>
+<li><a class="reference internal" href="#how-to-analyze-socket-errors">10.2.1. How to analyze socket errors</a><ul>
+<li><a class="reference internal" href="#example">10.2.1.1. Example</a></li>
+<li><a class="reference internal" href="#how-to-analyze">10.2.1.2. How to analyze</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="different_results_with_the_same_keyword.html"
+                        title="previous chapter">10.1. 同じ検索キーワードなのに全文検索結果が異なる</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mmap_cannot_allocate_memory.html"
+                        title="next chapter">10.3. How to avoid mmap Cannot allocate memory error</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mmap_cannot_allocate_memory.html" title="10.3. How to avoid mmap Cannot allocate memory error"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="different_results_with_the_same_keyword.html" title="10.1. 同じ検索キーワードなのに全文検索結果が異なる"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../troubleshooting.html" >10. Troubleshooting</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

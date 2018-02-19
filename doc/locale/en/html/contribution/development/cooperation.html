@@ -1,0 +1,208 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>12.3.4. ユーザーと協力して開発をうまく進めていくための指針 &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="12.3.5. クエリの実現" href="query.html" />
+    <link rel="prev" title="12.3.3. Groonga 通信アーキテクチャ" href="com.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/contribution/development/cooperation.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="query.html" title="12.3.5. クエリの実現"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="com.html" title="12.3.3. Groonga 通信アーキテクチャ"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../contribution.html" >12. How to contribute to groonga</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../development.html" accesskey="U">12.3. For Groonga developers</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>12.3.4. ユーザーと協力して開発をうまく進めていくための指針<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>Groongaを使ってくれているユーザーと協力して
+開発をうまく進めていくためにこうするといい、という事柄をまとめました。
+まとめておくと、新しく開発に加わる人とも共有することができます。</p>
+<div class="section" id="twitter">
+<h2>12.3.4.1. Twitter編<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
+<p>Groongaを使ってもらえるようにTwitterのアカウントGroongaを取得して
+日々、リリースの案内をしたり、ユーザーサポートをしたりしています。</p>
+<p>リリースの案内に利用する場合には、やりとりを考えなくて良いですが、
+複数人によるサポートをGroongaで行う場合に、どうサポートするのが
+良いのか/どうしてそうするのかという共通認識を持っていないと一貫性のないサポートとなってしま
+います。</p>
+<p>Twitterでサポートされている安心感からGroongaユーザーの拡大に繋げる
+ことができるようにサポートの際に気をつけることをまとめます。</p>
+<div class="section" id="id2">
+<h3>12.3.4.1.1. 過去のツイートはおさらいしておく<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h4>12.3.4.1.1.1. 理由<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>自分がツイートした内容を把握していない返信をされたら普通いい気はしません。</p>
+</div>
+<div class="section" id="id4">
+<h4>12.3.4.1.1.2. 対応<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>過去のツイートをおさらいし、こうすれば良いという提案をできるのが望ましいです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>良い例: ○○だと原因は□□ですね。××すると大丈夫です。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>12.3.4.1.2. こちらから情報を提供する<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h4>12.3.4.1.2.1. 理由<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>困っているユーザーが複数回ツイートして限られたなかで情報を提供してくれていることがあります。
+その限られたツイートから解決方法が見つかればユーザーにとって余計な手間が少なくて済みます。
+あれこれ情報提供を要求すると、ユーザーはそのぶん確認する作業が必要になります。</p>
+</div>
+<div class="section" id="id7">
+<h4>12.3.4.1.2.2. 対応<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>最初に声をかけるときに解決策を1つか2つ提案できると望ましいです。ユーザーにあまり負担を感じさせないようにすると良いです。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>良い例: ○○の場合は□□の可能性があるので、××を試してもらえますか？
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="twitter-redmine">
+<h3>12.3.4.1.3. Twitterでのやりとりはできるだけ他の場所(例えばRedmine)へと誘導しない<a class="headerlink" href="#twitter-redmine" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h4>12.3.4.1.3.1. 理由<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>Twitterは気軽につぶやけることが重要なので、気軽にできないことを相手に要求すると萎縮されてしまう可能性があります。</p>
+<p>いきなりRedmineでバグ報告をお願いすると、しりごみしてしまうかもしれません。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>駄目な例: 再現手順をMLかRedmineに報告してもらえますか?
+</pre></div>
+</div>
+<p>Groonga関連で気軽につぶやけないとなると開発者は困っている人を見つけられないし、利用者は困ったままとなるので、双方にとって嬉しくない状態になってしまいます。</p>
+</div>
+<div class="section" id="id9">
+<h4>12.3.4.1.3.2. 対応<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>Twitterでやりとりを完結できるようにします。</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">12.3.4. ユーザーと協力して開発をうまく進めていくための指針</a><ul>
+<li><a class="reference internal" href="#twitter">12.3.4.1. Twitter編</a><ul>
+<li><a class="reference internal" href="#id2">12.3.4.1.1. 過去のツイートはおさらいしておく</a><ul>
+<li><a class="reference internal" href="#id3">12.3.4.1.1.1. 理由</a></li>
+<li><a class="reference internal" href="#id4">12.3.4.1.1.2. 対応</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">12.3.4.1.2. こちらから情報を提供する</a><ul>
+<li><a class="reference internal" href="#id6">12.3.4.1.2.1. 理由</a></li>
+<li><a class="reference internal" href="#id7">12.3.4.1.2.2. 対応</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#twitter-redmine">12.3.4.1.3. Twitterでのやりとりはできるだけ他の場所(例えばRedmine)へと誘導しない</a><ul>
+<li><a class="reference internal" href="#id8">12.3.4.1.3.1. 理由</a></li>
+<li><a class="reference internal" href="#id9">12.3.4.1.3.2. 対応</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="com.html"
+                        title="previous chapter">12.3.3. Groonga 通信アーキテクチャ</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="query.html"
+                        title="next chapter">12.3.5. クエリの実現</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="query.html" title="12.3.5. クエリの実現"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="com.html" title="12.3.3. Groonga 通信アーキテクチャ"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../contribution.html" >12. How to contribute to groonga</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../development.html" >12.3. For Groonga developers</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

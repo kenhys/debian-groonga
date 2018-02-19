@@ -1,0 +1,178 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.16.2. 前方一致RK検索 &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="検索" href="../../search.html" />
+    <link rel="next" title="7.17. 設定" href="../configuration.html" />
+    <link rel="prev" title="7.16.1. 位置情報検索" href="geolocation_search.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../en/html/reference/operations/prefix_rk_search.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../configuration.html" title="7.17. 設定"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="geolocation_search.html" title="7.16.1. 位置情報検索"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../operations.html" accesskey="U">7.16. 操作方法</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="prefix-rk-search">
+<h1>7.16.2. 前方一致RK検索<a class="headerlink" href="#prefix-rk-search" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.16.2.1. 概要<a class="headerlink" href="#summary" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>Groongaは前方一致RK検索をサポートしています。RKはローマ字（Romaji）と仮名（Kana、読み）を意味しています。前方一致RK検索はカタカナで登録されているテキストをローマ字、ひらがな、カタカナで指定したクエリーで検索します。ヒットしたテキストは検索したクエリーで始まっています。</p>
+<p>前方一致RK検索は日本語テキストを補完するときに便利です。なぜなら、コンピューター上で日本語を入力するときはローマ字を使うことが多いからです。詳細は <a class="reference external" href="https://en.wikipedia.org/wiki/Japanese_input_methods">Wikipediaの日本語入力システム</a> を参照してください。</p>
+<p>ユーザーがローマ字で日本語テキストを検索することができると、ユーザーは自分でローマ字をひらがな、カタカナ、漢字に変換する必要がなくなります。たとえば、「日本」の読みとして「ニホン」を登録しておけば、「ni」でも「に」でも「二」でも「日本」を探すことができます。</p>
+<p>この機能は便利です。なぜならユーザーの操作が減るからです。</p>
+<p>この機能は <a class="reference internal" href="../suggest/completion.html"><span class="doc">補完</span></a> でも使われています。</p>
+<p><a class="reference internal" href="../functions/prefix_rk_search.html"><span class="doc">prefix_rk_search</span></a> を使えば、この機能を <a class="reference internal" href="../commands/select.html#select-filter"><span class="std std-ref">filter</span></a> で使うことができます。</p>
+</div>
+<div class="section" id="usage">
+<h2>7.16.2.2. 使い方<a class="headerlink" href="#usage" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>前方一致RK検索を使うには <a class="reference internal" href="../tables.html#table-pat-key"><span class="std std-ref">TABLE_PAT_KEY</span></a> テーブルが必要です。</p>
+<p>読みをカタカナで <code class="docutils literal"><span class="pre">TABLE_PAT_KEY</span></code> のキーとして登録する必要があります。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Readings TABLE_PAT_KEY ShortText --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Readings
+[
+{&quot;_key&quot;: &quot;ニホン&quot;},
+{&quot;_key&quot;: &quot;ニッポン&quot;},
+{&quot;_key&quot;: &quot;ローマジ&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 3]
+</pre></div>
+</div>
+<p>クエリーに <code class="docutils literal"><span class="pre">ni</span></code> を指定して前方一致RK検索をすると、 <code class="docutils literal"><span class="pre">Readings</span></code> テーブルから <code class="docutils literal"><span class="pre">ニホン</span></code> と <code class="docutils literal"><span class="pre">ニッポン</span></code> を見つけることができます。</p>
+<p>クエリーに <code class="docutils literal"><span class="pre">r</span></code> を指定して前方一致RK検索をすると、 <code class="docutils literal"><span class="pre">Readings</span></code> テーブルから <code class="docutils literal"><span class="pre">ローマジ</span></code> を見つけることができます。</p>
+</div>
+<div class="section" id="how-to-convert-romaji-to-reading">
+<h2>7.16.2.3. ローマ字から読みへの変換<a class="headerlink" href="#how-to-convert-romaji-to-reading" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>前方一致RK検索はJIS X 4063:2000をベースにしています。</p>
+<p>この使用はすでに廃止されています。JIS X 4063:2000については <a class="reference external" href="https://ja.wikipedia.org/wiki/%E3%83%AD%E3%83%BC%E3%83%9E%E5%AD%97%E5%85%A5%E5%8A%9B">Wikipediaのローマ字入力</a> を参照してください。</p>
+<p>通常、期待した通りの変換結果を得ることができます。</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.16.2.4. 参考<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../suggest/completion.html"><span class="doc">補完</span></a></li>
+<li><a class="reference internal" href="../functions/prefix_rk_search.html"><span class="doc">prefix_rk_search</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.16.2. 前方一致RK検索</a><ul>
+<li><a class="reference internal" href="#summary">7.16.2.1. 概要</a></li>
+<li><a class="reference internal" href="#usage">7.16.2.2. 使い方</a></li>
+<li><a class="reference internal" href="#how-to-convert-romaji-to-reading">7.16.2.3. ローマ字から読みへの変換</a></li>
+<li><a class="reference internal" href="#see-also">7.16.2.4. 参考</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="geolocation_search.html"
+                        title="前の章へ">7.16.1. 位置情報検索</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="../configuration.html"
+                        title="次の章へ">7.17. 設定</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../configuration.html" title="7.17. 設定"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="geolocation_search.html" title="7.16.1. 位置情報検索"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. リファレンスマニュアル</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../operations.html" >7.16. 操作方法</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

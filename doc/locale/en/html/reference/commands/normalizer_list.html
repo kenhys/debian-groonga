@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.38. normalizer_list &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.39. object_exist" href="object_exist.html" />
+    <link rel="prev" title="7.3.37. normalize" href="normalize.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/normalizer_list.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="object_exist.html" title="7.3.39. object_exist"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="normalize.html" title="7.3.37. normalize"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="normalizer-list">
+<h1>7.3.38. <code class="docutils literal"><span class="pre">normalizer_list</span></code><a class="headerlink" href="#normalizer-list" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.38.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">normalizer_list</span></code> command lists normalizers in a database.</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.38.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>This command takes no parameters:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>normalizer_list
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.38.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is a simple example.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>normalizer_list
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     {
+#       &quot;name&quot;: &quot;NormalizerAuto&quot;
+#     },
+#     {
+#       &quot;name&quot;: &quot;NormalizerNFKC51&quot;
+#     }
+#   ]
+# ]
+</pre></div>
+</div>
+<p>It returns normalizers in a database.</p>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.38.4. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">normalizer_list</span></code> command returns normalizers. Each normalizers has an attribute
+that contains the name. The attribute will be increased in the feature:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, normalizers]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code></p>
+<blockquote>
+<div>See <a class="reference internal" href="../command/output_format.html"><span class="doc">Output format</span></a> about <code class="docutils literal"><span class="pre">HEADER</span></code>.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">normalizers</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">normalizers</span></code> is an array of normalizer. Normalizer is an object that has the following
+attributes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">name</span></code></td>
+<td>Normalizer name.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.38.5. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../normalizers.html"><span class="doc">Normalizers</span></a></li>
+<li><a class="reference internal" href="normalize.html"><span class="doc">normalize</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.38. <code class="docutils literal"><span class="pre">normalizer_list</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.38.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.38.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.38.3. Usage</a></li>
+<li><a class="reference internal" href="#return-value">7.3.38.4. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.38.5. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="normalize.html"
+                        title="previous chapter">7.3.37. <code class="docutils literal"><span class="pre">normalize</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="object_exist.html"
+                        title="next chapter">7.3.39. <code class="docutils literal"><span class="pre">object_exist</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="object_exist.html" title="7.3.39. object_exist"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="normalize.html" title="7.3.37. normalize"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

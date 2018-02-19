@@ -1,0 +1,9 @@
+table_create Records TABLE_NO_KEY
+
+load --table Records
+[
+[],
+[]
+]
+
+select Records --filter 'true' --output_columns _score

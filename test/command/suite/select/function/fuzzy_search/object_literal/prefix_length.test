@@ -1,0 +1,21 @@
+table_create Users TABLE_NO_KEY
+column_create Users name COLUMN_SCALAR ShortText
+
+table_create Names TABLE_PAT_KEY ShortText
+column_create Names user COLUMN_INDEX Users name
+
+load --table Users
+[
+{"name": "Tom"},
+{"name": "Tomy"},
+{"name": "Tomas"},
+{"name": "Pom"},
+{"name": "Pam"},
+{"name": "Tim"},
+{"name": "Tina"},
+{"name": "Tiga"}
+]
+
+select Names --filter 'fuzzy_search(_key, "Tom", {"prefix_length": 1})' \
+  --output_columns '_key, _score' \
+  --match_escalation_threshold -1

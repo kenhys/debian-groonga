@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>5.1. Server packages &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5.2. HTTP" href="http.html" />
+    <link rel="prev" title="5. Server" href="../server.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/server/package.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="http.html" title="5.2. HTTP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../server.html" title="5. Server"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" accesskey="U">5. Server</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="server-packages">
+<h1>5.1. Server packages<a class="headerlink" href="#server-packages" title="Permalink to this headline">¶</a></h1>
+<p>The package <code class="docutils literal"><span class="pre">groonga</span></code> is the minimum set of fulltext search engine.
+If you want to use groonga for server use, you can install
+additional preconfigured packages.</p>
+<p>There are two packages for server use.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">groonga-httpd</span></code> (nginx and HTTP protocol based server package)</li>
+<li><code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code> (<a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> protocol based server package)</li>
+</ul>
+<p>There is the reason why groonga supports not only GQTP but also two HTTP server
+packages. <a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> - Groonga Query Transfer Protocol is desined to reduce overheads
+and improve performance. But, GQTP is less support of client library than HTTP protocol does.
+As HTTP is matured protocol, you can take advantage of existing tool and there are many client
+library (See <a class="reference external" href="http://groonga.org/related-projects.html">related projects</a> for details).
+If you use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> package, you can also take benefits of nginx functionality.</p>
+<p>We recommend to use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> at first, because it provides fullfilling server functionality.
+If you have performance issues which is derived from protocol overheads, consider to use <code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code>.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In the previous versions, there is a <code class="docutils literal"><span class="pre">groonga-server-http</span></code> package (simple HTTP protocol
+based server package). It is now marked as obsolete, please use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> packages
+instead. <code class="docutils literal"><span class="pre">groonga-server-http</span></code> package became a transitional package for <code class="docutils literal"><span class="pre">groonga-httpd</span></code>.</p>
+</div>
+</div></blockquote>
+<div class="section" id="groonga-httpd">
+<h2>5.1.1. groonga-httpd<a class="headerlink" href="#groonga-httpd" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-httpd</span></code> is a nginx and HTTP protocol based server package.</p>
+<p>Preconfigured setting:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Port number</td>
+<td>10041</td>
+</tr>
+<tr class="row-odd"><td>Access log path</td>
+<td>/var/log/groonga/httpd/acccess.log</td>
+</tr>
+<tr class="row-even"><td>Error log path</td>
+<td>/var/log/groonga/http-query.log</td>
+</tr>
+<tr class="row-odd"><td>Database</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+<tr class="row-even"><td>Configuration file</td>
+<td>/etc/groonga/httpd/groonga-httpd.conf</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="start-http-server">
+<h3>5.1.1.1. Start HTTP server<a class="headerlink" href="#start-http-server" title="Permalink to this headline">¶</a></h3>
+<p>Starting groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd start
+</pre></div>
+</div>
+<p>Starting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-httpd
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-http-server">
+<h3>5.1.1.2. Stop HTTP server<a class="headerlink" href="#stop-http-server" title="Permalink to this headline">¶</a></h3>
+<p>Stopping groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd stop
+</pre></div>
+</div>
+<p>Starting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-httpd
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-http-server">
+<h3>5.1.1.3. Restart HTTP server<a class="headerlink" href="#restart-http-server" title="Permalink to this headline">¶</a></h3>
+<p>Restarting groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-httpd restart
+</pre></div>
+</div>
+<p>Restarting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-httpd
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="groonga-server-gqtp">
+<h2>5.1.2. groonga-server-gqtp<a class="headerlink" href="#groonga-server-gqtp" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-server-gqtp</span></code> is a <a class="reference internal" href="../spec/gqtp.html"><span class="doc">GQTP</span></a> protocol based server package.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Port number</td>
+<td>10043</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../reference/log.html#process-log"><span class="std std-ref">Process log</span></a></td>
+<td>/var/log/groonga/groonga-gqtp.log</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../reference/log.html#query-log"><span class="std std-ref">Query log</span></a></td>
+<td>/var/log/groonga/gqtp-query.log</td>
+</tr>
+<tr class="row-odd"><td>Database</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+</tbody>
+</table>
+<p>Configuration file for server setting (Debian/Ubuntu):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/default/groonga/groonga-server-gqtp
+</pre></div>
+</div>
+<p>Configuration file for server setting (CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/sysconfig/groonga-server-gqtp
+</pre></div>
+</div>
+<div class="section" id="start-gqtp-server">
+<h3>5.1.2.1. Start GQTP server<a class="headerlink" href="#start-gqtp-server" title="Permalink to this headline">¶</a></h3>
+<p>Starting groonga GQTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-gqtp start
+</pre></div>
+</div>
+<p>Starting groonga GQTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+<div class="section" id="stop-gqtp-server">
+<h3>5.1.2.2. Stop GQTP server<a class="headerlink" href="#stop-gqtp-server" title="Permalink to this headline">¶</a></h3>
+<p>Stopping groonga GQTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http stop
+</pre></div>
+</div>
+<p>Stopping groonga GQTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+<div class="section" id="restart-gqtp-server">
+<h3>5.1.2.3. Restart GQTP server<a class="headerlink" href="#restart-gqtp-server" title="Permalink to this headline">¶</a></h3>
+<p>Restarting groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-gqtp restart
+</pre></div>
+</div>
+<p>Restarting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-server-gqtp
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="groonga-server-http">
+<h2>5.1.3. groonga-server-http<a class="headerlink" href="#groonga-server-http" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">groonga-server-http</span></code> is a simple HTTP protocol based server package.</p>
+<blockquote>
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">groonga-server-http</span></code> package is the transitional package since Groonga 4.0.8.
+Please use <code class="docutils literal"><span class="pre">groonga-httpd</span></code> instead.</p>
+</div>
+</div></blockquote>
+<p>Preconfigured setting:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Default value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Port number</td>
+<td>10041</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../reference/log.html#process-log"><span class="std std-ref">Process log</span></a></td>
+<td>/var/log/groonga/groonga-http.log</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../reference/log.html#query-log"><span class="std std-ref">Query log</span></a></td>
+<td>/var/log/groonga/http-query.log</td>
+</tr>
+<tr class="row-odd"><td>Database</td>
+<td>/var/lib/groonga/db/*</td>
+</tr>
+</tbody>
+</table>
+<p>Configuration file for server setting (Debian/Ubuntu):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/default/groonga/groonga-server-http
+</pre></div>
+</div>
+<p>Configuration file for server setting (CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>/etc/sysconfig/groonga-server-http
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h3>5.1.3.1. Start HTTP server<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Starting groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http start
+</pre></div>
+</div>
+<p>Starting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl start groonga-server-http
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>5.1.3.2. Stop HTTP server<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Stopping groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http stop
+</pre></div>
+</div>
+<p>Stopping groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl stop groonga-server-http
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3>5.1.3.3. Restart HTTP server<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Restarting groonga HTTP server(Debian/Ubuntu/CentOS):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo service groonga-server-http restart
+</pre></div>
+</div>
+<p>Restarting groonga HTTP server(Fedora):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo systemctl restart groonga-server-http
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5.1. Server packages</a><ul>
+<li><a class="reference internal" href="#groonga-httpd">5.1.1. groonga-httpd</a><ul>
+<li><a class="reference internal" href="#start-http-server">5.1.1.1. Start HTTP server</a></li>
+<li><a class="reference internal" href="#stop-http-server">5.1.1.2. Stop HTTP server</a></li>
+<li><a class="reference internal" href="#restart-http-server">5.1.1.3. Restart HTTP server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#groonga-server-gqtp">5.1.2. groonga-server-gqtp</a><ul>
+<li><a class="reference internal" href="#start-gqtp-server">5.1.2.1. Start GQTP server</a></li>
+<li><a class="reference internal" href="#stop-gqtp-server">5.1.2.2. Stop GQTP server</a></li>
+<li><a class="reference internal" href="#restart-gqtp-server">5.1.2.3. Restart GQTP server</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#groonga-server-http">5.1.3. groonga-server-http</a><ul>
+<li><a class="reference internal" href="#id1">5.1.3.1. Start HTTP server</a></li>
+<li><a class="reference internal" href="#id2">5.1.3.2. Stop HTTP server</a></li>
+<li><a class="reference internal" href="#id3">5.1.3.3. Restart HTTP server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../server.html"
+                        title="previous chapter">5. Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="http.html"
+                        title="next chapter">5.2. HTTP</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="http.html" title="5.2. HTTP"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../server.html" title="5. Server"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../server.html" >5. Server</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

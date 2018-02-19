@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.60. table_list &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.61. table_remove" href="table_remove.html" />
+    <link rel="prev" title="7.3.59. table_create" href="table_create.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/table_list.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="table_remove.html" title="7.3.61. table_remove"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="table_create.html" title="7.3.59. table_create"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="table-list">
+<h1>7.3.60. <code class="docutils literal"><span class="pre">table_list</span></code><a class="headerlink" href="#table-list" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.60.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>table_list - DBに定義されているテーブルをリスト表示</p>
+<p>Groonga組込コマンドの一つであるtable_listについて説明します。組込コマンドは、groonga実行ファイルの引数、標準入力、またはソケット経由でgroongaサーバにリクエストを送信することによって実行します。</p>
+<p>table_listは、DBに定義されているテーブルのリストを表示します。</p>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.60.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_list
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.60.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_list
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         &quot;id&quot;,
+#         &quot;UInt32&quot;
+#       ],
+#       [
+#         &quot;name&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;path&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;flags&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;domain&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;range&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;default_tokenizer&quot;,
+#         &quot;ShortText&quot;
+#       ],
+#       [
+#         &quot;normalizer&quot;,
+#         &quot;ShortText&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.60.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>ありません。</p>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.60.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p>テーブル名一覧が以下の形式で返却されます。:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[[[テーブル情報名1,テーブル情報型1],...], テーブル情報1,...]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">テーブル情報名n</span></code></p>
+<blockquote>
+<div><p><code class="docutils literal"><span class="pre">テーブル情報n</span></code> には複数の情報が含まれますが、そこに入る情報がどんな内容かを示す名前を出力します。
+情報名は以下の通りです。</p>
+<p><code class="docutils literal"><span class="pre">id</span></code></p>
+<blockquote>
+<div>テーブルオブジェクトに割り当てられたID</div></blockquote>
+<p><code class="docutils literal"><span class="pre">name</span></code></p>
+<blockquote>
+<div>テーブル名</div></blockquote>
+<p><code class="docutils literal"><span class="pre">path</span></code></p>
+<blockquote>
+<div>テーブルのレコードを格納するファイル名</div></blockquote>
+<p><code class="docutils literal"><span class="pre">flags</span></code></p>
+<blockquote>
+<div>テーブルのflags属性</div></blockquote>
+<p><code class="docutils literal"><span class="pre">domain</span></code></p>
+<blockquote>
+<div>主キー値の属する型</div></blockquote>
+<p><code class="docutils literal"><span class="pre">range</span></code></p>
+<blockquote>
+<div>valueが属する型</div></blockquote>
+</div></blockquote>
+<p><code class="docutils literal"><span class="pre">テーブル情報型n</span></code></p>
+<blockquote>
+<div>テーブル情報の型を出力します。</div></blockquote>
+<p><code class="docutils literal"><span class="pre">テーブル情報n</span></code></p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">テーブル情報名n</span></code> で示された情報の配列を出力します。
+情報の順序は <code class="docutils literal"><span class="pre">テーブル情報名n</span></code> の順序と同じです。</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.60. <code class="docutils literal"><span class="pre">table_list</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.60.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.60.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.60.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">7.3.60.4. Parameters</a></li>
+<li><a class="reference internal" href="#return-value">7.3.60.5. Return value</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="table_create.html"
+                        title="previous chapter">7.3.59. <code class="docutils literal"><span class="pre">table_create</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="table_remove.html"
+                        title="next chapter">7.3.61. <code class="docutils literal"><span class="pre">table_remove</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="table_remove.html" title="7.3.61. table_remove"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="table_create.html" title="7.3.59. table_create"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

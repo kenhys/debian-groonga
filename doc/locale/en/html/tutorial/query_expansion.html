@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.11. Query expansion &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Server" href="../server.html" />
+    <link rel="prev" title="4.10. Let&#39;s create micro-blog" href="micro_blog.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/tutorial/query_expansion.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../server.html" title="5. Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="micro_blog.html" title="4.10. Let&#39;s create micro-blog"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="query-expansion">
+<h1>4.11. Query expansion<a class="headerlink" href="#query-expansion" title="Permalink to this headline">¶</a></h1>
+<p>Groonga accepts <code class="docutils literal"><span class="pre">query_expander</span></code> parameter for <a class="reference internal" href="../reference/commands/select.html"><span class="doc">select</span></a> command.
+It enables you to extend your query string.</p>
+<p>For example, if user searches &quot;theatre&quot; instead of &quot;theater&quot;,
+query expansion enables to return search results of &quot;theatre OR theater&quot;.
+This kind of way reduces search leakages. This is what really user wants.</p>
+<div class="section" id="preparation">
+<h2>4.11.1. Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
+<p>To use query expansion, you need to create table which stores documents, synonym table which stores query string and replacement string.
+In synonym table, primary key represents original string, the column of ShortText represents modified string.</p>
+<p>Let's create document table and synonym table.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Doc TABLE_PAT_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Doc body COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Term TABLE_PAT_KEY ShortText --default_tokenizer TokenBigram --normalizer NormalizerAuto
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Term Doc_body COLUMN_INDEX|WITH_POSITION Doc body
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Synonym TABLE_PAT_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Synonym body COLUMN_VECTOR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Doc
+[
+{&quot;_key&quot;: &quot;001&quot;, &quot;body&quot;: &quot;Play all night in this theater.&quot;},
+{&quot;_key&quot;: &quot;002&quot;, &quot;body&quot;: &quot;theatre is British spelling.&quot;},
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+load --table Synonym
+[
+{&quot;_key&quot;: &quot;theater&quot;, &quot;body&quot;: [&quot;theater&quot;, &quot;theatre&quot;]},
+{&quot;_key&quot;: &quot;theatre&quot;, &quot;body&quot;: [&quot;theater&quot;, &quot;theatre&quot;]},
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+</pre></div>
+</div>
+<p>In this case, it doesn't occur search leakage because it creates synonym table which accepts &quot;theatre&quot; and &quot;theater&quot; as query string.</p>
+</div>
+<div class="section" id="search">
+<h2>4.11.2. Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h2>
+<p>Then, let's use prepared synonym table.
+First, use select command without <code class="docutils literal"><span class="pre">query_expander</span></code> parameter.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Doc --match_columns body --query &quot;theater&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;001&quot;,
+#         &quot;Play all night in this theater.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select Doc --match_columns body --query &quot;theatre&quot;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;002&quot;,
+#         &quot;theatre is British spelling.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Above query returns the record which completely equal to query string.</p>
+<p>Then, use <code class="docutils literal"><span class="pre">query_expander</span></code> parameter against <code class="docutils literal"><span class="pre">body</span></code> column of <code class="docutils literal"><span class="pre">Synonym</span></code> table.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select Doc --match_columns body --query &quot;theater&quot; --query_expander Synonym.body
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;001&quot;,
+#         &quot;Play all night in this theater.&quot;
+#       ],
+#       [
+#         2,
+#         &quot;002&quot;,
+#         &quot;theatre is British spelling.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select Doc --match_columns body --query &quot;theatre&quot; --query_expander Synonym.body
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;body&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;001&quot;,
+#         &quot;Play all night in this theater.&quot;
+#       ],
+#       [
+#         2,
+#         &quot;002&quot;,
+#         &quot;theatre is British spelling.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>In which cases, query string is replaced to &quot;(theater OR theatre)&quot;, thus synonym is considered for full text search.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.11. Query expansion</a><ul>
+<li><a class="reference internal" href="#preparation">4.11.1. Preparation</a></li>
+<li><a class="reference internal" href="#search">4.11.2. Search</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="micro_blog.html"
+                        title="previous chapter">4.10. Let's create micro-blog</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../server.html"
+                        title="next chapter">5. Server</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../server.html" title="5. Server"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="micro_blog.html" title="4.10. Let&#39;s create micro-blog"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

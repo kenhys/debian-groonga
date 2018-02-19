@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.48. register &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.49. reindex" href="reindex.html" />
+    <link rel="prev" title="7.3.47. range_filter" href="range_filter.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/register.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="reindex.html" title="7.3.49. reindex"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="range_filter.html" title="7.3.47. range_filter"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="register">
+<h1>7.3.48. <code class="docutils literal"><span class="pre">register</span></code><a class="headerlink" href="#register" title="Permalink to this headline">¶</a></h1>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 5.0.1: </span>Use <a class="reference internal" href="plugin_register.html"><span class="doc">plugin_register</span></a> instead.</p>
+</div>
+<div class="section" id="summary">
+<h2>7.3.48.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">register</span></code> command registers a plugin. You need to register a plugin
+before you use a plugin.</p>
+<p>You need just one <code class="docutils literal"><span class="pre">register</span></code> command for a plugin in the same
+database because registered plugin information is written into the
+database.  When you restart your <code class="docutils literal"><span class="pre">groonga</span></code> process, <code class="docutils literal"><span class="pre">groonga</span></code>
+process loads all registered plugins without <code class="docutils literal"><span class="pre">register</span></code> command.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Registered plugins can be removed since Groonga 5.0.1. Use
+<a class="reference internal" href="plugin_unregister.html"><span class="doc">plugin_unregister</span></a> in such a case.</p>
+</div>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.48.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>This command takes only one required parameter:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>register path
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.48.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here is a sample that registers <code class="docutils literal"><span class="pre">QueryExpanderTSV</span></code> query expander
+that is included in
+<code class="docutils literal"><span class="pre">${PREFIX}/lib/groonga/plugins/query_expanders/tsv.so</span></code>.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>register query_expanders/tsv
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+</pre></div>
+</div>
+<p>You can omit <code class="docutils literal"><span class="pre">${PREFIX}/lib/groonga/plugins/</span></code> and suffix (<code class="docutils literal"><span class="pre">.so</span></code>).
+They are completed automatically.</p>
+<p>You can specify absolute path such as <code class="docutils literal"><span class="pre">register</span>
+<span class="pre">/usr/lib/groonga/plugins/query_expanders/tsv.so</span></code>.</p>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.48.4. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">register</span></code> returns <code class="docutils literal"><span class="pre">true</span></code> as body on success such as:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, true]
+</pre></div>
+</div>
+<p>If <code class="docutils literal"><span class="pre">register</span></code> fails, error details are in <code class="docutils literal"><span class="pre">HEADER</span></code>.</p>
+<p>See <a class="reference internal" href="../command/output_format.html"><span class="doc">Output format</span></a> for <code class="docutils literal"><span class="pre">HEADER</span></code>.</p>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.48.5. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="plugin_register.html"><span class="doc">plugin_register</span></a></li>
+<li><a class="reference internal" href="plugin_unregister.html"><span class="doc">plugin_unregister</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.48. <code class="docutils literal"><span class="pre">register</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.48.1. Summary</a></li>
+<li><a class="reference internal" href="#syntax">7.3.48.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.48.3. Usage</a></li>
+<li><a class="reference internal" href="#return-value">7.3.48.4. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.48.5. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="range_filter.html"
+                        title="previous chapter">7.3.47. <code class="docutils literal"><span class="pre">range_filter</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="reindex.html"
+                        title="next chapter">7.3.49. <code class="docutils literal"><span class="pre">reindex</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="reindex.html" title="7.3.49. reindex"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="range_filter.html" title="7.3.47. range_filter"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

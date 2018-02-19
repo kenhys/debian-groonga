@@ -1,0 +1,46 @@
+table_create Categories TABLE_PAT_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Categories sub_category COLUMN_SCALAR ShortText
+[[0,0.0,0.0],true]
+table_create Tags TABLE_PAT_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Tags category COLUMN_SCALAR Categories
+[[0,0.0,0.0],true]
+table_create Memos TABLE_HASH_KEY ShortText
+[[0,0.0,0.0],true]
+column_create Memos tag COLUMN_SCALAR Tags
+[[0,0.0,0.0],true]
+load --table Memos
+[
+{"_key": "Groonga is fast!", "tag": "Groonga"},
+{"_key": "Mroonga is fast!", "tag": "Mroonga"},
+{"_key": "Groonga sticker!", "tag": "Groonga"},
+{"_key": "Rroonga is fast!", "tag": "Rroonga"}
+]
+[[0,0.0,0.0],4]
+load --table Tags
+[
+{"_key": "Groonga", "category": "C/C++"},
+{"_key": "Mroonga", "category": "C/C++"},
+{"_key": "Rroonga", "category": "Ruby"}
+]
+[[0,0.0,0.0],3]
+load --table Categories
+[
+{"_key": "C/C++", "sub_category": "Programming language"},
+{"_key": "Ruby", "sub_category": "Programming language"}
+]
+[[0,0.0,0.0],2]
+select Memos   --drilldowns[category].table sub_category   --drilldowns[category].keys _key   --drilldowns[category].output_columns _key,_nsubrecs   --drilldowns[sub_category].table category   --drilldowns[sub_category].keys sub_category   --drilldowns[sub_category].output_columns _key,_nsubrecs   --drilldowns[tag].keys tag   --drilldowns[tag].output_columns _key,_nsubrecs,category
+[
+  [
+    [
+      -22,
+      0.0,
+      0.0
+    ],
+    "[select][drilldowns][category][table] cycled dependency: <sub_category>"
+  ]
+]
+#|e| [select][drilldowns][sub_category][table] cycled dependency: <category>
+#|e| [select][drilldowns][category][table] cycled dependency: <sub_category>

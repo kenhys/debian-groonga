@@ -1,0 +1,35 @@
+Execution example::
+
+  suggest --table item_query --column kana --types suggest --frequency_threshold 1 --query search
+  # [
+  #   [
+  #     0, 
+  #     1337566253.89858, 
+  #     0.000355720520019531
+  #   ], 
+  #   {
+  #     "suggest": [
+  #       [
+  #         2
+  #       ], 
+  #       [
+  #         [
+  #           "_key", 
+  #           "ShortText"
+  #         ], 
+  #         [
+  #           "_score", 
+  #           "Int32"
+  #         ]
+  #       ], 
+  #       [
+  #         "search engine", 
+  #         1
+  #       ], 
+  #       [
+  #         "web search realtime", 
+  #         1
+  #       ]
+  #     ]
+  #   }
+  # ]

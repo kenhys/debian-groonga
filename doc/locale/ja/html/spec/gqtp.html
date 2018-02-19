@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>8.1. GQTP &#8212; Groonga v7.1.1-46-g46e97feドキュメント</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-46-g46e97fe',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/translations.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="next" title="8.2. 検索" href="search.html" />
+    <link rel="prev" title="8. 仕様" href="../spec.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">オープンソースのカラムストア機能付き全文検索エンジン</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../en/html/spec/gqtp.html">English</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="search.html" title="8.2. 検索"
+             accesskey="N">次へ</a> |</li>
+        <li class="right" >
+          <a href="../spec.html" title="8. 仕様"
+             accesskey="P">前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../spec.html" accesskey="U">8. 仕様</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="gqtp">
+<h1>8.1. GQTP<a class="headerlink" href="#gqtp" title="このヘッドラインへのパーマリンク">¶</a></h1>
+<p>GQTPはGroonga Query Transfer Protocolの頭文字です。GQTPはgroonga用の独自プロトコルです。</p>
+<div class="section" id="protocol">
+<h2>8.1.1. プロトコル<a class="headerlink" href="#protocol" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<p>GQTPはステートフルなクライアント・サーバーモデルのプロトコルです。以下の流れが1つの処理単位です:</p>
+<ul class="simple">
+<li>クライアントがリクエストを送る</li>
+<li>サーバーがリクエストを受け取る</li>
+<li>サーバーがリクエストを処理する</li>
+<li>サーバーがレスポンスを返す</li>
+<li>クライアントがレスポンスを受け取る</li>
+</ul>
+<p>1つのセッション内で0個以上の処理単位を実行できます。</p>
+<p>リクエストもレスポンスもGQTPヘッダーとボディから成ります。GQTPヘッダーは固定長のデータです。ボディは可変長サイズのデータです。ボディのサイズはGQTPヘッダーの中に入っています。GQTPではボディの中身については何も定義しません。</p>
+<div class="section" id="gqtp-header">
+<span id="gqtp-header-spec"></span><h3>8.1.1.1. GQTPヘッダー<a class="headerlink" href="#gqtp-header" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GQTPヘッダーは以下の符号なし整数値から成ります:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="14%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">サイズ</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">protocol</span></code></td>
+<td>1byte</td>
+<td>プロトコルの種類。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">query_type</span></code></td>
+<td>1byte</td>
+<td>ボディのコンテントタイプ。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">key_length</span></code></td>
+<td>2byte</td>
+<td>未使用。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">level</span></code></td>
+<td>1byte</td>
+<td>未使用。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">flags</span></code></td>
+<td>1byte</td>
+<td>フラグ。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">status</span></code></td>
+<td>2byte</td>
+<td>リターンコード。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">size</span></code></td>
+<td>4byte</td>
+<td>ボディのサイズ。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">opaque</span></code></td>
+<td>4byte</td>
+<td>未使用。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">cas</span></code></td>
+<td>8byte</td>
+<td>未使用。</td>
+</tr>
+</tbody>
+</table>
+<p>ヘッダーのすべての値はネットワークバイトオーダーを使っています。</p>
+<p>以下のセクションではそれぞれのヘッダーの値で利用可能な値について説明します。</p>
+<p>GQTPヘッダーは全部で24byteになります。</p>
+<div class="section" id="id1">
+<h4>8.1.1.1.1. <code class="docutils literal"><span class="pre">protocol</span></code><a class="headerlink" href="#id1" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>リクエストのGQTPヘッダーでもレスポンスのGQTPヘッダーでも、この値は常に <code class="docutils literal"><span class="pre">0xc7</span></code> になります。</p>
+</div>
+<div class="section" id="query-type">
+<h4>8.1.1.1.2. <code class="docutils literal"><span class="pre">query_type</span></code><a class="headerlink" href="#query-type" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>この値は以下のいずれかの値です:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="16%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">値</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">NONE</span></code></td>
+<td>0</td>
+<td>自由形式。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TSV</span></code></td>
+<td>1</td>
+<td>値をタブで区切った形式。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">JSON</span></code></td>
+<td>2</td>
+<td>JSON。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">XML</span></code></td>
+<td>3</td>
+<td>XML。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">MSGPACK</span></code></td>
+<td>4</td>
+<td>MessagePack。</td>
+</tr>
+</tbody>
+</table>
+<p>リクエストGQTPヘッダーでは使われません。</p>
+<p>レスポンスGQTPヘッダーで使われます。ボディは指定した形式にします。</p>
+</div>
+<div class="section" id="flags">
+<h4>8.1.1.1.3. <code class="docutils literal"><span class="pre">flags</span></code><a class="headerlink" href="#flags" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>この値は以下の値をビット単位ORしたものになります:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="17%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">名前</th>
+<th class="head">値</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">MORE</span></code></td>
+<td>0x01</td>
+<td>まだデータがあります。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">TAIL</span></code></td>
+<td>0x02</td>
+<td>これ以上データはありません。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">HEAD</span></code></td>
+<td>0x04</td>
+<td>未使用。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">QUIET</span></code></td>
+<td>0x08</td>
+<td>レスポンスを出力しません。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">QUIT</span></code></td>
+<td>0x10</td>
+<td>終了します。</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal"><span class="pre">MORE</span></code> あるいは <code class="docutils literal"><span class="pre">TAIL</span></code> フラグは必ず指定しないといけません。</p>
+<p><code class="docutils literal"><span class="pre">MORE</span></code> フラグを使うときは <code class="docutils literal"><span class="pre">QUIET</span></code> フラグも使うべきです。リクエストが途中のときはレスポンスを出力する必要がないからです。</p>
+<p>セッションを終了するときは <code class="docutils literal"><span class="pre">QUIT</span></code> フラグを使ってください。</p>
+</div>
+<div class="section" id="status">
+<h4>8.1.1.1.4. <code class="docutils literal"><span class="pre">status</span></code><a class="headerlink" href="#status" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>利用可能な値です。将来的に新しいステータスが追加される可能性があります。</p>
+<ul class="simple">
+<li>0: <code class="docutils literal"><span class="pre">SUCCESS</span></code></li>
+<li>1: <code class="docutils literal"><span class="pre">END_OF_DATA</span></code></li>
+<li>65535: <code class="docutils literal"><span class="pre">UNKNOWN_ERROR</span></code></li>
+<li>65534: <code class="docutils literal"><span class="pre">OPERATION_NOT_PERMITTED</span></code></li>
+<li>65533: <code class="docutils literal"><span class="pre">NO_SUCH_FILE_OR_DIRECTORY</span></code></li>
+<li>65532: <code class="docutils literal"><span class="pre">NO_SUCH_PROCESS</span></code></li>
+<li>65531: <code class="docutils literal"><span class="pre">INTERRUPTED_FUNCTION_CALL</span></code></li>
+<li>65530: <code class="docutils literal"><span class="pre">INPUT_OUTPUT_ERROR</span></code></li>
+<li>65529: <code class="docutils literal"><span class="pre">NO_SUCH_DEVICE_OR_ADDRESS</span></code></li>
+<li>65528: <code class="docutils literal"><span class="pre">ARG_LIST_TOO_LONG</span></code></li>
+<li>65527: <code class="docutils literal"><span class="pre">EXEC_FORMAT_ERROR</span></code></li>
+<li>65526: <code class="docutils literal"><span class="pre">BAD_FILE_DESCRIPTOR</span></code></li>
+<li>65525: <code class="docutils literal"><span class="pre">NO_CHILD_PROCESSES</span></code></li>
+<li>65524: <code class="docutils literal"><span class="pre">RESOURCE_TEMPORARILY_UNAVAILABLE</span></code></li>
+<li>65523: <code class="docutils literal"><span class="pre">NOT_ENOUGH_SPACE</span></code></li>
+<li>65522: <code class="docutils literal"><span class="pre">PERMISSION_DENIED</span></code></li>
+<li>65521: <code class="docutils literal"><span class="pre">BAD_ADDRESS</span></code></li>
+<li>65520: <code class="docutils literal"><span class="pre">RESOURCE_BUSY</span></code></li>
+<li>65519: <code class="docutils literal"><span class="pre">FILE_EXISTS</span></code></li>
+<li>65518: <code class="docutils literal"><span class="pre">IMPROPER_LINK</span></code></li>
+<li>65517: <code class="docutils literal"><span class="pre">NO_SUCH_DEVICE</span></code></li>
+<li>65516: <code class="docutils literal"><span class="pre">NOT_A_DIRECTORY</span></code></li>
+<li>65515: <code class="docutils literal"><span class="pre">IS_A_DIRECTORY</span></code></li>
+<li>65514: <code class="docutils literal"><span class="pre">INVALID_ARGUMENT</span></code></li>
+<li>65513: <code class="docutils literal"><span class="pre">TOO_MANY_OPEN_FILES_IN_SYSTEM</span></code></li>
+<li>65512: <code class="docutils literal"><span class="pre">TOO_MANY_OPEN_FILES</span></code></li>
+<li>65511: <code class="docutils literal"><span class="pre">INAPPROPRIATE_I_O_CONTROL_OPERATION</span></code></li>
+<li>65510: <code class="docutils literal"><span class="pre">FILE_TOO_LARGE</span></code></li>
+<li>65509: <code class="docutils literal"><span class="pre">NO_SPACE_LEFT_ON_DEVICE</span></code></li>
+<li>65508: <code class="docutils literal"><span class="pre">INVALID_SEEK</span></code></li>
+<li>65507: <code class="docutils literal"><span class="pre">READ_ONLY_FILE_SYSTEM</span></code></li>
+<li>65506: <code class="docutils literal"><span class="pre">TOO_MANY_LINKS</span></code></li>
+<li>65505: <code class="docutils literal"><span class="pre">BROKEN_PIPE</span></code></li>
+<li>65504: <code class="docutils literal"><span class="pre">DOMAIN_ERROR</span></code></li>
+<li>65503: <code class="docutils literal"><span class="pre">RESULT_TOO_LARGE</span></code></li>
+<li>65502: <code class="docutils literal"><span class="pre">RESOURCE_DEADLOCK_AVOIDED</span></code></li>
+<li>65501: <code class="docutils literal"><span class="pre">NO_MEMORY_AVAILABLE</span></code></li>
+<li>65500: <code class="docutils literal"><span class="pre">FILENAME_TOO_LONG</span></code></li>
+<li>65499: <code class="docutils literal"><span class="pre">NO_LOCKS_AVAILABLE</span></code></li>
+<li>65498: <code class="docutils literal"><span class="pre">FUNCTION_NOT_IMPLEMENTED</span></code></li>
+<li>65497: <code class="docutils literal"><span class="pre">DIRECTORY_NOT_EMPTY</span></code></li>
+<li>65496: <code class="docutils literal"><span class="pre">ILLEGAL_BYTE_SEQUENCE</span></code></li>
+<li>65495: <code class="docutils literal"><span class="pre">SOCKET_NOT_INITIALIZED</span></code></li>
+<li>65494: <code class="docutils literal"><span class="pre">OPERATION_WOULD_BLOCK</span></code></li>
+<li>65493: <code class="docutils literal"><span class="pre">ADDRESS_IS_NOT_AVAILABLE</span></code></li>
+<li>65492: <code class="docutils literal"><span class="pre">NETWORK_IS_DOWN</span></code></li>
+<li>65491: <code class="docutils literal"><span class="pre">NO_BUFFER</span></code></li>
+<li>65490: <code class="docutils literal"><span class="pre">SOCKET_IS_ALREADY_CONNECTED</span></code></li>
+<li>65489: <code class="docutils literal"><span class="pre">SOCKET_IS_NOT_CONNECTED</span></code></li>
+<li>65488: <code class="docutils literal"><span class="pre">SOCKET_IS_ALREADY_SHUTDOWNED</span></code></li>
+<li>65487: <code class="docutils literal"><span class="pre">OPERATION_TIMEOUT</span></code></li>
+<li>65486: <code class="docutils literal"><span class="pre">CONNECTION_REFUSED</span></code></li>
+<li>65485: <code class="docutils literal"><span class="pre">RANGE_ERROR</span></code></li>
+<li>65484: <code class="docutils literal"><span class="pre">TOKENIZER_ERROR</span></code></li>
+<li>65483: <code class="docutils literal"><span class="pre">FILE_CORRUPT</span></code></li>
+<li>65482: <code class="docutils literal"><span class="pre">INVALID_FORMAT</span></code></li>
+<li>65481: <code class="docutils literal"><span class="pre">OBJECT_CORRUPT</span></code></li>
+<li>65480: <code class="docutils literal"><span class="pre">TOO_MANY_SYMBOLIC_LINKS</span></code></li>
+<li>65479: <code class="docutils literal"><span class="pre">NOT_SOCKET</span></code></li>
+<li>65478: <code class="docutils literal"><span class="pre">OPERATION_NOT_SUPPORTED</span></code></li>
+<li>65477: <code class="docutils literal"><span class="pre">ADDRESS_IS_IN_USE</span></code></li>
+<li>65476: <code class="docutils literal"><span class="pre">ZLIB_ERROR</span></code></li>
+<li>65475: <code class="docutils literal"><span class="pre">LZO_ERROR</span></code></li>
+<li>65474: <code class="docutils literal"><span class="pre">STACK_OVER_FLOW</span></code></li>
+<li>65473: <code class="docutils literal"><span class="pre">SYNTAX_ERROR</span></code></li>
+<li>65472: <code class="docutils literal"><span class="pre">RETRY_MAX</span></code></li>
+<li>65471: <code class="docutils literal"><span class="pre">INCOMPATIBLE_FILE_FORMAT</span></code></li>
+<li>65470: <code class="docutils literal"><span class="pre">UPDATE_NOT_ALLOWED</span></code></li>
+<li>65469: <code class="docutils literal"><span class="pre">TOO_SMALL_OFFSET</span></code></li>
+<li>65468: <code class="docutils literal"><span class="pre">TOO_LARGE_OFFSET</span></code></li>
+<li>65467: <code class="docutils literal"><span class="pre">TOO_SMALL_LIMIT</span></code></li>
+<li>65466: <code class="docutils literal"><span class="pre">CAS_ERROR</span></code></li>
+<li>65465: <code class="docutils literal"><span class="pre">UNSUPPORTED_COMMAND_VERSION</span></code></li>
+</ul>
+</div>
+<div class="section" id="size">
+<h4>8.1.1.1.5. <code class="docutils literal"><span class="pre">size</span></code><a class="headerlink" href="#size" title="このヘッドラインへのパーマリンク">¶</a></h4>
+<p>ボディのサイズです。ボディの最大サイズは4GiBです。これは <code class="docutils literal"><span class="pre">size</span></code> が4byteの符号なし整数だからです。4GiB以上のサイズのデータを送りたい場合は <code class="docutils literal"><span class="pre">MORE</span></code> フラグを使ってください。</p>
+</div>
+</div>
+</div>
+<div class="section" id="example">
+<h2>8.1.2. 例<a class="headerlink" href="#example" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<div class="section" id="how-to-run-a-gqtp-server">
+<h3>8.1.2.1. GQTPサーバの起動<a class="headerlink" href="#how-to-run-a-gqtp-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>Groongaには、専用のプロトコルであるGQTPが存在します。GQTPを用いることにより、データベースへとリモートアクセスすることができます。以下の書式はGQTPサーバの起動方法を示しています。</p>
+<p>Form:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [-p PORT_NUMBER] -s DB_PATH
+</pre></div>
+</div>
+<p><cite>-s</cite> オプションはGroongaをサーバとして起動するためのオプションです。DB_PATHには既存のデータベースのパスを指定します。 <cite>-p</cite> オプションとその引数により、サーバのポート番号を指定することができます。ポート番号を省略した場合は10043が使用されます。</p>
+<p>以下のコマンドにより、デフォルトのポート番号で待ち受けるサーバを起動することができます。サーバは指定されたデータベースへの操作を受け付けます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -s /tmp/groonga-databases/introduction.db
+Ctrl-c
+%
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-run-a-gqtp-daemon">
+<h3>8.1.2.2. GQTPデーモンの起動<a class="headerlink" href="#how-to-run-a-gqtp-daemon" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GQTPサーバはデーモンとして起動することができます。オプションとして、 <cite>-s</cite> の代わりに <cite>-d</cite> を与えてください。</p>
+<p>Form:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [-p PORT_NUMBER] -d DB_PATH
+</pre></div>
+</div>
+<p>Groongaをデーモンとして起動したときは、デーモンのプロセスIDが表示されます。以下の例では、12345というプロセスIDが表示されています。サーバとして起動した場合と同様に、指定されたデータベースへの操作を受け付けます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -d /tmp/groonga-databases/introduction.db
+12345
+%
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-run-a-gqtp-client">
+<h3>8.1.2.3. GQTPサーバへの接続<a class="headerlink" href="#how-to-run-a-gqtp-client" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GQTPサーバに接続するクライアントは、以下のように起動します。</p>
+<p>Form:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>groonga [-p PORT_NUMBER] -c [HOST_NAME_OR_IP_ADDRESS]
+</pre></div>
+</div>
+<p>上記のコマンドによって起動されたクライアントは、サーバとの接続に成功すると対話モードに入ります。HOST_NAME_OR_IP_ADDRESSにはサーバのホスト名もしくはIPアドレスを指定します。HOST_NAME_OR_IP_ADDRESSが省略されたときは&quot;localhost&quot;をサーバのホスト名として採用します。また、 <cite>-p</cite> オプションとその引数により、サーバのポート番号を指定することができます。ポート番号を省略した場合は10043が使用されます。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -c
+status
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   {
+#     &quot;uptime&quot;: 10,
+#     &quot;max_command_version&quot;: 3,
+#     &quot;start_time&quot;: 1514346074,
+#     &quot;cache_hit_rate&quot;: 0.0,
+#     &quot;version&quot;: &quot;7.0.9&quot;,
+#     &quot;alloc_count&quot;: 13655,
+#     &quot;command_version&quot;: 1,
+#     &quot;starttime&quot;: 1514346074,
+#     &quot;default_command_version&quot;: 1,
+#     &quot;n_queries&quot;: 13
+#   }
+# ]
+&gt; ctrl-d
+%
+</pre></div>
+</div>
+<p>対話モードでは、標準入力からコマンドを読み込んで順次実行します。</p>
+</div>
+<div class="section" id="how-to-terminate-a-gqtp-server">
+<h3>8.1.2.4. GQTPサーバの終了<a class="headerlink" href="#how-to-terminate-a-gqtp-server" title="このヘッドラインへのパーマリンク">¶</a></h3>
+<p>GQTPサーバを終了する安全は方法は、クライアントを起動して <a class="reference internal" href="../reference/commands/shutdown.html"><span class="doc">shutdown</span></a> を発行することです。</p>
+<p>実行例:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% groonga -c
+&gt; shutdown
+%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="see-also">
+<h2>8.1.3. 参照<a class="headerlink" href="#see-also" title="このヘッドラインへのパーマリンク">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/executables/groonga.html"><span class="doc">groonga 実行ファイル</span></a></li>
+<li><a class="reference internal" href="../server/gqtp.html"><span class="doc">GQTP</span></a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">目次</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8.1. GQTP</a><ul>
+<li><a class="reference internal" href="#protocol">8.1.1. プロトコル</a><ul>
+<li><a class="reference internal" href="#gqtp-header">8.1.1.1. GQTPヘッダー</a><ul>
+<li><a class="reference internal" href="#id1">8.1.1.1.1. <code class="docutils literal"><span class="pre">protocol</span></code></a></li>
+<li><a class="reference internal" href="#query-type">8.1.1.1.2. <code class="docutils literal"><span class="pre">query_type</span></code></a></li>
+<li><a class="reference internal" href="#flags">8.1.1.1.3. <code class="docutils literal"><span class="pre">flags</span></code></a></li>
+<li><a class="reference internal" href="#status">8.1.1.1.4. <code class="docutils literal"><span class="pre">status</span></code></a></li>
+<li><a class="reference internal" href="#size">8.1.1.1.5. <code class="docutils literal"><span class="pre">size</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example">8.1.2. 例</a><ul>
+<li><a class="reference internal" href="#how-to-run-a-gqtp-server">8.1.2.1. GQTPサーバの起動</a></li>
+<li><a class="reference internal" href="#how-to-run-a-gqtp-daemon">8.1.2.2. GQTPデーモンの起動</a></li>
+<li><a class="reference internal" href="#how-to-run-a-gqtp-client">8.1.2.3. GQTPサーバへの接続</a></li>
+<li><a class="reference internal" href="#how-to-terminate-a-gqtp-server">8.1.2.4. GQTPサーバの終了</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#see-also">8.1.3. 参照</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>前のトピックへ</h4>
+  <p class="topless"><a href="../spec.html"
+                        title="前の章へ">8. 仕様</a></p>
+  <h4>次のトピックへ</h4>
+  <p class="topless"><a href="search.html"
+                        title="次の章へ">8.2. 検索</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>クイック検索</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="検索" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>ナビゲーション</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="総合索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="search.html" title="8.2. 検索"
+             >次へ</a> |</li>
+        <li class="right" >
+          <a href="../spec.html" title="8. 仕様"
+             >前へ</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-46-g46e97feドキュメント</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../spec.html" >8. 仕様</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

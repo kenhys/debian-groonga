@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.24.11. grn_expr &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.24.12. grn_geo" href="grn_geo.html" />
+    <link rel="prev" title="7.24.10. grn_encoding" href="grn_encoding.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/api/grn_expr.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="grn_geo.html" title="7.24.12. grn_geo"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="grn_encoding.html" title="7.24.10. grn_encoding"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" accesskey="U">7.24. API</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="grn-expr">
+<h1>7.24.11. grn_expr<a class="headerlink" href="#grn-expr" title="Permalink to this headline">¶</a></h1>
+<p><cite>grn_expr</cite> is an <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj"><code class="xref c c-type docutils literal"><span class="pre">grn_obj</span></code></a> that represents an expression. Here
+is a list of what expression can do:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Expression can apply some operations to a record by
+<a class="reference internal" href="#c.grn_expr_exec" title="grn_expr_exec"><code class="xref c c-func docutils literal"><span class="pre">grn_expr_exec()</span></code></a>.</li>
+<li>Expression can represents search condition. <code class="xref c c-func docutils literal"><span class="pre">grn_table_select()</span></code>
+can select records that match against the search condition represented
+by expression.</li>
+</ul>
+</div></blockquote>
+<p>There are two string representations of expression:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="../grn_expr/query_syntax.html"><span class="doc">Query syntax</span></a></li>
+<li><a class="reference internal" href="../grn_expr/script_syntax.html"><span class="doc">Script syntax</span></a></li>
+</ul>
+</div></blockquote>
+<p><code class="xref c c-func docutils literal"><span class="pre">grn_expr_parse()</span></code> parses string represented expression and
+appends the parsed expression to another expression.</p>
+<div class="section" id="example">
+<h2>7.24.11.1. Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>TODO...</p>
+</div>
+<div class="section" id="reference">
+<h2>7.24.11.2. Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="c.grn_expr_create">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_create</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*name</em>, unsigned int<em>&nbsp;name_size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_create" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_close">
+GRN_API grn_rc <code class="descname">grn_expr_close</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_add_var">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_add_var</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, const char<em>&nbsp;*name</em>, unsigned int<em>&nbsp;name_size</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_add_var" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_get_var_by_offset">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_get_var_by_offset</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, unsigned int<em>&nbsp;offset</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_get_var_by_offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descname">GRN_API grn_obj *grn_expr_append_obj(grn_ctx *ctx, grn_obj *expr, grn_obj *obj, grn_operator op, int nargs);</code></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_append_const">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_append_const</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*obj</em>, grn_operator<em>&nbsp;op</em>, int<em>&nbsp;nargs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_append_const" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_append_const_str">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_append_const_str</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, const char<em>&nbsp;*str</em>, unsigned int<em>&nbsp;str_size</em>, grn_operator<em>&nbsp;op</em>, int<em>&nbsp;nargs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_append_const_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_append_const_int">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_append_const_int</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, int<em>&nbsp;i</em>, grn_operator<em>&nbsp;op</em>, int<em>&nbsp;nargs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_append_const_int" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_append_op">
+GRN_API grn_rc <code class="descname">grn_expr_append_op</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, grn_operator<em>&nbsp;op</em>, int<em>&nbsp;nargs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_append_op" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_get_keywords">
+grn_rc <code class="descname">grn_expr_get_keywords</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_get_keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extracts keywords from <code class="docutils literal"><span class="pre">expr</span></code> and stores to
+<code class="docutils literal"><span class="pre">keywords</span></code>. Keywords in <code class="docutils literal"><span class="pre">keywords</span></code> are owned by <code class="docutils literal"><span class="pre">expr</span></code>. Don't
+unlink them. Each keyword is <code class="docutils literal"><span class="pre">GRN_BULK</span></code> and its domain is
+<code class="docutils literal"><span class="pre">GRN_DB_TEXT</span></code>.</p>
+<p><code class="docutils literal"><span class="pre">keywords</span></code> must be <code class="docutils literal"><span class="pre">GRN_PVECTOR</span></code>.</p>
+<p>Here is an example code:</p>
+<div class="highlight-c"><div class="highlight"><pre><span></span><span class="n">grn_obj</span> <span class="n">keywords</span><span class="p">;</span>
+<span class="n">GRN_PTR_INIT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">keywords</span><span class="p">,</span> <span class="n">GRN_OBJ_VECTOR</span><span class="p">,</span> <span class="n">GRN_ID_NIL</span><span class="p">);</span>
+<span class="n">grn_expr_get_keywords</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">expr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">keywords</span><span class="p">);</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">n_keywords</span><span class="p">;</span>
+  <span class="n">n_keywords</span> <span class="o">=</span> <span class="n">GRN_BULK_VSIZE</span><span class="p">(</span><span class="o">&amp;</span><span class="n">keywords</span><span class="p">)</span> <span class="o">/</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">grn_obj</span> <span class="o">*</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n_keywords</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">grn_obj</span> <span class="o">*</span><span class="n">keyword</span> <span class="o">=</span> <span class="n">GRN_PTR_VALUE_AT</span><span class="p">(</span><span class="o">&amp;</span><span class="n">keywords</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">keyword_content</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">keyword_size</span><span class="p">;</span>
+    <span class="n">keyword_content</span> <span class="o">=</span> <span class="n">GRN_TEXT_VALUE</span><span class="p">(</span><span class="n">keyword</span><span class="p">);</span>
+    <span class="n">keyword_size</span> <span class="o">=</span> <span class="n">GRN_TEXT_LEN</span><span class="p">(</span><span class="n">keyword</span><span class="p">);</span>
+    <span class="cm">/*</span>
+<span class="cm">      Use keyword_content and keyword_size.</span>
+<span class="cm">      You don&#39;t need to unlink keyword.</span>
+<span class="cm">      keyword is owned by expr.</span>
+<span class="cm">    */</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">GRN_OBJ_FIN</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">keywords</span><span class="p">);</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- The context that creates the <code class="docutils literal"><span class="pre">expr</span></code>.</li>
+<li><strong>expr</strong> -- The expression to be extracted.</li>
+<li><strong>keywords</strong> -- <p>The container to store extracted keywords.
+It must be <code class="docutils literal"><span class="pre">GRN_PVECTOR</span></code>.</p>
+<p>Each extracted keyword is <code class="docutils literal"><span class="pre">GRN_BULK</span></code> and its
+domain is <code class="docutils literal"><span class="pre">GRN_DB_TEXT</span></code>.</p>
+<p>Extracted keywords are owned by <code class="docutils literal"><span class="pre">expr</span></code>. Don't
+unlink them.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_syntax_escape">
+grn_rc <code class="descname">grn_expr_syntax_escape</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*string</em>, int<em>&nbsp;string_size</em>, const char<em>&nbsp;*target_characters</em>, char<em>&nbsp;escape_character</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*escaped_string</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_syntax_escape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escapes <code class="docutils literal"><span class="pre">target_characters</span></code> in <code class="docutils literal"><span class="pre">string</span></code> by <code class="docutils literal"><span class="pre">escape_character</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- Its encoding must be the same encoding of <code class="docutils literal"><span class="pre">string</span></code>.
+It is used for allocating buffer for <code class="docutils literal"><span class="pre">escaped_string</span></code>.</li>
+<li><strong>string</strong> -- String expression representation.</li>
+<li><strong>string_size</strong> -- The byte size of <code class="docutils literal"><span class="pre">string</span></code>. <code class="docutils literal"><span class="pre">-1</span></code> means <code class="docutils literal"><span class="pre">string</span></code>
+is NULL terminated string.</li>
+<li><strong>target_characters</strong> -- NULL terminated escape target characters.
+For example, <code class="docutils literal"><span class="pre">&quot;+-&gt;&lt;~*()\&quot;\\:&quot;</span></code> is
+<code class="docutils literal"><span class="pre">target_characters</span></code> for
+<a class="reference internal" href="../grn_expr/query_syntax.html"><span class="doc">Query syntax</span></a>.</li>
+<li><strong>escape_character</strong> -- The character to use escape a character in
+<code class="docutils literal"><span class="pre">target_characters</span></code>. For example, <code class="docutils literal"><span class="pre">\\</span></code>
+(backslash) is <code class="docutils literal"><span class="pre">escaped_character</span></code> for
+<a class="reference internal" href="../grn_expr/query_syntax.html"><span class="doc">Query syntax</span></a>.</li>
+<li><strong>escaped_string</strong> -- The output of escaped <code class="docutils literal"><span class="pre">string</span></code>. It should be
+text typed bulk.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_syntax_escape_query">
+grn_rc <code class="descname">grn_expr_syntax_escape_query</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, const char<em>&nbsp;*query</em>, int<em>&nbsp;query_size</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*escaped_query</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_syntax_escape_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Escapes special characters in
+<a class="reference internal" href="../grn_expr/query_syntax.html"><span class="doc">Query syntax</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ctx</strong> -- Its encoding must be the same encoding of <code class="docutils literal"><span class="pre">query</span></code>.
+It is used for allocating buffer for <code class="docutils literal"><span class="pre">escaped_query</span></code>.</li>
+<li><strong>query</strong> -- String expression representation in
+<a class="reference internal" href="../grn_expr/query_syntax.html"><span class="doc">Query syntax</span></a>.</li>
+<li><strong>query_size</strong> -- The byte size of <code class="docutils literal"><span class="pre">query</span></code>. <code class="docutils literal"><span class="pre">-1</span></code> means <code class="docutils literal"><span class="pre">query</span></code>
+is NULL terminated string.</li>
+<li><strong>escaped_query</strong> -- The output of escaped <code class="docutils literal"><span class="pre">query</span></code>. It should be
+text typed bulk.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on success, not <code class="docutils literal"><span class="pre">GRN_SUCCESS</span></code> on error.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_compile">
+GRN_API grn_rc <code class="descname">grn_expr_compile</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_compile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_exec">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_exec</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, int<em>&nbsp;nargs</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_exec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="c.grn_expr_alloc">
+GRN_API <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a> *<code class="descname">grn_expr_alloc</code><span class="sig-paren">(</span><a class="reference internal" href="grn_ctx.html#c.grn_ctx" title="grn_ctx">grn_ctx</a><em>&nbsp;*ctx</em>, <a class="reference internal" href="grn_obj.html#c.grn_obj" title="grn_obj">grn_obj</a><em>&nbsp;*expr</em>, grn_id<em>&nbsp;domain</em>, grn_obj_flags<em>&nbsp;flags</em><span class="sig-paren">)</span><a class="headerlink" href="#c.grn_expr_alloc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.24.11. grn_expr</a><ul>
+<li><a class="reference internal" href="#example">7.24.11.1. Example</a></li>
+<li><a class="reference internal" href="#reference">7.24.11.2. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="grn_encoding.html"
+                        title="previous chapter">7.24.10. <code class="docutils literal"><span class="pre">grn_encoding</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="grn_geo.html"
+                        title="next chapter">7.24.12. <code class="docutils literal"><span class="pre">grn_geo</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="grn_geo.html" title="7.24.12. grn_geo"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="grn_encoding.html" title="7.24.10. grn_encoding"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../api.html" >7.24. API</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

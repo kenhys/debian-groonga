@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>2.4. Ubuntu &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.5. CentOS" href="centos.html" />
+    <link rel="prev" title="2.3. Debian GNU/Linux" href="debian.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/install/ubuntu.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="centos.html" title="2.5. CentOS"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="debian.html" title="2.3. Debian GNU/Linux"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../install.html" accesskey="U">2. Install</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ubuntu">
+<h1>2.4. Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h1>
+<p>This section describes how to install Groonga related deb packages on
+Ubuntu. You can install them by <code class="docutils literal"><span class="pre">apt</span></code>.</p>
+<p>We distribute both 32-bit and 64-bit packages but we strongly
+recommend a 64-bit package for server. You should use a 32-bit package
+just only for tests or development. You will encounter an out of
+memory error with a 32-bit package even if you just process medium
+size data.</p>
+<div class="section" id="ppa-personal-package-archive">
+<h2>2.4.1. PPA (Personal Package Archive)<a class="headerlink" href="#ppa-personal-package-archive" title="Permalink to this headline">¶</a></h2>
+<p>The Groonga APT repository for Ubuntu uses PPA (Personal Package
+Archive) on Launchpad. You can install Groonga by APT from the PPA.</p>
+<p>Here are supported Ubuntu versions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>14.04 LTS Trusty Tahr</li>
+<li>16.04 LTS Xenial Xerus</li>
+<li>17.04 Zesty Zapus</li>
+<li>17.10 Artful Aardvark</li>
+</ul>
+</div></blockquote>
+<p>Enable the universe repository to install Groonga:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install software-properties-common
+% sudo add-apt-repository -y universe
+</pre></div>
+</div>
+<p>Add the <code class="docutils literal"><span class="pre">ppa:groonga/ppa</span></code> PPA to your system:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo add-apt-repository -y ppa:groonga/ppa
+% sudo apt-get update
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install groonga
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal"><span class="pre">groonga</span></code> package is the minimum set of fulltext search engine.
+If you want to use Groonga for server use, you can install
+additional preconfigured packages.</p>
+<p>There are two packages for server use.</p>
+<ul class="simple">
+<li>groonga-httpd (nginx and HTTP protocol based server package)</li>
+<li>groonga-server-gqtp (GQTP protocol based server package)</li>
+</ul>
+<p class="last">See <a class="reference internal" href="../server.html"><span class="doc">Server</span></a> section about details.</p>
+</div>
+<p>If you want to use <a class="reference external" href="https://taku910.github.io/mecab/">MeCab</a> as a
+tokenizer, install groonga-tokenizer-mecab package.</p>
+<p>Install groonga-tokenizer-mecab package:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install groonga-tokenizer-mecab
+</pre></div>
+</div>
+<p>If you want to use <code class="docutils literal"><span class="pre">TokenFilterStem</span></code> as a token filter, install
+groonga-token-filter-stem package.</p>
+<p>Install groonga-token-filter-stem package:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install groonga-token-filter-stem
+</pre></div>
+</div>
+<p>There is a package that provides <a class="reference external" href="http://munin-monitoring.org/">Munin</a> plugins. If you want to monitor
+Groonga status by Munin, install groonga-munin-plugins package.</p>
+<p>Install groonga-munin-plugins package:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install groonga-munin-plugins
+</pre></div>
+</div>
+<p>There is a package that provides MySQL compatible normalizer as
+a Groonga plugin.
+If you want to use that one, install groonga-normalizer-mysql package.</p>
+<p>Install groonga-normalizer-mysql package:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -y install groonga-normalizer-mysql
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-from-source">
+<h2>2.4.2. Build from source<a class="headerlink" href="#build-from-source" title="Permalink to this headline">¶</a></h2>
+<p>Install required packages to build Groonga:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo apt-get -V -y install wget tar build-essential zlib1g-dev liblzo2-dev libmsgpack-dev libzmq-dev libevent-dev libmecab-dev
+</pre></div>
+</div>
+<p>Download source:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% wget https://packages.groonga.org/source/groonga/groonga-8.0.0.tar.gz
+% tar xvzf groonga-8.0.0.tar.gz
+% cd groonga-8.0.0
+</pre></div>
+</div>
+<p>Configure (see <a class="reference internal" href="others.html#source-configure"><span class="std std-ref">configure</span></a> about <code class="docutils literal"><span class="pre">configure</span></code> options):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% ./configure
+</pre></div>
+</div>
+<p>Build:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% make -j$(grep &#39;^processor&#39; /proc/cpuinfo | wc -l)
+</pre></div>
+</div>
+<p>Install:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>% sudo make install
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">2.4. Ubuntu</a><ul>
+<li><a class="reference internal" href="#ppa-personal-package-archive">2.4.1. PPA (Personal Package Archive)</a></li>
+<li><a class="reference internal" href="#build-from-source">2.4.2. Build from source</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="debian.html"
+                        title="previous chapter">2.3. Debian GNU/Linux</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="centos.html"
+                        title="next chapter">2.5. CentOS</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="centos.html" title="2.5. CentOS"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="debian.html" title="2.3. Debian GNU/Linux"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../install.html" >2. Install</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

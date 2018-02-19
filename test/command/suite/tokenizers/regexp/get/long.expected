@@ -1,0 +1,117 @@
+table_create Lexicon TABLE_PAT_KEY ShortText   --default_tokenizer TokenRegexp
+[[0,0.0,0.0],true]
+table_tokenize Lexicon "abcdefghijk" --mode ADD
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "￯",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "ab",
+      "position": 1,
+      "force_prefix": false
+    },
+    {
+      "value": "bc",
+      "position": 2,
+      "force_prefix": false
+    },
+    {
+      "value": "cd",
+      "position": 3,
+      "force_prefix": false
+    },
+    {
+      "value": "de",
+      "position": 4,
+      "force_prefix": false
+    },
+    {
+      "value": "ef",
+      "position": 5,
+      "force_prefix": false
+    },
+    {
+      "value": "fg",
+      "position": 6,
+      "force_prefix": false
+    },
+    {
+      "value": "gh",
+      "position": 7,
+      "force_prefix": false
+    },
+    {
+      "value": "hi",
+      "position": 8,
+      "force_prefix": false
+    },
+    {
+      "value": "ij",
+      "position": 9,
+      "force_prefix": false
+    },
+    {
+      "value": "jk",
+      "position": 10,
+      "force_prefix": false
+    },
+    {
+      "value": "k",
+      "position": 11,
+      "force_prefix": false
+    },
+    {
+      "value": "￰",
+      "position": 12,
+      "force_prefix": false
+    }
+  ]
+]
+table_tokenize Lexicon "abcdefghijk" --mode GET
+[
+  [
+    0,
+    0.0,
+    0.0
+  ],
+  [
+    {
+      "value": "ab",
+      "position": 0,
+      "force_prefix": false
+    },
+    {
+      "value": "cd",
+      "position": 2,
+      "force_prefix": false
+    },
+    {
+      "value": "ef",
+      "position": 4,
+      "force_prefix": false
+    },
+    {
+      "value": "gh",
+      "position": 6,
+      "force_prefix": false
+    },
+    {
+      "value": "ij",
+      "position": 8,
+      "force_prefix": false
+    },
+    {
+      "value": "jk",
+      "position": 9,
+      "force_prefix": false
+    }
+  ]
+]

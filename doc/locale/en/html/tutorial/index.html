@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>4.6. Tag search and reverse resolution of reference relationships &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4.7. match_columns parameter" href="match_columns.html" />
+    <link rel="prev" title="4.5. Drilldown" href="drilldown.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../ja/html/tutorial/index.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columns parameter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. Drilldown"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" accesskey="U">4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tag-search-and-reverse-resolution-of-reference-relationships">
+<h1>4.6. Tag search and reverse resolution of reference relationships<a class="headerlink" href="#tag-search-and-reverse-resolution-of-reference-relationships" title="Permalink to this headline">¶</a></h1>
+<p>As you know, Groonga supports to store array in column which refers other table.
+In fact, you can do tag search by using array data which refers other table.</p>
+<p>Tag search is very fast because Groonga use inverted index as data structure.</p>
+<div class="section" id="tag-search">
+<h2>4.6.1. Tag search<a class="headerlink" href="#tag-search" title="Permalink to this headline">¶</a></h2>
+<p>Let's consider to create a search engine for an web site to share movies. Each movie may be associated with multiple keywords which represents the content of movie.</p>
+<p>Let's create tables for movie information, then search the movies.</p>
+<p>First, create the <code class="docutils literal"><span class="pre">Video</span></code> table which stores movie information. the <code class="docutils literal"><span class="pre">Video</span></code> table has two columns. the <code class="docutils literal"><span class="pre">title</span></code> column stores title of the movie. the <code class="docutils literal"><span class="pre">tags</span></code> column stores multiple tag information in reference Tag table.</p>
+<p>Next, create the <code class="docutils literal"><span class="pre">Tag</span></code> table which stores tag information. the <code class="docutils literal"><span class="pre">Tag</span></code> table has one column. The tag string is stored as primary key, then <code class="docutils literal"><span class="pre">index_tags</span></code> stores indexes for tags column of Video table.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name Video --flags TABLE_HASH_KEY --key_type UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name Tag --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Video --name title --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Video --name tags --flags COLUMN_VECTOR --type Tag
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table Tag --name index_tags --flags COLUMN_INDEX --type Video --source tags
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Video
+[
+{&quot;_key&quot;:1,&quot;title&quot;:&quot;Soccer 2010&quot;,&quot;tags&quot;:[&quot;Sports&quot;,&quot;Soccer&quot;]},
+{&quot;_key&quot;:2,&quot;title&quot;:&quot;Zenigata Kinjirou&quot;,&quot;tags&quot;:[&quot;Variety&quot;,&quot;Money&quot;]},
+{&quot;_key&quot;:3,&quot;title&quot;:&quot;groonga Demo&quot;,&quot;tags&quot;:[&quot;IT&quot;,&quot;Server&quot;,&quot;groonga&quot;]},
+{&quot;_key&quot;:4,&quot;title&quot;:&quot;Moero!! Ultra Baseball&quot;,&quot;tags&quot;:[&quot;Sports&quot;,&quot;Baseball&quot;]},
+{&quot;_key&quot;:5,&quot;title&quot;:&quot;Hex Gone!&quot;,&quot;tags&quot;:[&quot;Variety&quot;,&quot;Quiz&quot;]},
+{&quot;_key&quot;:6,&quot;title&quot;:&quot;Pikonyan 1&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Pikonyan&quot;]},
+{&quot;_key&quot;:7,&quot;title&quot;:&quot;Draw 8 Month&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Raccoon&quot;]},
+{&quot;_key&quot;:8,&quot;title&quot;:&quot;K.O.&quot;,&quot;tags&quot;:[&quot;Animation&quot;,&quot;Music&quot;]}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 8]
+</pre></div>
+</div>
+<p>After creating indexed column, you can do full-text search very fast. The indexed column is also automatically updated when stored data is refreshed.</p>
+<p>List up the movies that specific keywords are given.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table Video --query tags:@Variety --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;Zenigata Kinjirou&quot;
+#       ],
+#       [
+#         5,
+#         &quot;Hex Gone!&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Video --query tags:@Sports --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         &quot;Soccer 2010&quot;
+#       ],
+#       [
+#         4,
+#         &quot;Moero!! Ultra Baseball&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table Video --query tags:@Animation --output_columns _key,title
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;title&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         6,
+#         &quot;Pikonyan 1&quot;
+#       ],
+#       [
+#         7,
+#         &quot;Draw 8 Month&quot;
+#       ],
+#       [
+#         8,
+#         &quot;K.O.&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>You can search by tags such as &quot;Variety&quot;, &quot;Sports&quot; and &quot;Animation&quot;.</p>
+</div>
+<div class="section" id="reverse-resolution-of-reference-relationships">
+<h2>4.6.2. Reverse resolution of reference relationships<a class="headerlink" href="#reverse-resolution-of-reference-relationships" title="Permalink to this headline">¶</a></h2>
+<p>Groonga supports indexes for reverse resolution among tables. Tag search is one of concrete examples.</p>
+<p>For example, you can search friendships by reverse resolution in social networking site.</p>
+<p>Following example shows how to create <code class="docutils literal"><span class="pre">User</span></code> table which stores user information, <code class="docutils literal"><span class="pre">username</span></code> column which stores user name, <code class="docutils literal"><span class="pre">friends</span></code> column which stores list of user's friends in array, <code class="docutils literal"><span class="pre">index_friends</span></code> column as indexed column.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name User --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name username --flags COLUMN_SCALAR --type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name friends --flags COLUMN_VECTOR --type User
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table User --name index_friends --flags COLUMN_INDEX --type User --source friends
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table User
+[
+{&quot;_key&quot;:&quot;ken&quot;,&quot;username&quot;:&quot;健作&quot;,&quot;friends&quot;:[&quot;taro&quot;,&quot;jiro&quot;,&quot;tomo&quot;,&quot;moritapo&quot;]}
+{&quot;_key&quot;:&quot;moritapo&quot;,&quot;username&quot;:&quot;森田&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;taro&quot;,&quot;username&quot;:&quot;ぐるんが太郎&quot;,&quot;friends&quot;:[&quot;jiro&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;jiro&quot;,&quot;username&quot;:&quot;ぐるんが次郎&quot;,&quot;friends&quot;:[&quot;taro&quot;,&quot;tomo&quot;]}
+{&quot;_key&quot;:&quot;tomo&quot;,&quot;username&quot;:&quot;トモちゃん&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;hana&quot;]}
+{&quot;_key&quot;:&quot;hana&quot;,&quot;username&quot;:&quot;花子&quot;,&quot;friends&quot;:[&quot;ken&quot;,&quot;taro&quot;,&quot;jiro&quot;,&quot;moritapo&quot;,&quot;tomo&quot;]}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 6]
+</pre></div>
+</div>
+<p>Let's show list of users who contains specified user in friend list.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table User --query friends:@tomo --output_columns _key,username
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         5
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         &quot;健作&quot;
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         &quot;ぐるんが太郎&quot;
+#       ],
+#       [
+#         &quot;jiro&quot;,
+#         &quot;ぐるんが次郎&quot;
+#       ],
+#       [
+#         &quot;moritapo&quot;,
+#         &quot;森田&quot;
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         &quot;花子&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select --table User --query friends:@jiro --output_columns _key,username
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         3
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         &quot;健作&quot;
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         &quot;ぐるんが太郎&quot;
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         &quot;花子&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Then drilldown the count which shows user is listed as friend.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table User --limit 0 --drilldown friends
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         6
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;friends&quot;,
+#           &quot;User&quot;
+#         ],
+#         [
+#           &quot;index_friends&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;username&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ]
+#     ],
+#     [
+#       [
+#         6
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;_nsubrecs&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;taro&quot;,
+#         3
+#       ],
+#       [
+#         &quot;jiro&quot;,
+#         3
+#       ],
+#       [
+#         &quot;tomo&quot;,
+#         5
+#       ],
+#       [
+#         &quot;moritapo&quot;,
+#         2
+#       ],
+#       [
+#         &quot;ken&quot;,
+#         3
+#       ],
+#       [
+#         &quot;hana&quot;,
+#         1
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>As you can see, it shows the results which follows reverse resolution of reference relationship.</p>
+</div>
+<div class="section" id="geo-location-search-with-index">
+<h2>4.6.3. Geo location search with index<a class="headerlink" href="#geo-location-search-with-index" title="Permalink to this headline">¶</a></h2>
+<p>Groonga supports to add indexes to the column which stores geo location information.
+Groonga is very fast because it use such indexes against the column which contains geo location information to search enormous number of records.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create --name GeoSite --flags TABLE_HASH_KEY --key_type ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table GeoSite --name location --type WGS84GeoPoint
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create --name GeoIndex --flags TABLE_PAT_KEY --key_type WGS84GeoPoint
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create --table GeoIndex --name index_point --type GeoSite --flags COLUMN_INDEX --source location
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table GeoSite
+[
+ {&quot;_key&quot;:&quot;http://example.org/&quot;,&quot;location&quot;:&quot;128452975x503157902&quot;},
+ {&quot;_key&quot;:&quot;http://example.net/&quot;,&quot;location&quot;:&quot;128487316x502920929&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+select --table GeoSite --filter &#39;geo_in_circle(location, &quot;128515259x503187188&quot;, 5000)&#39; --output_columns _key,location
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>These indexes are also used when sorting the records with geo location search.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>select --table GeoSite --filter &#39;geo_in_circle(location, &quot;128515259x503187188&quot;, 50000)&#39; --output_columns _key,location,_score --sort_keys &#39;-geo_distance(location, &quot;128515259x503187188&quot;)&#39; --scorer &#39;_score = geo_distance(location, &quot;128515259x503187188&quot;)&#39;
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         2
+#       ],
+#       [
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ],
+#         [
+#           &quot;location&quot;,
+#           &quot;WGS84GeoPoint&quot;
+#         ],
+#         [
+#           &quot;_score&quot;,
+#           &quot;Int32&quot;
+#         ]
+#       ],
+#       [
+#         &quot;http://example.org/&quot;,
+#         &quot;128452975x503157902&quot;,
+#         2054
+#       ],
+#       [
+#         &quot;http://example.net/&quot;,
+#         &quot;128487316x502920929&quot;,
+#         6720
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">4.6. Tag search and reverse resolution of reference relationships</a><ul>
+<li><a class="reference internal" href="#tag-search">4.6.1. Tag search</a></li>
+<li><a class="reference internal" href="#reverse-resolution-of-reference-relationships">4.6.2. Reverse resolution of reference relationships</a></li>
+<li><a class="reference internal" href="#geo-location-search-with-index">4.6.3. Geo location search with index</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="drilldown.html"
+                        title="previous chapter">4.5. Drilldown</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="match_columns.html"
+                        title="next chapter">4.7. match_columns parameter</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="match_columns.html" title="4.7. match_columns parameter"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="drilldown.html" title="4.5. Drilldown"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../tutorial.html" >4. Tutorial</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

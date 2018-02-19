@@ -1,0 +1,27 @@
+Execution example::
+
+  tokenize TokenDelimit "Full￾text Sea￾crch" NormalizerAuto ENABLE_TOKENIZED_DELIMITER
+  # [
+  #   [
+  #     0, 
+  #     1337566253.89858, 
+  #     0.000355720520019531
+  #   ], 
+  #   [
+  #     {
+  #       "position": 0, 
+  #       "force_prefix": false, 
+  #       "value": "full"
+  #     }, 
+  #     {
+  #       "position": 1, 
+  #       "force_prefix": false, 
+  #       "value": "text sea"
+  #     }, 
+  #     {
+  #       "position": 2, 
+  #       "force_prefix": false, 
+  #       "value": "crch"
+  #     }
+  #   ]
+  # ]

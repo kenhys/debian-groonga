@@ -1,0 +1,210 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>12. How to contribute to groonga &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="12.1. How to report a bug" href="contribution/report.html" />
+    <link rel="prev" title="11.1. Travis CI" href="development/travis-ci.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../ja/html/contribution.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="contribution/report.html" title="12.1. How to report a bug"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="development/travis-ci.html" title="11.1. Travis CI"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-contribute-to-groonga">
+<h1>12. How to contribute to groonga<a class="headerlink" href="#how-to-contribute-to-groonga" title="Permalink to this headline">¶</a></h1>
+<p>We welcome your contributions to the groonga project. There are many ways
+to contribute, such as using groonga, introduction to others, etc.
+For example, if you find a bug when using groonga, you are welcome to
+report the bug. Coding and documentation are also welcome for groonga and
+its related projects.</p>
+<dl class="docutils">
+<dt>As a user:</dt>
+<dd>If you are interested in groonga, please read this document and try it.</dd>
+<dt>As a spokesman:</dt>
+<dd>Please introduce groonga to your friends and colleagues.</dd>
+<dt>As a developer: Bug report, development and documentation</dt>
+<dd>This section describes the details.</dd>
+</dl>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contribution/report.html">12.1. How to report a bug</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html#submit-a-bug-to-the-issue-tracker">12.1.1. Submit a bug to the issue tracker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/report.html#report-a-bug-to-the-mailing-list">12.1.2. Report a bug to the mailing list</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution/documentation.html">12.2. How to contribute in documentation topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/introduction.html">12.2.1. Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#install-depended-software">12.2.1.1. Install depended software</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#run-configure-with-enable-document">12.2.1.2. Run <code class="docutils literal"><span class="pre">configure</span></code> with <code class="docutils literal"><span class="pre">--enable-document</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#generate-html">12.2.1.3. Generate HTML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/introduction.html#update">12.2.1.4. Update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/i18n.html">12.2.2. I18N</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#translation-flow">12.2.2.1. Translation flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-install-sphinx">12.2.2.2. How to install Sphinx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-clone-groonga-repository">12.2.2.3. How to clone Groonga repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-update-po-files">12.2.2.4. How to update .po files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-edit-po">12.2.2.5. How to edit .po</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-generate-html-files">12.2.2.6. How to generate HTML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-confirm-html-output">12.2.2.7. How to confirm HTML output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-send-your-works">12.2.2.8. How to send your works</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/documentation/i18n.html#how-to-add-new-language">12.2.2.9. How to add new language</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/documentation/c-api.html">12.2.3. C API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contribution/development.html">12.3. For Groonga developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/repository.html">12.3.1. Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/build.html">12.3.2. How to build Groonga at the repository</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/unix_autotools.html">12.3.2.1. How to build Groonga at the repository by GNU Autotools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/unix_cmake.html">12.3.2.2. How to build Groonga at the repository by CMake on GNU/Linux or Unix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/build/windows_cmake.html">12.3.2.3. How to build Groonga at the repository by CMake on Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/com.html">12.3.3. Groonga 通信アーキテクチャ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/com.html#gqtp">12.3.3.1. GQTPでのアーキテクチャ</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/cooperation.html">12.3.4. ユーザーと協力して開発をうまく進めていくための指針</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/cooperation.html#twitter">12.3.4.1. Twitter編</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/query.html">12.3.5. クエリの実現</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id2">12.3.5.1. クエリ実行のためのインタフェース</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id3">12.3.5.2. grn_exprで表現できるクエリ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#grn-table-select">12.3.5.3. grn_table_select()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id4">12.3.5.4. 関係式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/query.html#id5">12.3.6. クエリの実例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id6">12.3.6.1. 検索例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id7">12.3.6.2. 検索例2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id8">12.3.6.3. 検索例3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/query.html#id9">12.3.6.4. 検索例4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/release.html">12.3.7. リリース手順</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id2">12.3.7.1. 前提条件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id3">12.3.7.2. 最初の1回だけ行う手順</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/release.html#id7">12.3.7.3. 毎回のリリースで行う手順</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="contribution/development/test.html">12.3.8. テスト方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id2">12.3.8.1. テスト環境の構築</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id5">12.3.8.2. テストの動作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id6">12.3.8.3. カバレッジ情報</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id7">12.3.8.4. 様々なテスト</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contribution/development/test.html#id12">12.3.8.5. 静的解析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="development/travis-ci.html"
+                        title="previous chapter">11.1. Travis CI</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contribution/report.html"
+                        title="next chapter">12.1. How to report a bug</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="contribution/report.html" title="12.1. How to report a bug"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="development/travis-ci.html" title="11.1. Travis CI"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>

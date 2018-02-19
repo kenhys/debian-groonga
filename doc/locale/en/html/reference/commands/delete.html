@@ -1,0 +1,347 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>7.3.21. delete &#8212; Groonga v7.1.1-35-g1c7d4db documentation</title>
+    <link rel="stylesheet" href="../../_static/groonga.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '7.1.1-35-g1c7d4db',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.3.22. dump" href="dump.html" />
+    <link rel="prev" title="7.3.20. defrag" href="defrag.html" /> 
+  </head>
+  <body>
+<div class="header">
+  <h1 class="title">
+    <a id="top-link" href="../../index.html">
+      <span class="project">groonga</span>
+      <span class="separator">-</span>
+      <span class="description">An open-source fulltext search engine and column store.</span>
+    </a>
+  </h1>
+
+  <div class="other-language-links">
+    <ul>
+      <li><a href="../../../../ja/html/reference/commands/delete.html">日本語</a></li>
+    </ul>
+  </div>
+</div>
+  
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dump.html" title="7.3.22. dump"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="defrag.html" title="7.3.20. defrag"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" accesskey="U">7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="delete">
+<h1>7.3.21. <code class="docutils literal"><span class="pre">delete</span></code><a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="summary">
+<h2>7.3.21.1. Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">delete</span></code> command deletes specified record of table.</p>
+<div class="section" id="cascade-delete">
+<span id="id1"></span><h3>7.3.21.1.1. Cascade delete<a class="headerlink" href="#cascade-delete" title="Permalink to this headline">¶</a></h3>
+<p>There is a case that multiple table is associated. For example, the key of one table are referenced by other table's records. In such a case, if you delete the key of one table, other table's records are also removed.</p>
+<p>Note that the type of other table's column is COLUMN_VECTOR, only the value of referencing key is removed from the vector value.</p>
+</div>
+</div>
+<div class="section" id="syntax">
+<h2>7.3.21.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>delete table [key [id [filter]]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>7.3.21.3. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Here are a schema definition and sample data to show usage.</p>
+<p>Delete the record from Entry table which has &quot;2&quot; as the key.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>delete Entry 2
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+select Entry
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;status&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         1,
+#         &quot;OK&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+<p>Here is the example about cascaded delete.</p>
+<p>The country column of Users table associates with Country table.</p>
+<p>&quot;Cascaded delete&quot; removes the records which matches specified key and refers that key.</p>
+<p>Execution example:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>table_create Country TABLE_HASH_KEY ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+table_create Users TABLE_HASH_KEY UInt32
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Users name COLUMN_SCALAR ShortText
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+column_create Users country COLUMN_SCALAR Country
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+load --table Users
+[
+{&quot;_key&quot;: 1, &quot;name&quot;: &quot;John&quot;, country: &quot;United States&quot;}
+{&quot;_key&quot;: 2, &quot;name&quot;: &quot;Mike&quot;, country: &quot;United States&quot;}
+{&quot;_key&quot;: 3, &quot;name&quot;: &quot;Takashi&quot;, country: &quot;Japan&quot;}
+{&quot;_key&quot;: 4, &quot;name&quot;: &quot;Hanako&quot;, country: &quot;Japan&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 4]
+load --table Country
+[
+{&quot;_key&quot;: &quot;United States&quot;}
+{&quot;_key&quot;: &quot;Japan&quot;}
+]
+# [[0, 1337566253.89858, 0.000355720520019531], 2]
+delete Country &quot;United States&quot;
+# [[0, 1337566253.89858, 0.000355720520019531], true]
+select Country
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         1
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         2,
+#         &quot;Japan&quot;
+#       ]
+#     ]
+#   ]
+# ]
+select Users
+# [
+#   [
+#     0,
+#     1337566253.89858,
+#     0.000355720520019531
+#   ],
+#   [
+#     [
+#       [
+#         4
+#       ],
+#       [
+#         [
+#           &quot;_id&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;_key&quot;,
+#           &quot;UInt32&quot;
+#         ],
+#         [
+#           &quot;country&quot;,
+#           &quot;Country&quot;
+#         ],
+#         [
+#           &quot;name&quot;,
+#           &quot;ShortText&quot;
+#         ]
+#       ],
+#       [
+#         1,
+#         1,
+#         &quot;&quot;,
+#         &quot;John&quot;
+#       ],
+#       [
+#         2,
+#         2,
+#         &quot;&quot;,
+#         &quot;Mike&quot;
+#       ],
+#       [
+#         3,
+#         3,
+#         &quot;Japan&quot;,
+#         &quot;Takashi&quot;
+#       ],
+#       [
+#         4,
+#         4,
+#         &quot;Japan&quot;,
+#         &quot;Hanako&quot;
+#       ]
+#     ]
+#   ]
+# ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>7.3.21.4. Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">table</span></code></p>
+<blockquote>
+<div>Specifies the name of table to delete the records.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">key</span></code></p>
+<blockquote>
+<div>Specifies the key of record to delete. If you use the table with TABLE_NO_KEY, the key is just ignored.
+(Use <code class="docutils literal"><span class="pre">id</span></code> parameter in such a case)</div></blockquote>
+<p><code class="docutils literal"><span class="pre">id</span></code></p>
+<blockquote>
+<div>Specifies the id of record to delete. If you specify <code class="docutils literal"><span class="pre">id</span></code> parameter, you must not specify <code class="docutils literal"><span class="pre">key</span></code> parameter.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">filter</span></code></p>
+<blockquote>
+<div>Specifies the expression of grn_expr to identify the record. If you specify <code class="docutils literal"><span class="pre">filter</span></code> parameter,
+you must not specify <code class="docutils literal"><span class="pre">key</span></code> and <code class="docutils literal"><span class="pre">id</span></code> parameter.</div></blockquote>
+</div>
+<div class="section" id="return-value">
+<h2>7.3.21.5. Return value<a class="headerlink" href="#return-value" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none"><div class="highlight"><pre><span></span>[HEADER, SUCCEEDED_OR_NOT]
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">HEADER</span></code></p>
+<blockquote>
+<div>See <a class="reference internal" href="../command/output_format.html"><span class="doc">Output format</span></a> about <code class="docutils literal"><span class="pre">HEADER</span></code>.</div></blockquote>
+<p><code class="docutils literal"><span class="pre">SUCCEEDED_OR_NOT</span></code></p>
+<blockquote>
+<div>If command succeeded, it returns true, otherwise it returns false on error.</div></blockquote>
+</div>
+<div class="section" id="see-also">
+<h2>7.3.21.6. See also<a class="headerlink" href="#see-also" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="load.html"><span class="doc">load</span></a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7.3.21. <code class="docutils literal"><span class="pre">delete</span></code></a><ul>
+<li><a class="reference internal" href="#summary">7.3.21.1. Summary</a><ul>
+<li><a class="reference internal" href="#cascade-delete">7.3.21.1.1. Cascade delete</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#syntax">7.3.21.2. Syntax</a></li>
+<li><a class="reference internal" href="#usage">7.3.21.3. Usage</a></li>
+<li><a class="reference internal" href="#parameters">7.3.21.4. Parameters</a></li>
+<li><a class="reference internal" href="#return-value">7.3.21.5. Return value</a></li>
+<li><a class="reference internal" href="#see-also">7.3.21.6. See also</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="defrag.html"
+                        title="previous chapter">7.3.20. <code class="docutils literal"><span class="pre">defrag</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dump.html"
+                        title="next chapter">7.3.22. <code class="docutils literal"><span class="pre">dump</span></code></a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dump.html" title="7.3.22. dump"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="defrag.html" title="7.3.20. defrag"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Groonga v7.1.1-35-g1c7d4db documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../reference.html" >7. Reference manual</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../command.html" >7.3. Command</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2009-2018, Brazil, Inc.
+    </div>
+  </body>
+</html>
